@@ -1,0 +1,70 @@
+# --- Secrets: add these BEFORE the first commit ---
+.env
+.env.*
+*.key
+kaggle.json
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# --- Virtual environments ---
+venv/
+.venv/
+env/
+malaya-env/
+
+# --- Model weights and adapters: these go to Hugging Face Hub ---
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.gguf
+saves/
+checkpoints/
+outputs/
+adapter/
+models/
+.cache/
+huggingface/
+
+# --- Whisper model cache ---
+whisper_models/
+
+# --- Databases: commit schema.sql, not the data ---
+*.db
+*.sqlite
+*.sqlite3
+feedback.db
+
+# --- Audio: test recordings are large and not source ---
+*.wav
+*.mp3
+*.m4a
+*.ogg
+*.flac
+recordings/
+
+# --- Intermediate generation runs (commit only the validated dataset) ---
+data/generated/raw/
+data/generated/tmp/
+data/**/*.tmp.jsonl
+
+# --- Logs ---
+*.log
+logs/
+wandb/
+runs/
+
+# --- Streamlit ---
+.streamlit/secrets.toml
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/settings.json
+.idea/
