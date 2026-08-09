@@ -1,97 +1,97 @@
-id,audio_path,reference,switch_type,speaker,phase
-s01_yv,audio/s01_ms_dom_yv.wav,macam mana nak apply lesen memandu baru,ms_dom,yv,1
-s01_pq,audio/s01_ms_dom_pq.wav,macam mana nak apply lesen memandu baru,ms_dom,pq,2
-s02_yv,audio/s02_ms_dom_yv.wav,saya nak tanya pasal insurance kereta ni,ms_dom,yv,1
-s02_pq,audio/s02_ms_dom_pq.wav,saya nak tanya pasal insurance kereta ni,ms_dom,pq,2
-s03_yv,audio/s03_ms_dom_yv.wav,boleh tak awak explain apa itu inflation,ms_dom,yv,1
-s03_pq,audio/s03_ms_dom_pq.wav,boleh tak awak explain apa itu inflation,ms_dom,pq,2
-s04_yv,audio/s04_ms_dom_yv.wav,nak cari tempat makan yang murah dekat sini,ms_dom,yv,1
-s04_pq,audio/s04_ms_dom_pq.wav,nak cari tempat makan yang murah dekat sini,ms_dom,pq,2
-s05_yv,audio/s05_ms_dom_yv.wav,camne nak transfer duit guna online banking,ms_dom,yv,2
-s05_pq,audio/s05_ms_dom_pq.wav,camne nak transfer duit guna online banking,ms_dom,pq,1
-s06_yv,audio/s06_ms_dom_yv.wav,saya lupa password akaun macam mana nak reset,ms_dom,yv,2
-s06_pq,audio/s06_ms_dom_pq.wav,saya lupa password akaun macam mana nak reset,ms_dom,pq,1
-s07_yv,audio/s07_ms_dom_yv.wav,berapa lama proses renew passport ambil masa,ms_dom,yv,2
-s07_pq,audio/s07_ms_dom_pq.wav,berapa lama proses renew passport ambil masa,ms_dom,pq,1
-s08_yv,audio/s08_ms_dom_yv.wav,tolong bagitahu cara nak book appointment klinik,ms_dom,yv,2
-s08_pq,audio/s08_ms_dom_pq.wav,tolong bagitahu cara nak book appointment klinik,ms_dom,pq,1
-s09_yv,audio/s09_en_dom_yv.wav,how do i check my epf balance ah,en_dom,yv,1
-s09_pq,audio/s09_en_dom_pq.wav,how do i check my epf balance ah,en_dom,pq,2
-s10_yv,audio/s10_en_dom_yv.wav,can you explain what is compound interest lah,en_dom,yv,1
-s10_pq,audio/s10_en_dom_pq.wav,can you explain what is compound interest lah,en_dom,pq,2
-s11_yv,audio/s11_en_dom_yv.wav,where can i find cheap flight ticket meh,en_dom,yv,1
-s11_pq,audio/s11_en_dom_pq.wav,where can i find cheap flight ticket meh,en_dom,pq,2
-s12_yv,audio/s12_en_dom_yv.wav,i want to know how to save money properly one,en_dom,yv,1
-s12_pq,audio/s12_en_dom_pq.wav,i want to know how to save money properly one,en_dom,pq,2
-s13_yv,audio/s13_en_dom_yv.wav,is it safe to invest in unit trust ke,en_dom,yv,2
-s13_pq,audio/s13_en_dom_pq.wav,is it safe to invest in unit trust ke,en_dom,pq,1
-s14_yv,audio/s14_en_dom_yv.wav,tell me how to cook nasi lemak lah,en_dom,yv,2
-s14_pq,audio/s14_en_dom_pq.wav,tell me how to cook nasi lemak lah,en_dom,pq,1
-s15_yv,audio/s15_en_dom_yv.wav,what time the post office close ah,en_dom,yv,2
-s15_pq,audio/s15_en_dom_pq.wav,what time the post office close ah,en_dom,pq,1
-s16_yv,audio/s16_en_dom_yv.wav,can i renew my licence online or not,en_dom,yv,2
-s16_pq,audio/s16_en_dom_pq.wav,can i renew my licence online or not,en_dom,pq,1
-s17_yv,audio/s17_balanced_yv.wav,saya dah submit application tapi belum dapat approval lagi,balanced,yv,1
-s17_pq,audio/s17_balanced_pq.wav,saya dah submit application tapi belum dapat approval lagi,balanced,pq,2
-s18_yv,audio/s18_balanced_yv.wav,nak tanya pasal tax relief untuk medical expenses,balanced,yv,1
-s18_pq,audio/s18_balanced_pq.wav,nak tanya pasal tax relief untuk medical expenses,balanced,pq,2
-s19_yv,audio/s19_balanced_yv.wav,macam mana nak cancel subscription yang auto renew tu,balanced,yv,1
-s19_pq,audio/s19_balanced_pq.wav,macam mana nak cancel subscription yang auto renew tu,balanced,pq,2
-s20_yv,audio/s20_balanced_yv.wav,boleh tak explain difference antara savings dengan current account,balanced,yv,1
-s20_pq,audio/s20_balanced_pq.wav,boleh tak explain difference antara savings dengan current account,balanced,pq,2
-s21_yv,audio/s21_balanced_yv.wav,saya nak update alamat kat identity card,balanced,yv,2
-s21_pq,audio/s21_balanced_pq.wav,saya nak update alamat kat identity card,balanced,pq,1
-s22_yv,audio/s22_balanced_yv.wav,camne nak claim insurance kalau accident kereta,balanced,yv,2
-s22_pq,audio/s22_balanced_pq.wav,camne nak claim insurance kalau accident kereta,balanced,pq,1
-s23_yv,audio/s23_balanced_yv.wav,nak tahu requirement untuk apply credit card,balanced,yv,2
-s23_pq,audio/s23_balanced_pq.wav,nak tahu requirement untuk apply credit card,balanced,pq,1
-s24_yv,audio/s24_balanced_yv.wav,tolong terangkan macam mana interest rate affect loan,balanced,yv,2
-s24_pq,audio/s24_balanced_pq.wav,tolong terangkan macam mana interest rate affect loan,balanced,pq,1
-s25_yv,audio/s25_particles_yv.wav,eh betul ke ni macam tak kena je lor,particles,yv,1
-s25_pq,audio/s25_particles_pq.wav,eh betul ke ni macam tak kena je lor,particles,pq,2
-s26_yv,audio/s26_particles_yv.wav,aiyo susah sangat lah macam ni,particles,yv,1
-s26_pq,audio/s26_particles_pq.wav,aiyo susah sangat lah macam ni,particles,pq,2
-s27_yv,audio/s27_particles_yv.wav,can one lah don't worry so much,particles,yv,1
-s27_pq,audio/s27_particles_pq.wav,can one lah don't worry so much,particles,pq,2
-s28_yv,audio/s28_particles_yv.wav,wah mahal gila meh ada yang murah tak,particles,yv,1
-s28_pq,audio/s28_particles_pq.wav,wah mahal gila meh ada yang murah tak,particles,pq,2
-s29_yv,audio/s29_particles_yv.wav,so how ah nak buat macam mana ni,particles,yv,2
-s29_pq,audio/s29_particles_pq.wav,so how ah nak buat macam mana ni,particles,pq,1
-s30_yv,audio/s30_particles_yv.wav,alamak terlupa pulak kan boleh tolong tak,particles,yv,2
-s30_pq,audio/s30_particles_pq.wav,alamak terlupa pulak kan boleh tolong tak,particles,pq,1
-s31_yv,audio/s31_particles_yv.wav,ish lambat betul lah service ni,particles,yv,2
-s31_pq,audio/s31_particles_pq.wav,ish lambat betul lah service ni,particles,pq,1
-s32_yv,audio/s32_particles_yv.wav,okay lah fine saya try dulu kot,particles,yv,2
-s32_pq,audio/s32_particles_pq.wav,okay lah fine saya try dulu kot,particles,pq,1
-s33_yv,audio/s33_numeric_yv.wav,harga dia RM45.90 termasuk cukai ke tak,numeric,yv,1
-s33_pq,audio/s33_numeric_pq.wav,harga dia RM45.90 termasuk cukai ke tak,numeric,pq,2
-s34_yv,audio/s34_numeric_yv.wav,gaji minimum sekarang berapa ringgit ah,numeric,yv,1
-s34_pq,audio/s34_numeric_pq.wav,gaji minimum sekarang berapa ringgit ah,numeric,pq,2
-s35_yv,audio/s35_numeric_yv.wav,saya nak transfer RM1500 boleh tak,numeric,yv,1
-s35_pq,audio/s35_numeric_pq.wav,saya nak transfer RM1500 boleh tak,numeric,pq,2
-s36_yv,audio/s36_numeric_yv.wav,deadline dia 31 Ogos 2026 kan,numeric,yv,1
-s36_pq,audio/s36_numeric_pq.wav,deadline dia 31 Ogos 2026 kan,numeric,pq,2
-s37_yv,audio/s37_numeric_yv.wav,interest rate dia 3.5 peratus setahun je,numeric,yv,2
-s37_pq,audio/s37_numeric_pq.wav,interest rate dia 3.5 peratus setahun je,numeric,pq,1
-s38_yv,audio/s38_numeric_yv.wav,kena bayar deposit dua ribu lima ratus ringgit,numeric,yv,2
-s38_pq,audio/s38_numeric_pq.wav,kena bayar deposit dua ribu lima ratus ringgit,numeric,pq,1
-s39_yv,audio/s39_numeric_yv.wav,cukai jualan naik dari 6 peratus ke 8 peratus ke,numeric,yv,2
-s39_pq,audio/s39_numeric_pq.wav,cukai jualan naik dari 6 peratus ke 8 peratus ke,numeric,pq,1
-s40_yv,audio/s40_numeric_yv.wav,buka pukul 9 pagi tutup pukul 5 petang kan,numeric,yv,2
-s40_pq,audio/s40_numeric_pq.wav,buka pukul 9 pagi tutup pukul 5 petang kan,numeric,pq,1
-s41_yv,audio/s41_entity_yv.wav,macam mana nak renew roadtax kat MyJPJ,entity,yv,1
-s41_pq,audio/s41_entity_pq.wav,macam mana nak renew roadtax kat MyJPJ,entity,pq,2
-s42_yv,audio/s42_entity_yv.wav,boleh guna Touch n Go eWallet tak kat sini,entity,yv,1
-s42_pq,audio/s42_entity_pq.wav,boleh guna Touch n Go eWallet tak kat sini,entity,pq,2
-s43_yv,audio/s43_entity_yv.wav,saya nak semak baki KWSP guna i-Akaun,entity,yv,1
-s43_pq,audio/s43_entity_pq.wav,saya nak semak baki KWSP guna i-Akaun,entity,pq,2
-s44_yv,audio/s44_entity_yv.wav,LHDN dah buka e-Filing untuk tahun ni ke,entity,yv,1
-s44_pq,audio/s44_entity_pq.wav,LHDN dah buka e-Filing untuk tahun ni ke,entity,pq,2
-s45_yv,audio/s45_entity_yv.wav,nak apply MyKad baru kat JPN macam mana,entity,yv,2
-s45_pq,audio/s45_entity_pq.wav,nak apply MyKad baru kat JPN macam mana,entity,pq,1
-s46_yv,audio/s46_entity_yv.wav,boleh bayar bil TNB guna Maybank2u tak,entity,yv,2
-s46_pq,audio/s46_entity_pq.wav,boleh bayar bil TNB guna Maybank2u tak,entity,pq,1
-s47_yv,audio/s47_entity_yv.wav,Grab dengan foodpanda mana lagi murah ah,entity,yv,2
-s47_pq,audio/s47_entity_pq.wav,Grab dengan foodpanda mana lagi murah ah,entity,pq,1
-s48_yv,audio/s48_entity_yv.wav,nak tanya pasal bantuan STR tahun ni,entity,yv,2
-s48_pq,audio/s48_entity_pq.wav,nak tanya pasal bantuan STR tahun ni,entity,pq,1
+id,audio_path,reference,switch_type,speaker,phase,numeral_lang
+s01_yv,audio/s01_ms_dom_yv.wav,macam mana nak apply lesen memandu baru,ms_dom,yv,1,
+s01_pq,audio/s01_ms_dom_pq.wav,macam mana nak apply lesen memandu baru,ms_dom,pq,2,
+s02_yv,audio/s02_ms_dom_yv.wav,saya nak tanya pasal insurance kereta ni,ms_dom,yv,1,
+s02_pq,audio/s02_ms_dom_pq.wav,saya nak tanya pasal insurance kereta ni,ms_dom,pq,2,
+s03_yv,audio/s03_ms_dom_yv.wav,boleh tak awak explain apa itu inflation,ms_dom,yv,1,
+s03_pq,audio/s03_ms_dom_pq.wav,boleh tak awak explain apa itu inflation,ms_dom,pq,2,
+s04_yv,audio/s04_ms_dom_yv.wav,nak cari tempat makan yang murah dekat sini,ms_dom,yv,1,
+s04_pq,audio/s04_ms_dom_pq.wav,nak cari tempat makan yang murah dekat sini,ms_dom,pq,2,
+s05_yv,audio/s05_ms_dom_yv.wav,camne nak transfer duit guna online banking,ms_dom,yv,2,
+s05_pq,audio/s05_ms_dom_pq.wav,camne nak transfer duit guna online banking,ms_dom,pq,1,
+s06_yv,audio/s06_ms_dom_yv.wav,saya lupa password akaun macam mana nak reset,ms_dom,yv,2,
+s06_pq,audio/s06_ms_dom_pq.wav,saya lupa password akaun macam mana nak reset,ms_dom,pq,1,
+s07_yv,audio/s07_ms_dom_yv.wav,berapa lama proses renew passport ambil masa,ms_dom,yv,2,
+s07_pq,audio/s07_ms_dom_pq.wav,berapa lama proses renew passport ambil masa,ms_dom,pq,1,
+s08_yv,audio/s08_ms_dom_yv.wav,tolong bagitahu cara nak book appointment klinik,ms_dom,yv,2,
+s08_pq,audio/s08_ms_dom_pq.wav,tolong bagitahu cara nak book appointment klinik,ms_dom,pq,1,
+s09_yv,audio/s09_en_dom_yv.wav,how do i check my epf balance ah,en_dom,yv,1,
+s09_pq,audio/s09_en_dom_pq.wav,how do i check my epf balance ah,en_dom,pq,2,
+s10_yv,audio/s10_en_dom_yv.wav,can you explain what is compound interest lah,en_dom,yv,1,
+s10_pq,audio/s10_en_dom_pq.wav,can you explain what is compound interest lah,en_dom,pq,2,
+s11_yv,audio/s11_en_dom_yv.wav,where can i find cheap flight ticket meh,en_dom,yv,1,
+s11_pq,audio/s11_en_dom_pq.wav,where can i find cheap flight ticket meh,en_dom,pq,2,
+s12_yv,audio/s12_en_dom_yv.wav,i want to know how to save money properly one,en_dom,yv,1,
+s12_pq,audio/s12_en_dom_pq.wav,i want to know how to save money properly one,en_dom,pq,2,
+s13_yv,audio/s13_en_dom_yv.wav,is it safe to invest in unit trust ke,en_dom,yv,2,
+s13_pq,audio/s13_en_dom_pq.wav,is it safe to invest in unit trust ke,en_dom,pq,1,
+s14_yv,audio/s14_en_dom_yv.wav,tell me how to cook nasi lemak lah,en_dom,yv,2,
+s14_pq,audio/s14_en_dom_pq.wav,tell me how to cook nasi lemak lah,en_dom,pq,1,
+s15_yv,audio/s15_en_dom_yv.wav,what time the post office close ah,en_dom,yv,2,
+s15_pq,audio/s15_en_dom_pq.wav,what time the post office close ah,en_dom,pq,1,
+s16_yv,audio/s16_en_dom_yv.wav,can i renew my licence online or not,en_dom,yv,2,
+s16_pq,audio/s16_en_dom_pq.wav,can i renew my licence online or not,en_dom,pq,1,
+s17_yv,audio/s17_balanced_yv.wav,saya dah submit application tapi belum dapat approval lagi,balanced,yv,1,
+s17_pq,audio/s17_balanced_pq.wav,saya dah submit application tapi belum dapat approval lagi,balanced,pq,2,
+s18_yv,audio/s18_balanced_yv.wav,nak tanya pasal tax relief untuk medical expenses,balanced,yv,1,
+s18_pq,audio/s18_balanced_pq.wav,nak tanya pasal tax relief untuk medical expenses,balanced,pq,2,
+s19_yv,audio/s19_balanced_yv.wav,macam mana nak cancel subscription yang auto renew tu,balanced,yv,1,
+s19_pq,audio/s19_balanced_pq.wav,macam mana nak cancel subscription yang auto renew tu,balanced,pq,2,
+s20_yv,audio/s20_balanced_yv.wav,boleh tak explain difference antara savings dengan current account,balanced,yv,1,
+s20_pq,audio/s20_balanced_pq.wav,boleh tak explain difference antara savings dengan current account,balanced,pq,2,
+s21_yv,audio/s21_balanced_yv.wav,saya nak update alamat kat identity card,balanced,yv,2,
+s21_pq,audio/s21_balanced_pq.wav,saya nak update alamat kat identity card,balanced,pq,1,
+s22_yv,audio/s22_balanced_yv.wav,camne nak claim insurance kalau accident kereta,balanced,yv,2,
+s22_pq,audio/s22_balanced_pq.wav,camne nak claim insurance kalau accident kereta,balanced,pq,1,
+s23_yv,audio/s23_balanced_yv.wav,nak tahu requirement untuk apply credit card,balanced,yv,2,
+s23_pq,audio/s23_balanced_pq.wav,nak tahu requirement untuk apply credit card,balanced,pq,1,
+s24_yv,audio/s24_balanced_yv.wav,tolong terangkan macam mana interest rate affect loan,balanced,yv,2,
+s24_pq,audio/s24_balanced_pq.wav,tolong terangkan macam mana interest rate affect loan,balanced,pq,1,
+s25_yv,audio/s25_particles_yv.wav,eh betul ke ni macam tak kena je lor,particles,yv,1,
+s25_pq,audio/s25_particles_pq.wav,eh betul ke ni macam tak kena je lor,particles,pq,2,
+s26_yv,audio/s26_particles_yv.wav,aiyo susah sangat lah macam ni,particles,yv,1,
+s26_pq,audio/s26_particles_pq.wav,aiyo susah sangat lah macam ni,particles,pq,2,
+s27_yv,audio/s27_particles_yv.wav,can one lah don't worry so much,particles,yv,1,
+s27_pq,audio/s27_particles_pq.wav,can one lah don't worry so much,particles,pq,2,
+s28_yv,audio/s28_particles_yv.wav,wah mahal gila meh ada yang murah tak,particles,yv,1,
+s28_pq,audio/s28_particles_pq.wav,wah mahal gila meh ada yang murah tak,particles,pq,2,
+s29_yv,audio/s29_particles_yv.wav,so how ah nak buat macam mana ni,particles,yv,2,
+s29_pq,audio/s29_particles_pq.wav,so how ah nak buat macam mana ni,particles,pq,1,
+s30_yv,audio/s30_particles_yv.wav,alamak terlupa pulak kan boleh tolong tak,particles,yv,2,
+s30_pq,audio/s30_particles_pq.wav,alamak terlupa pulak kan boleh tolong tak,particles,pq,1,
+s31_yv,audio/s31_particles_yv.wav,ish lambat betul lah service ni,particles,yv,2,
+s31_pq,audio/s31_particles_pq.wav,ish lambat betul lah service ni,particles,pq,1,
+s32_yv,audio/s32_particles_yv.wav,okay lah fine saya try dulu kot,particles,yv,2,
+s32_pq,audio/s32_particles_pq.wav,okay lah fine saya try dulu kot,particles,pq,1,
+s33_yv,audio/s33_numeric_yv.wav,harga dia empat puluh lima ringgit sembilan puluh sen termasuk cukai ke tak,numeric,yv,1,malay numerals
+s33_pq,audio/s33_numeric_pq.wav,harga dia empat puluh lima ringgit sembilan puluh sen termasuk cukai ke tak,numeric,pq,2,malay numerals
+s34_yv,audio/s34_numeric_yv.wav,gaji minimum sekarang seribu lima ratus ringgit ke ah,numeric,yv,1,malay numerals
+s34_pq,audio/s34_numeric_pq.wav,gaji minimum sekarang seribu lima ratus ringgit ke ah,numeric,pq,2,malay numerals
+s35_yv,audio/s35_numeric_yv.wav,saya nak transfer one thousand five hundred ringgit boleh tak,numeric,yv,1,english numerals
+s35_pq,audio/s35_numeric_pq.wav,saya nak transfer one thousand five hundred ringgit boleh tak,numeric,pq,2,english numerals
+s36_yv,audio/s36_numeric_yv.wav,deadline dia thirty one august twenty twenty six kan,numeric,yv,1,english numerals
+s36_pq,audio/s36_numeric_pq.wav,deadline dia thirty one august twenty twenty six kan,numeric,pq,2,english numerals
+s37_yv,audio/s37_numeric_yv.wav,interest rate dia three point five percent setahun je,numeric,yv,2,english numerals
+s37_pq,audio/s37_numeric_pq.wav,interest rate dia three point five percent setahun je,numeric,pq,1,english numerals
+s38_yv,audio/s38_numeric_yv.wav,kena bayar deposit dua ribu lima ratus ringgit,numeric,yv,2,malay numerals
+s38_pq,audio/s38_numeric_pq.wav,kena bayar deposit dua ribu lima ratus ringgit,numeric,pq,1,malay numerals
+s39_yv,audio/s39_numeric_yv.wav,cukai jualan naik dari enam peratus ke lapan peratus ke,numeric,yv,2,malay numerals
+s39_pq,audio/s39_numeric_pq.wav,cukai jualan naik dari enam peratus ke lapan peratus ke,numeric,pq,1,malay numerals
+s40_yv,audio/s40_numeric_yv.wav,buka pukul nine in the morning tutup pukul five in the evening kan,numeric,yv,2,english numerals
+s40_pq,audio/s40_numeric_pq.wav,buka pukul nine in the morning tutup pukul five in the evening kan,numeric,pq,1,english numerals
+s41_yv,audio/s41_entity_yv.wav,macam mana nak renew roadtax kat MyJPJ,entity,yv,1,
+s41_pq,audio/s41_entity_pq.wav,macam mana nak renew roadtax kat MyJPJ,entity,pq,2,
+s42_yv,audio/s42_entity_yv.wav,boleh guna Touch n Go eWallet tak kat sini,entity,yv,1,
+s42_pq,audio/s42_entity_pq.wav,boleh guna Touch n Go eWallet tak kat sini,entity,pq,2,
+s43_yv,audio/s43_entity_yv.wav,saya nak semak baki KWSP guna i-Akaun,entity,yv,1,
+s43_pq,audio/s43_entity_pq.wav,saya nak semak baki KWSP guna i-Akaun,entity,pq,2,
+s44_yv,audio/s44_entity_yv.wav,LHDN dah buka e-Filing untuk tahun ni ke,entity,yv,1,
+s44_pq,audio/s44_entity_pq.wav,LHDN dah buka e-Filing untuk tahun ni ke,entity,pq,2,
+s45_yv,audio/s45_entity_yv.wav,nak apply MyKad baru kat JPN macam mana,entity,yv,2,
+s45_pq,audio/s45_entity_pq.wav,nak apply MyKad baru kat JPN macam mana,entity,pq,1,
+s46_yv,audio/s46_entity_yv.wav,boleh bayar bil TNB guna Maybank2u tak,entity,yv,2,
+s46_pq,audio/s46_entity_pq.wav,boleh bayar bil TNB guna Maybank2u tak,entity,pq,1,
+s47_yv,audio/s47_entity_yv.wav,Grab dengan foodpanda mana lagi murah ah,entity,yv,2,
+s47_pq,audio/s47_entity_pq.wav,Grab dengan foodpanda mana lagi murah ah,entity,pq,1,
+s48_yv,audio/s48_entity_yv.wav,nak tanya pasal bantuan STR tahun ni,entity,yv,2,
+s48_pq,audio/s48_entity_pq.wav,nak tanya pasal bantuan STR tahun ni,entity,pq,1,
