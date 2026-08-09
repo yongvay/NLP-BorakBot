@@ -41,12 +41,20 @@ whisper_models/
 feedback.db
 
 # --- Audio: test recordings are large and not source ---
+# Phone voice memos are usually .mp4 or .3gp containers, not just .m4a -- so those are
+# listed too. The manifest is the source of truth; the audio itself lives in Drive.
 *.wav
 *.mp3
 *.m4a
+*.mp4
+*.aac
+*.3gp
 *.ogg
+*.opus
 *.flac
 recordings/
+eval/speech/audio/
+eval/speech/raw/
 
 # --- Intermediate generation runs (commit only the validated dataset) ---
 data/generated/raw/
