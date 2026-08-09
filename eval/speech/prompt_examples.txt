@@ -1,0 +1,29 @@
+# initial_prompt / prompt_ids candidates for Whisper.
+#
+# CRITICAL: these share NO sentences and no distinctive vocabulary with manifest.csv.
+# Test topics are banking, licences, tax and Malaysian agencies -- so these deliberately
+# use weather, media, sport and casual chat instead. Reusing test content here would
+# make the model copy from its own context and inflate every WER number.
+#
+# Whisper caps the prompt at 224 tokens and truncates from the LEFT, so the most
+# important examples go LAST. Descriptions like "this is rojak" do nothing -- only
+# concrete examples in the exact orthography you want will bias the decoder.
+
+PROMPT_A_SHORT = (
+    "cuaca panas gila hari ni kan, tak larat nak keluar. "
+    "eh awak dah tengok movie baru tu ke belum lah."
+)
+
+PROMPT_B_MEDIUM = (
+    "cuaca panas gila hari ni kan, tak larat nak keluar langsung. "
+    "eh awak dah tengok movie baru tu ke belum lah. "
+    "boleh tak awak reply message saya semalam tu, penting sikit. "
+    "team mana yang menang semalam ah, saya tak sempat tengok."
+)
+
+PROMPT_C_ORTHOGRAPHY = (
+    "dia cakap nak join group study tu tapi tak confirm lagi. "
+    "saya dah download file tu tapi tak boleh open pulak. "
+    "nanti kita discuss dekat cafe je lah, senang sikit. "
+    "jangan lupa charge phone awak sebelum keluar tau."
+)
