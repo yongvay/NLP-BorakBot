@@ -1,0 +1,5 @@
+config,clips,ref_words,wer_strict,wer_lenient,sub,ins,dele
+vanilla_prompt,48,387,0.4935,0.4935,131,8,52
+vanilla_noprompt,48,387,0.5866,0.5866,160,6,61
+malaysian_noprompt,48,387,0.6176,0.6176,181,13,45
+malaysian_prompt,48,387,1.062,1.062,156,215,40
