@@ -1,5 +1,10 @@
 config,clips,ref_words,wer_strict,wer_lenient,sub,ins,dele
-vanilla_prompt,48,387,0.4935,0.4935,131,8,52
-vanilla_noprompt,48,387,0.5866,0.5866,160,6,61
-malaysian_noprompt,48,387,0.6176,0.6176,181,13,45
-malaysian_prompt,48,387,1.062,1.062,156,215,40
+malaysian_prompt_routed,48,387,0.3488,0.3385,90,11,34
+malaysian_prompt_auto,48,387,0.3979,0.3902,105,12,37
+malaysian_prompt,48,387,0.3979,0.3902,105,12,37
+vanilla_prompt_routed,48,387,0.4289,0.4186,124,14,28
+vanilla_prompt,48,387,0.447,0.4393,108,15,50
+vanilla_noprompt,48,387,0.5917,0.5814,166,8,55
+malaysian_noprompt_auto,48,387,0.5995,0.5969,175,13,44
+malaysian_noprompt,48,387,0.6176,0.615,181,13,45
+malaysian_prompt_en,48,387,1.2739,1.2636,90,379,24
