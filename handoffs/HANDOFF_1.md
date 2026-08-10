@@ -1,4 +1,8 @@
-# BorakBot — Handoff
+# BorakBot — Handoff 1 (SUPERSEDED)
+
+> ⚠ **Read `HANDOFF_2.md` instead.** This file is kept for history. Where the two
+> disagree, Handoff 2 is right — it corrects two claims made here, listed in its §3.
+> The status tables, next steps and open decisions below are all out of date.
 
 Written 10 August 2026. Read this first in a new session, then `CLAUDE.md` for the
 project rules.
@@ -54,6 +58,12 @@ The threshold is **asymmetric** — English is only selected when `P(en) > 0.5` 
 forcing English on Malay audio is catastrophic (6.483 WER, runaway repetition) while the
 reverse merely translates (0.788).
 
+> ⚠ **CORRECTED.** That 6.483 is one clip, not a category-wide effect: seven of the
+> eight `ms_dom` clips transcribe fine under forced English (0, 0, 0, 0, 1, 1, 5
+> errors) and `s05_pq` alone contributes 362 of the 379 insertions. Forcing the wrong
+> language is *usually harmless and occasionally unbounded*. The threshold is still
+> right; the justification is expected cost under a heavy tail. See `HANDOFF_2.md` §3.
+
 ---
 
 ## 3. Results (final, from the last Colab run)
@@ -100,8 +110,10 @@ drifted; they are now regenerated from the CSV by `sync_report_figures.py`.
   (Recomputed from the CSV — the fine-tune figure was previously stated as ~6.)
   Prompting is worth 22 points on the Malaysian checkpoint but only 14.5 on vanilla,
   so "22 points on both models" was wrong and has been corrected in the report.
-- **Excluding `numeric` and `en_dom`** (both with identified external causes), the
-  remaining 240 words score **0.238** — under target.
+- **Excluding `numeric` and `en_dom`**, the remaining 240 words score **0.238** — under
+  target. ⚠ **CORRECTED:** these two exclusions are not equivalent. `numeric` is a
+  scoring artefact arising outside the system; `en_dom` is a failure of our own routing
+  component. Excluding both as "external causes" flatters the result.
 - **Oracle bound** (best language per category) is **0.277**. That caps what routing
   alone can achieve here.
 - **The §5.6 prediction failed.** Intra-sentential switching (`balanced`, 0.234) was

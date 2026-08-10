@@ -202,6 +202,11 @@ def _strip_prompt(text: str, prompt: str) -> str:
     and not always at position 0. Left in, every echoed word scores as an insertion --
     which is how malaysian_prompt reached 106% WER with 215 insertions on a 387-word
     corpus. Checking only `startswith` was not enough.
+
+    Currently inert: none of the 288 prompted transcripts in results_detail.csv takes
+    either branch. Kept because the echo behaviour is transformers-version-dependent.
+    Changing this function cannot alter the committed results, which store transcripts
+    with it already applied -- verified before the grid search below was replaced.
     """
     t = " ".join(text.split())
     p = " ".join(prompt.split())
@@ -209,11 +214,16 @@ def _strip_prompt(text: str, prompt: str) -> str:
 
     if low_p in low_t:                      # whole prompt echoed somewhere
         i = low_t.index(low_p)
-        return (t[:i] + " " + t[i + len(p):]).strip()
+        return " ".join((t[:i] + " " + t[i + len(p):]).split())
 
-    for k in range(len(p), 15, -5):         # truncated echo at the head
-        if low_t.startswith(low_p[:k]):
-            return t[k:].lstrip(" ,.-").strip()
+    # Truncated echo at the head. Cut at the exact end of the shared prefix: the
+    # previous grid search stepped in fives, so it could stop up to four characters
+    # short and leave a fragment of the prompt's last word in the transcript.
+    n = 0
+    while n < min(len(low_t), len(low_p)) and low_t[n] == low_p[n]:
+        n += 1
+    if n >= 16:                             # guard against short coincidental overlap
+        return t[n:].lstrip(" ,.-").strip()
     return t
 
 
