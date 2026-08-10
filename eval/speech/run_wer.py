@@ -60,11 +60,18 @@ ROJAK_PROMPT = (
 VANILLA = "small"
 MALAYSIAN = "mesolitica/malaysian-whisper-small-v3"
 
+# `lang=None` means auto-detect per clip. Forcing a language is what makes Whisper
+# translate instead of transcribe: forcing "en" on Malay audio produced English prose,
+# and forcing "ms" on English-dominant clips produced Malay prose ('how do i know' ->
+# 'bagaimana saya tahu'), which scored en_dom at 79% WER. For code-switched input the
+# language must stay free, so both _auto variants exist to prove that on your own data.
 CONFIGS = {
-    "vanilla_noprompt":   dict(model="vanilla",   prompt=False),
-    "vanilla_prompt":     dict(model="vanilla",   prompt=True),
-    "malaysian_noprompt": dict(model="malaysian", prompt=False),
-    "malaysian_prompt":   dict(model="malaysian", prompt=True),
+    "vanilla_noprompt":        dict(model="vanilla",   prompt=False, lang=None),
+    "vanilla_prompt":          dict(model="vanilla",   prompt=True,  lang=None),
+    "malaysian_noprompt":      dict(model="malaysian", prompt=False, lang="ms"),
+    "malaysian_prompt":        dict(model="malaysian", prompt=True,  lang="ms"),
+    "malaysian_prompt_auto":   dict(model="malaysian", prompt=True,  lang=None),
+    "malaysian_noprompt_auto": dict(model="malaysian", prompt=False, lang=None),
 }
 
 
@@ -95,26 +102,29 @@ def get_malaysian():
     return _cache["malaysian"]
 
 
-def transcribe(path: str, model: str, prompt: bool) -> str:
+def transcribe(path: str, model: str, prompt: bool, lang):
     if model == "vanilla":
         out = get_vanilla().transcribe(
             path,
-            language=None,
+            language=lang,
             fp16=False,
             initial_prompt=ROJAK_PROMPT if prompt else None,
             # Clips are independent single utterances. Carrying context between them
             # would let one bad transcription bias the next.
             condition_on_previous_text=False,
         )
-        return out["text"].strip()
+        return out["text"].strip(), out.get("language", "")
 
     asr = get_malaysian()
-    gk = {"language": "ms", "task": "transcribe"}
+    gk = {"task": "transcribe"}
+    if lang:
+        gk["language"] = lang
     if prompt:
         ids = asr.tokenizer.get_prompt_ids(ROJAK_PROMPT, return_tensors="pt")
         gk["prompt_ids"] = ids.to(asr.model.device)
     text = asr(path, generate_kwargs=gk)["text"].strip()
-    return _strip_prompt(text, ROJAK_PROMPT) if prompt else text
+    text = _strip_prompt(text, ROJAK_PROMPT) if prompt else text
+    return text, (lang or "auto")
 
 
 def _strip_prompt(text: str, prompt: str) -> str:
@@ -153,7 +163,16 @@ def build_transform():
 
 
 def apply_ortho(text: str, mapping: dict) -> str:
-    return " ".join(mapping.get(w, w) for w in text.split())
+    """Canonicalise spelling variants before scoring.
+
+    Lowercases and strips punctuation itself, because the jiwer transform runs *after*
+    this and a map keyed on 'cek' would otherwise miss 'Cek' or 'cek,'.
+    """
+    out = []
+    for w in text.split():
+        k = w.lower().strip(".,!?;:")
+        out.append(mapping.get(k, w))
+    return " ".join(out)
 
 
 def score_pair(ref: str, hyp: str, tf):
@@ -228,9 +247,10 @@ def main() -> int:
             kw = CONFIGS[cfg]
             print(f"--- {cfg} ---", flush=True)
             for i, r in enumerate(man.itertuples(), 1):
-                hyp = transcribe(str(AUDIO_ROOT / r.audio_path), **kw)
+                hyp, det = transcribe(str(AUDIO_ROOT / r.audio_path), **kw)
                 rows.append(dict(config=cfg, id=r.id, switch_type=r.switch_type,
-                                 speaker=r.speaker, reference=r.reference, hypothesis=hyp))
+                                 speaker=r.speaker, reference=r.reference, hypothesis=hyp,
+                                 detected_lang=det))
                 if i % 8 == 0:
                     print(f"  {i}/{len(man)}", flush=True)
         detail = pd.DataFrame(rows)
@@ -240,6 +260,7 @@ def main() -> int:
     # ---- score
     tf = build_transform()
     mapping = json.loads(ORTHO_MAP.read_text(encoding="utf-8")) if ORTHO_MAP.exists() else {}
+    mapping = {k: v for k, v in mapping.items() if not k.startswith("_")}
     if mapping:
         print(f"orthography map: {len(mapping)} entries (lenient scoring enabled)")
     else:
@@ -254,6 +275,7 @@ def main() -> int:
         all_subs.update(subs)
         recs.append(dict(config=r.config, id=r.id, switch_type=r.switch_type,
                          speaker=r.speaker, reference=r.reference, hypothesis=r.hypothesis,
+                         detected_lang=getattr(r, "detected_lang", ""),
                          errors=strict["errors"], n=strict["n"], sub=strict["sub"],
                          ins=strict["ins"], dele=strict["dele"],
                          errors_lenient=lenient["errors"], n_lenient=lenient["n"]))
