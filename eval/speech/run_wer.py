@@ -76,6 +76,9 @@ CONFIGS = {
     # WER, the model CAN write English and the problem is detection. If it does not,
     # the checkpoint is effectively Malay-only and no decoding flag will rescue it.
     "malaysian_prompt_en":     dict(model="malaysian", prompt=True,  lang="en"),
+    # The deployment candidate: vanilla detects, Mesolitica transcribes.
+    "malaysian_prompt_routed": dict(model="malaysian", prompt=True,  lang="route"),
+    "vanilla_prompt_routed":   dict(model="vanilla",   prompt=True,  lang="route"),
 }
 
 
@@ -106,7 +109,33 @@ def get_malaysian():
     return _cache["malaysian"]
 
 
+def detect_lang(path: str) -> str:
+    """Detect spoken language with vanilla Whisper's encoder.
+
+    The Mesolitica checkpoint transcribes English well when told to (en_dom 10.6% under
+    forced English) but its own detection always lands on Malay, so English clips come
+    back translated at 78.8%. Vanilla Whisper's detector is unbiased, costs one encoder
+    pass, and is only used to CHOOSE the language token -- the Malaysian model still does
+    the transcribing.
+    """
+    import whisper
+    m = get_vanilla()
+    mel = whisper.log_mel_spectrogram(
+        whisper.pad_or_trim(whisper.load_audio(path)),
+        n_mels=m.dims.n_mels,
+    ).to(m.device)
+    _, probs = m.detect_language(mel)
+    top = max(probs, key=probs.get)
+    # Anything that is not confidently English is treated as Malay: forcing English on
+    # Malay audio is catastrophic (648% WER, runaway repetition) while the reverse merely
+    # translates. The asymmetry justifies an asymmetric threshold.
+    return "en" if top == "en" and probs["en"] > 0.5 else "ms"
+
+
 def transcribe(path: str, model: str, prompt: bool, lang):
+    if lang == "route":
+        lang = detect_lang(path)
+
     if model == "vanilla":
         out = get_vanilla().transcribe(
             path,
@@ -269,6 +298,13 @@ def main() -> int:
                 if i % 8 == 0:
                     print(f"  {i}/{len(man)}", flush=True)
         detail = pd.DataFrame(rows)
+        # Merge with earlier runs. Without this, `--configs foo` silently throws away
+        # every other config's transcripts, which is how the --langs report came back
+        # empty after a single-config run.
+        if detail_path.exists():
+            old = pd.read_csv(detail_path)
+            old = old[~old["config"].isin(chosen)]
+            detail = pd.concat([old, detail], ignore_index=True)
         detail.to_csv(detail_path, index=False)
         print(f"\nwrote {detail_path.name}")
 
