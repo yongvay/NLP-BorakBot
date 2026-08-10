@@ -117,8 +117,19 @@ def transcribe(path: str, model: str, prompt: bool, lang):
 
     asr = get_malaysian()
     gk = {"task": "transcribe"}
+    # Mesolitica fine-tuned this checkpoint on Malay, so its generation_config pins the
+    # language token. Simply omitting `language=` falls back to that default -- which is
+    # why lang=None and lang="ms" produced byte-identical results on the first attempt.
+    # Clearing forced_decoder_ids is what actually re-enables detection.
+    gc = asr.model.generation_config
     if lang:
         gk["language"] = lang
+        gc.forced_decoder_ids = getattr(gc, "_orig_forced", None) or gc.forced_decoder_ids
+    else:
+        if not hasattr(gc, "_orig_forced"):
+            gc._orig_forced = getattr(gc, "forced_decoder_ids", None)
+        gc.forced_decoder_ids = None
+        gc.language = None
     if prompt:
         ids = asr.tokenizer.get_prompt_ids(ROJAK_PROMPT, return_tensors="pt")
         gk["prompt_ids"] = ids.to(asr.model.device)
