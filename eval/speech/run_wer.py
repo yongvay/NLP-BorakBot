@@ -72,6 +72,10 @@ CONFIGS = {
     "malaysian_prompt":        dict(model="malaysian", prompt=True,  lang="ms"),
     "malaysian_prompt_auto":   dict(model="malaysian", prompt=True,  lang=None),
     "malaysian_noprompt_auto": dict(model="malaysian", prompt=False, lang=None),
+    # Diagnostic, not a candidate for deployment. If forcing English collapses en_dom
+    # WER, the model CAN write English and the problem is detection. If it does not,
+    # the checkpoint is effectively Malay-only and no decoding flag will rescue it.
+    "malaysian_prompt_en":     dict(model="malaysian", prompt=True,  lang="en"),
 }
 
 
