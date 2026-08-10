@@ -44,11 +44,17 @@ ORTHO_MAP = HERE / "orthography_map.json"
 # Deliberately shares no sentence or distinctive vocabulary with the test set -- see
 # prompt_examples.txt. Overlap would let the model copy from its own context and
 # inflate every number below.
+#
+# NOTE ON BALANCE: the first version of this prompt was almost entirely Malay, and it
+# pushed the decoder so far toward Malay that English-dominant clips came back
+# TRANSLATED ('how do i know' -> 'bagaimana saya tahu'). en_dom scored 71% WER as a
+# result. A prompt for code-switched speech must itself be code-switched, with English
+# words left in English orthography, or it biases one language at the other's expense.
 ROJAK_PROMPT = (
-    "cuaca panas gila hari ni kan, tak larat nak keluar langsung. "
-    "eh awak dah tengok movie baru tu ke belum lah. "
-    "boleh tak awak reply message saya semalam tu, penting sikit. "
-    "team mana yang menang semalam ah, saya tak sempat tengok."
+    "cuaca panas gila hari ni kan, tak larat nak keluar. "
+    "can you send me the file later, i need to check something first. "
+    "eh awak dah reply that email ke belum lah. "
+    "so how ah, do you want to join us or not."
 )
 
 VANILLA = "small"
@@ -108,10 +114,29 @@ def transcribe(path: str, model: str, prompt: bool) -> str:
         ids = asr.tokenizer.get_prompt_ids(ROJAK_PROMPT, return_tensors="pt")
         gk["prompt_ids"] = ids.to(asr.model.device)
     text = asr(path, generate_kwargs=gk)["text"].strip()
-    # HF sometimes echoes the prompt back at the head of the output.
-    if prompt and text.lower().startswith(ROJAK_PROMPT[:30].lower()):
-        text = text[len(ROJAK_PROMPT):].strip()
-    return text
+    return _strip_prompt(text, ROJAK_PROMPT) if prompt else text
+
+
+def _strip_prompt(text: str, prompt: str) -> str:
+    """Remove prompt text echoed into the transcript.
+
+    HF echoes `prompt_ids` back into the output, sometimes whole, sometimes truncated,
+    and not always at position 0. Left in, every echoed word scores as an insertion --
+    which is how malaysian_prompt reached 106% WER with 215 insertions on a 387-word
+    corpus. Checking only `startswith` was not enough.
+    """
+    t = " ".join(text.split())
+    p = " ".join(prompt.split())
+    low_t, low_p = t.lower(), p.lower()
+
+    if low_p in low_t:                      # whole prompt echoed somewhere
+        i = low_t.index(low_p)
+        return (t[:i] + " " + t[i + len(p):]).strip()
+
+    for k in range(len(p), 15, -5):         # truncated echo at the head
+        if low_t.startswith(low_p[:k]):
+            return t[k:].lstrip(" ,.-").strip()
+    return t
 
 
 # ---------------------------------------------------------------------- scoring
