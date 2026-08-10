@@ -145,6 +145,25 @@ def main() -> int:
         known.add(f"{v:.3f}")
     for v in cat.wer_strict:
         known.add(f"{v:.3f}")
+
+    # detector probabilities and the threshold sweep, if those runs have been done
+    for name, cols in (("detector_probs.csv", ["p_en"]),
+                       ("threshold_sweep.csv", ["threshold", "wer_strict", "wer_lenient"])):
+        for p in (HERE / name, HERE / "results" / name):
+            if p.exists():
+                extra = pd.read_csv(p)
+                for c in cols:
+                    for v in extra[c]:
+                        known.add(f"{v:.3f}")
+                        known.add(f"{v:.4f}")
+                # per-category min/median/max are quoted in the sensitivity section
+                if "switch_type" in extra.columns and "p_en" in extra.columns:
+                    g = extra.groupby("switch_type").p_en
+                    for series in (g.min(), g.median(), g.max()):
+                        for v in series:
+                            known.add(f"{v:.3f}")
+                break
+
     known |= {"0.250", "0.300", "0.500", "0.277"}   # target, cited literature range, oracle
 
     suspicious = []
