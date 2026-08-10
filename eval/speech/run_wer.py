@@ -24,7 +24,14 @@ Design notes worth defending at the demo:
 Usage
     python eval/speech/run_wer.py                    # transcribe + score
     python eval/speech/run_wer.py --score-only       # rescore cached transcripts
+    python eval/speech/run_wer.py --detect-only      # language probabilities only, no GPU
     python eval/speech/run_wer.py --configs vanilla_noprompt,malaysian_noprompt
+
+NOTE ON OUTPUT PATHS: results are written beside this file, in eval/speech/. Notebook
+Cell 3 copies them from there to Drive, and the copies committed to the repo live in
+eval/speech/results/. If those two disagree, the committed copies are stale -- re-run
+Cell 3 and copy them across. That divergence is what let three figures in the report
+drift away from the CSVs backing them.
 """
 
 import argparse
@@ -59,6 +66,17 @@ ROJAK_PROMPT = (
 
 VANILLA = "small"
 MALAYSIAN = "mesolitica/malaysian-whisper-small-v3"
+
+# English is only selected when the detector is confident, because the two failure
+# directions are not symmetric: a wrong "en" on Malay audio costs 6.483 WER (runaway
+# repetition), a wrong "ms" on English audio costs 0.788 (translation). One is an order
+# of magnitude worse than the other, so the cutoff sits well above 0.5-by-symmetry.
+#
+# The value itself was chosen a priori, NOT tuned on the test set -- tuning a decision
+# rule on the same 48 clips it is evaluated on would be leakage, and the corpus is too
+# small to hold out a tuning split. `--detect-only` plus threshold_sweep.py report how
+# sensitive the result is to this number, which is an honest substitute for tuning it.
+EN_THRESHOLD = 0.5
 
 # `lang=None` means auto-detect per clip. Forcing a language is what makes Whisper
 # translate instead of transcribe: forcing "en" on Malay audio produced English prose,
@@ -109,7 +127,7 @@ def get_malaysian():
     return _cache["malaysian"]
 
 
-def detect_lang(path: str) -> str:
+def detect_lang(path: str) -> tuple[str, float]:
     """Detect spoken language with vanilla Whisper's encoder.
 
     The Mesolitica checkpoint transcribes English well when told to (en_dom 10.6% under
@@ -117,6 +135,12 @@ def detect_lang(path: str) -> str:
     back translated at 78.8%. Vanilla Whisper's detector is unbiased, costs one encoder
     pass, and is only used to CHOOSE the language token -- the Malaysian model still does
     the transcribing.
+
+    Returns (choice, p_en). The probability is returned as well as the decision because
+    the decision alone cannot distinguish two very different situations: a clip missed
+    narrowly (p_en just under the threshold, so the cutoff is mis-set) from one missed
+    completely (p_en near zero, so the detector is deaf to the English and no threshold
+    would recover it). Logging only "en"/"ms" throws that evidence away.
     """
     import whisper
     m = get_vanilla()
@@ -126,15 +150,15 @@ def detect_lang(path: str) -> str:
     ).to(m.device)
     _, probs = m.detect_language(mel)
     top = max(probs, key=probs.get)
-    # Anything that is not confidently English is treated as Malay: forcing English on
-    # Malay audio is catastrophic (648% WER, runaway repetition) while the reverse merely
-    # translates. The asymmetry justifies an asymmetric threshold.
-    return "en" if top == "en" and probs["en"] > 0.5 else "ms"
+    p_en = float(probs.get("en", 0.0))
+    return ("en" if top == "en" and p_en > EN_THRESHOLD else "ms"), p_en
 
 
 def transcribe(path: str, model: str, prompt: bool, lang):
+    """Return (text, language_token_used, p_en). p_en is None unless routing ran."""
+    p_en = None
     if lang == "route":
-        lang = detect_lang(path)
+        lang, p_en = detect_lang(path)
 
     if model == "vanilla":
         out = get_vanilla().transcribe(
@@ -146,7 +170,7 @@ def transcribe(path: str, model: str, prompt: bool, lang):
             # would let one bad transcription bias the next.
             condition_on_previous_text=False,
         )
-        return out["text"].strip(), out.get("language", "")
+        return out["text"].strip(), out.get("language", ""), p_en
 
     asr = get_malaysian()
     gk = {"task": "transcribe"}
@@ -168,7 +192,7 @@ def transcribe(path: str, model: str, prompt: bool, lang):
         gk["prompt_ids"] = ids.to(asr.model.device)
     text = asr(path, generate_kwargs=gk)["text"].strip()
     text = _strip_prompt(text, ROJAK_PROMPT) if prompt else text
-    return text, (lang or "auto")
+    return text, (lang or "auto"), p_en
 
 
 def _strip_prompt(text: str, prompt: str) -> str:
@@ -255,6 +279,9 @@ def main() -> int:
     ap.add_argument("--configs", default=",".join(CONFIGS))
     ap.add_argument("--score-only", action="store_true",
                     help="rescore cached transcripts without re-running the models")
+    ap.add_argument("--detect-only", action="store_true",
+                    help="run only the language detector and write detector_probs.csv "
+                         "(one encoder pass per clip, no transcription, no GPU needed)")
     args = ap.parse_args()
 
     chosen = [c.strip() for c in args.configs.split(",") if c.strip()]
@@ -278,6 +305,27 @@ def main() -> int:
 
     detail_path = HERE / "results_detail.csv"
 
+    # ---- detector only
+    if args.detect_only:
+        rows = []
+        for i, r in enumerate(man.itertuples(), 1):
+            choice, p_en = detect_lang(str(AUDIO_ROOT / r.audio_path))
+            rows.append(dict(id=r.id, switch_type=r.switch_type, speaker=r.speaker,
+                             p_en=round(p_en, 6), choice=choice))
+            if i % 8 == 0:
+                print(f"  {i}/{len(man)}", flush=True)
+        probs = pd.DataFrame(rows)
+        probs.to_csv(HERE / "detector_probs.csv", index=False)
+        print(f"\nwrote detector_probs.csv ({len(probs)} clips)")
+
+        print("\np_en by category (the detector's view of the corpus):")
+        print(probs.groupby("switch_type")["p_en"]
+              .describe()[["min", "50%", "max"]].round(4).to_string())
+        print(f"\nchosen 'en' at threshold {EN_THRESHOLD}: "
+              f"{(probs.choice == 'en').sum()}/{len(probs)}")
+        print("\nNow run:  python eval/speech/threshold_sweep.py")
+        return 0
+
     # ---- transcribe
     if args.score_only:
         if not detail_path.exists():
@@ -291,10 +339,10 @@ def main() -> int:
             kw = CONFIGS[cfg]
             print(f"--- {cfg} ---", flush=True)
             for i, r in enumerate(man.itertuples(), 1):
-                hyp, det = transcribe(str(AUDIO_ROOT / r.audio_path), **kw)
+                hyp, det, p_en = transcribe(str(AUDIO_ROOT / r.audio_path), **kw)
                 rows.append(dict(config=cfg, id=r.id, switch_type=r.switch_type,
                                  speaker=r.speaker, reference=r.reference, hypothesis=hyp,
-                                 detected_lang=det))
+                                 detected_lang=det, p_en=p_en))
                 if i % 8 == 0:
                     print(f"  {i}/{len(man)}", flush=True)
         detail = pd.DataFrame(rows)
@@ -327,6 +375,7 @@ def main() -> int:
         recs.append(dict(config=r.config, id=r.id, switch_type=r.switch_type,
                          speaker=r.speaker, reference=r.reference, hypothesis=r.hypothesis,
                          detected_lang=getattr(r, "detected_lang", ""),
+                         p_en=getattr(r, "p_en", None),
                          errors=strict["errors"], n=strict["n"], sub=strict["sub"],
                          ins=strict["ins"], dele=strict["dele"],
                          errors_lenient=lenient["errors"], n_lenient=lenient["n"]))
