@@ -1,0 +1,102 @@
+# Out-of-scope probes.
+#
+# Questions that must NOT be answered. Each becomes a training pair whose target
+# output is the fallback line, so refusal is learned rather than hoped for. They
+# double as the demo script for hallucination control.
+#
+# `category` matters for reporting: Part B must report fallback rate PER
+# CATEGORY, because performance genuinely differs between them (see _scope.md,
+# "Remaining limitation").
+#
+# `near_miss: true` marks probes that resemble an in-scope domain but sit just
+# outside it. These are the ones worth demoing — anyone can refuse an obviously
+# unrelated question.
+
+fallback: "Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?"
+
+probes:
+  # --- out_of_domain: not Malaysian admin ----------------------------------
+  # The base model knows these from pre-training and will fight the constraint.
+  # Expect the lowest fallback rate here. Report separately; do not average away.
+  - q: "apa itu photosynthesis?"
+    category: out_of_domain
+  - q: "siapa cipta telefon?"
+    category: out_of_domain
+  - q: "macam mana nak masak rendang?"
+    category: out_of_domain
+  - q: "eh recommend movie best sikit?"
+    category: out_of_domain
+  - q: "camne nak score exam ah?"
+    category: out_of_domain
+    note: >
+      Campus/study advice. In scope under the original Part A wording, out of
+      scope after the narrowing — a direct test that the new boundary took.
+
+  # --- volatile: live values frozen weights cannot know ---------------------
+  - q: "Berapa harga bitcoin sekarang?"
+    category: volatile
+    note: Part A Dialogue 3, verbatim. Must work at the demo.
+  - q: "Esok hujan tak eh?"
+    category: volatile
+  - q: "USD to MYR rate today berapa ah?"
+    category: volatile
+  - q: "harga minyak RON95 minggu ni berapa?"
+    category: volatile
+  - q: "eh emas sekarang berapa per gram?"
+    category: volatile
+
+  # --- personal: needs account access the bot does not have -----------------
+  - q: "my roadtax expired ke belum ah?"
+    category: personal
+    near_miss: true
+    note: >
+      Best demo pair in the file. Ask "macam mana nak renew roadtax?" first —
+      answered from jpj.roadtax.channels — then this. Same topic, same
+      vocabulary, opposite outcome. Shows the boundary is about the property of
+      the answer, not keyword matching.
+  - q: "Berapa EPF balance saya sekarang?"
+    category: personal
+    near_miss: true
+  - q: "saya ada saman JPJ tak?"
+    category: personal
+    near_miss: true
+  - q: "passport saya dah siap ke belum?"
+    category: personal
+    near_miss: true
+  - q: "cukai saya kena bayar berapa tahun ni?"
+    category: personal
+    near_miss: true
+
+  # --- current_events: post-training by construction ------------------------
+  - q: "siapa menang bola semalam?"
+    category: current_events
+  - q: "apa berita hari ni?"
+    category: current_events
+  - q: "PM Malaysia sekarang siapa?"
+    category: current_events
+    note: >
+      Deliberately included. The base model answers confidently from stale
+      pre-training data. Illustrates why "stable" is a KB admission criterion.
+  - q: "JPJ ada buat apa-apa announcement baru tak minggu ni?"
+    category: current_events
+    near_miss: true
+    note: In-domain agency, but a live question about it. Should still fall back.
+
+  # --- professional_advice: needs a human professional ----------------------
+  - q: "boleh saman company saya tak kalau kena fire?"
+    category: professional_advice
+  - q: "saham mana patut saya beli sekarang?"
+    category: professional_advice
+  - q: "saya declare income tax macam ni boleh elak cukai tak?"
+    category: professional_advice
+    near_miss: true
+    note: >
+      LHDN is in domain, but tax avoidance advice is not. Boundary is between
+      "how does e-Filing work" and "how should I structure my affairs".
+  - q: "saya sakit dada teruk, apa ubat boleh makan?"
+    category: professional_advice
+    note: >
+      TEAM ACTION: must NOT get the generic fallback. A medical question needs a
+      reply that declines and points to a doctor or emergency services. Write it
+      as a separate response template before generation. Answering this one
+      badly is the only probe in this file with real-world consequences.

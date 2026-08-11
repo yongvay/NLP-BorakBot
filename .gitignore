@@ -76,3 +76,9 @@ Thumbs.db
 desktop.ini
 .vscode/settings.json
 .idea/
+.~lock.*#
+
+# --- generated ---
+# sync_report_figures.py writes this before editing the report. Git already holds the
+# previous version of the .docx, so the .bak is a convenience, not the real backup.
+*.docx.bak

@@ -1,0 +1,66 @@
+domain: jpn_identity
+agency: Jabatan Pendaftaran Negara (JPN)
+portal: https://www.jpn.gov.my/
+description: >
+  Identity documents — MyKad replacement, registration and related procedures.
+  Does not cover a specific user's application status.
+
+facts:
+  - id: jpn.mykad.lost_fee
+    fact: >
+      Replacing a lost MyKad costs RM110 for the first loss (a RM100 penalty plus
+      a RM10 application fee), RM310 for the second loss, and RM1,010 for the
+      third or later loss.
+    check: ["RM110", "RM310"]
+    stability: slow
+    verified: secondary
+    source: https://www.jpn.gov.my/en/services/identity-card/replacement-application-for-lost-identity-card-mykad-mytentera-mypr-or-mykas/
+    retrieved: 2026-08-10
+    tags: [mykad, fee, lost]
+
+  - id: jpn.mykad.lost_procedure
+    fact: >
+      Replacing a lost MyKad requires a police report, and the replacement is
+      done in person at a JPN office because the applicant's photograph and
+      thumbprints are captured on site.
+    check: [police report, JPN]
+    stability: slow
+    verified: secondary
+    source: https://www.jpn.gov.my/en/services/identity-card/replacement-application-for-lost-identity-card-mykad-mytentera-mypr-or-mykas/
+    retrieved: 2026-08-10
+    tags: [mykad, procedure, lost]
+
+  - id: jpn.mykad.online_first_loss_only
+    fact: >
+      An online replacement application for a lost MyKad is allowed only for a
+      first loss. Second, third and subsequent losses must be handled at a JPN
+      counter.
+    check: [first, counter]
+    stability: slow
+    verified: secondary
+    source: https://www.malaysia.gov.my/en/digital-services/mykad-replacement-application
+    retrieved: 2026-08-10
+    tags: [mykad, online, eligibility]
+
+  - id: jpn.mykad.collection_time
+    fact: >
+      Replacement MyKads are issued in about 33 minutes at state headquarters,
+      UTCs and selected branches. Other Peninsular Malaysia branches take about
+      five working days, and Sabah, Sarawak and Labuan about seven working days.
+    check: ["33", "working days"]
+    stability: slow
+    verified: secondary
+    source: https://www.jpn.gov.my/en/services/identity-card/replacement-application-for-lost-identity-card-mykad-mytentera-mypr-or-mykas/
+    retrieved: 2026-08-10
+    tags: [mykad, timing]
+
+  - id: jpn.mykad.no_refund
+    fact: >
+      The MyKad replacement application fee is not refunded even if the lost card
+      is subsequently found.
+    check: [not refunded]
+    stability: slow
+    verified: secondary
+    source: https://www.jpn.gov.my/en/services/identity-card/replacement-application-for-lost-identity-card-mykad-mytentera-mypr-or-mykas/
+    retrieved: 2026-08-10
+    tags: [mykad, fee, refund]

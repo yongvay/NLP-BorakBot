@@ -1,0 +1,220 @@
+domain: jpj_vehicle_licence
+agency: Jabatan Pengangkutan Jalan (JPJ)
+portal: https://www.jpj.gov.my/
+description: >
+  Road tax and driving licence procedures, fees and requirements. Covers how to
+  do the thing, what it costs, and what to bring. Does not cover a specific
+  user's expiry dates, summonses or application status — those fall back.
+
+facts:
+  # --- Road tax (LKM) -------------------------------------------------------
+  - id: jpj.roadtax.channels
+    fact: >
+      Road tax can be renewed online through the MyJPJ app, the MySIKAP portal
+      or MyEG, or in person at a JPJ counter, a UTC, or a Pos Malaysia branch.
+    check: [MyJPJ, Pos Malaysia, JPJ]
+    stability: slow
+    verified: secondary
+    source: https://www.pos.com.my/jpj
+    retrieved: 2026-08-10
+    tags: [roadtax, renewal, channels]
+
+  - id: jpj.roadtax.insurance_first
+    fact: >
+      Road tax cannot be issued or renewed unless the vehicle has an active motor
+      insurance or takaful policy, which JPJ verifies electronically. Insurance
+      must therefore be renewed first.
+    check: [insurance, road tax]
+    stability: slow
+    verified: secondary
+    source: https://paultan.org/2026/06/22/how-to-renew-your-car-insurance-and-road-tax-in-malaysia-2026/
+    retrieved: 2026-08-10
+    tags: [roadtax, insurance, ordering]
+
+  - id: jpj.roadtax.digital_disc
+    fact: >
+      Since February 2024 Malaysian road tax is digital (e-LKM) and the physical
+      road tax disc is no longer issued. Status is verified electronically by JPJ
+      and the traffic police.
+    check: [digital, no longer]
+    stability: slow
+    verified: secondary
+    source: https://paultan.org/2026/06/22/how-to-renew-your-car-insurance-and-road-tax-in-malaysia-2026/
+    retrieved: 2026-08-10
+    tags: [roadtax, digital]
+    notes: >
+      High-value demo fact. A base model trained before 2024 will confidently
+      describe sticking the disc on the windscreen, so this is a clean
+      fine-tuned-vs-base comparison item.
+
+  - id: jpj.roadtax.documents
+    fact: >
+      Renewing road tax generally requires the owner's MyKad, the vehicle
+      registration details, and a valid insurance cover note.
+    check: [MyKad, insurance]
+    stability: slow
+    verified: secondary
+    source: https://paultan.org/2026/06/22/how-to-renew-your-car-insurance-and-road-tax-in-malaysia-2026/
+    retrieved: 2026-08-10
+    tags: [roadtax, documents]
+
+  # --- Competent Driving Licence (CDL) --------------------------------------
+  - id: jpj.cdl.channels
+    fact: >
+      A Competent Driving Licence can be renewed at a JPJ state or branch office,
+      a UTC, a 1JPJ counter, an eKhidmat kiosk, or a Pos Malaysia office, or
+      online through the MySIKAP portal, the MyJPJ app, or MyEG.
+    check: [JPJ, Pos Malaysia, MyJPJ]
+    stability: slow
+    verified: official
+    source: https://www.jpj.gov.my/en/jpj-service-information/competent-drivers-license-cdl-renewal/
+    retrieved: 2026-08-10
+    tags: [cdl, renewal, channels]
+
+  - id: jpj.cdl.fee_b_c
+    fact: >
+      Competent Driving Licence renewal for Malaysian citizens costs RM20 per
+      year for classes B2, B and C.
+    check: ["RM20"]
+    stability: slow
+    verified: official
+    source: https://www.jpj.gov.my/en/jpj-service-information/driving-license-transaction-fee-rate/
+    retrieved: 2026-08-10
+    tags: [cdl, fee]
+
+  - id: jpj.cdl.fee_a
+    fact: >
+      Competent Driving Licence renewal for classes A and A1 costs RM2 per year
+      for Malaysian citizens.
+    check: ["RM2", "A"]
+    stability: slow
+    verified: official
+    source: https://www.jpj.gov.my/en/jpj-service-information/driving-license-transaction-fee-rate/
+    retrieved: 2026-08-10
+    tags: [cdl, fee]
+
+  - id: jpj.cdl.fee_d_above
+    fact: >
+      Competent Driving Licence renewal costs RM30 per year for classes D, E, F,
+      G, H and I for Malaysian citizens.
+    check: ["RM30", "D"]
+    stability: slow
+    verified: official
+    source: https://www.jpj.gov.my/en/jpj-service-information/driving-license-transaction-fee-rate/
+    retrieved: 2026-08-10
+    tags: [cdl, fee]
+
+  - id: jpj.cdl.fee_noncitizen
+    fact: >
+      For non-citizens, Competent Driving Licence renewal costs RM60 per year for
+      classes B2, B and C, and RM60 per year for classes D, E, F, G, H and I.
+    check: ["RM60"]
+    stability: slow
+    verified: official
+    source: https://www.jpj.gov.my/en/jpj-service-information/driving-license-transaction-fee-rate/
+    retrieved: 2026-08-10
+    tags: [cdl, fee, non-citizen]
+    notes: >
+      Corrected against the official JPJ fee table. Secondary sources report
+      RM120 for non-citizens, but that is the Trial Licence (PDL) rate, not the
+      CDL rate. Worked example of README rule 4 — the aggregator was wrong.
+
+  - id: jpj.cdl.duration
+    fact: >
+      A Competent Driving Licence can be renewed for 1, 2, 3, 4 or 5 years only.
+    check: ["5", "year"]
+    stability: slow
+    verified: official
+    source: https://www.jpj.gov.my/en/jpj-service-information/competent-drivers-license-cdl-renewal/
+    retrieved: 2026-08-10
+    tags: [cdl, duration]
+
+  - id: jpj.cdl.documents
+    fact: >
+      Renewing a Competent Driving Licence requires the applicant's original
+      MyKad or passport, or a copy if a representative is doing the transaction.
+    check: [MyKad]
+    stability: slow
+    verified: official
+    source: https://www.jpj.gov.my/en/jpj-service-information/competent-drivers-license-cdl-renewal/
+    retrieved: 2026-08-10
+    tags: [cdl, documents]
+
+  - id: jpj.cdl.late_adjustment_fee
+    fact: >
+      Renewing a Competent Driving Licence after its expiry date incurs an
+      adjustment fee, charged to realign the licence expiry with the holder's
+      next birthday.
+    check: [adjustment fee, expiry]
+    stability: slow
+    verified: secondary
+    source: https://help.myeg.com.my/portal/en/kb/articles/what-does-the-term-adjustment-fee-mean
+    retrieved: 2026-08-10
+    tags: [cdl, penalty]
+
+  # --- Learner and trial licences -------------------------------------------
+  - id: jpj.ldl.fee_b_c
+    fact: >
+      A Learner's Driving Licence (LDL, the "L" licence) for classes B and C
+      costs RM20 for three months or RM40 for six months.
+    check: ["RM20", "RM40"]
+    stability: slow
+    verified: official
+    source: https://www.jpj.gov.my/en/jpj-service-information/driving-license-transaction-fee-rate/
+    retrieved: 2026-08-10
+    tags: [ldl, fee, learner]
+
+  - id: jpj.pdl.fee
+    fact: >
+      A Probationary or Trial Driving Licence (PDL, the "P" licence) costs RM40
+      for classes B and C, RM60 for classes D, DA, F, G, H and I, and RM120 for
+      non-citizens.
+    check: ["RM40", "RM120"]
+    stability: slow
+    verified: official
+    source: https://www.jpj.gov.my/en/jpj-service-information/driving-license-transaction-fee-rate/
+    retrieved: 2026-08-10
+    tags: [pdl, fee, probationary]
+
+  - id: jpj.pdl.duration
+    fact: >
+      A Probationary or Trial Driving Licence (PDL) is issued for two years.
+    check: ["2", "year"]
+    stability: slow
+    verified: official
+    source: https://www.jpj.gov.my/en/jpj-service-information/driving-license-transaction-fee-rate/
+    retrieved: 2026-08-10
+    tags: [pdl, duration, probationary]
+
+  # --- Other licence transactions -------------------------------------------
+  - id: jpj.idp.fee
+    fact: >
+      An International Driving Permit (IDP) costs RM150 per year for both
+      citizens and non-citizens.
+    check: ["RM150"]
+    stability: slow
+    verified: official
+    source: https://www.jpj.gov.my/en/jpj-service-information/driving-license-transaction-fee-rate/
+    retrieved: 2026-08-10
+    tags: [idp, fee, international]
+
+  - id: jpj.licence.add_class
+    fact: >
+      Adding a class to an existing driving licence costs RM5.
+    check: ["RM5"]
+    stability: slow
+    verified: official
+    source: https://www.jpj.gov.my/en/jpj-service-information/driving-license-transaction-fee-rate/
+    retrieved: 2026-08-10
+    tags: [cdl, fee, amendment]
+
+  - id: jpj.licence.copy_and_amendment
+    fact: >
+      A copy of a driving licence costs RM20, while a driving licence information
+      search or an information amendment costs RM10 each.
+    check: ["RM20", "RM10"]
+    stability: slow
+    verified: official
+    source: https://www.jpj.gov.my/en/jpj-service-information/driving-license-transaction-fee-rate/
+    retrieved: 2026-08-10
+    tags: [cdl, fee, amendment]

@@ -1,0 +1,433 @@
+config,id,switch_type,speaker,reference,hypothesis,detected_lang,errors,n,sub,ins,dele,errors_lenient,n_lenient
+vanilla_noprompt,s01_yv,ms_dom,yv,macam mana nak apply lesen memandu baru,Macam mana nak apply lesson memandu baru?,ms,1,7,1,0,0,1,7
+vanilla_noprompt,s02_yv,ms_dom,yv,saya nak tanya pasal insurance kereta ni,Saya nak Tanya pasal infuensi lebih tinggi,ms,3,7,3,0,0,3,7
+vanilla_noprompt,s03_yv,ms_dom,yv,boleh tak awak explain apa itu inflation,Boleh tak awak kata apa yang berlaku pada inflasi?,ms,5,7,3,2,0,5,7
+vanilla_noprompt,s04_yv,ms_dom,yv,nak cari tempat makan yang murah dekat sini,Nak cari tempat makan yang murah dekat sini.,ms,0,8,0,0,0,0,8
+vanilla_noprompt,s05_pq,ms_dom,pq,camne nak transfer duit guna online banking,Cepat sedia了 잘 eternal,ms,7,7,4,0,3,7,7
+vanilla_noprompt,s06_pq,ms_dom,pq,saya lupa password akaun macam mana nak reset,Saya lupa password account macam mana nak reset,ms,1,8,1,0,0,0,8
+vanilla_noprompt,s07_pq,ms_dom,pq,berapa lama proses renew passport ambil masa,브라포 람워 프로세스 리뉴 파스타버 암벨 마스,ko,7,7,7,0,0,7,7
+vanilla_noprompt,s08_pq,ms_dom,pq,tolong bagitahu cara nak book appointment klinik,<|th|>ò   endorse,my,7,7,2,0,5,7,7
+vanilla_noprompt,s09_yv,en_dom,yv,how do i check my epf balance ah,bagaimana saya melihat balon APF saya?,ms,8,8,6,0,2,8,8
+vanilla_noprompt,s10_yv,en_dom,yv,can you explain what is compound interest lah,Boleh anda memberitahui apa yang berlainan dalam perintah?,ms,8,8,8,0,0,8,8
+vanilla_noprompt,s11_yv,en_dom,yv,where can i find cheap flight ticket meh,Di mana dapat saya cari puran berbalas saya?,ms,8,8,8,0,0,8,8
+vanilla_noprompt,s12_yv,en_dom,yv,i want to know how to save money properly one,Saya ingin tahu bagaimana untuk mencari duit dengan baik.,ms,10,10,9,0,1,10,10
+vanilla_noprompt,s13_pq,en_dom,pq,is it safe to invest in unit trust ke,Is this safe to invest in UniTracker?,en,4,9,2,0,2,4,9
+vanilla_noprompt,s14_pq,en_dom,pq,tell me how to cook nasi lemak lah,"調味好多酷,那是辣麻辣",zh,8,8,1,0,7,8,8
+vanilla_noprompt,s15_pq,en_dom,pq,what time the post office close ah,What time the post office close are?,en,1,7,1,0,0,1,7
+vanilla_noprompt,s16_pq,en_dom,pq,can i renew my licence online or not,Can I renew my license online or not?,en,1,8,1,0,0,0,8
+vanilla_noprompt,s17_yv,balanced,yv,saya dah submit application tapi belum dapat approval lagi,Saya dah submit application tapi belum dapat approval lagi.,ms,0,9,0,0,0,0,9
+vanilla_noprompt,s18_yv,balanced,yv,nak tanya pasal tax relief untuk medical expenses,Nak tanya pasal teks relief untuk medical expenses,ms,1,8,1,0,0,1,8
+vanilla_noprompt,s19_yv,balanced,yv,macam mana nak cancel subscription yang auto renew tu,Terima kasih kerana menyesal subsripsi yang autor bernil tu.,ms,7,9,7,0,0,7,9
+vanilla_noprompt,s20_yv,balanced,yv,boleh tak explain difference antara savings dengan current account,Boleh tak kata perubahan antara pengguna dengan akal sekarang,ms,5,9,5,0,0,5,9
+vanilla_noprompt,s21_pq,balanced,pq,saya nak update alamat kat identity card,Saya nak update alamak ke identi dekat,ms,4,7,4,0,0,4,7
+vanilla_noprompt,s22_pq,balanced,pq,camne nak claim insurance kalau accident kereta,Jemnon nak klaim insurin karau asiden karator?,ms,6,7,6,0,0,5,7
+vanilla_noprompt,s23_pq,balanced,pq,nak tahu requirement untuk apply credit card,Tahu rekaran untuk menggunakan kredit,ms,5,7,3,0,2,5,7
+vanilla_noprompt,s24_pq,balanced,pq,tolong terangkan macam mana interest rate affect loan,Terlalu terangkan macam mana interest rate effect lun,ms,3,8,3,0,0,3,8
+vanilla_noprompt,s25_yv,particles,yv,eh betul ke ni macam tak kena je lor,Eh betul ke ni? Macam tak kena je lho,ms,1,9,1,0,0,1,9
+vanilla_noprompt,s26_yv,particles,yv,aiyo susah sangat lah macam ni,Ayo susah sangatlah macam ni,ms,3,6,2,0,1,2,6
+vanilla_noprompt,s27_yv,particles,yv,can one lah don't worry so much,Terima kasih. Jangan risau.,ms,7,7,4,0,3,7,7
+vanilla_noprompt,s28_yv,particles,yv,wah mahal gila meh ada yang murah tak,"Wah, makhamgila, ada yang murah tak?",ms,3,8,1,0,2,3,8
+vanilla_noprompt,s29_pq,particles,pq,so how ah nak buat macam mana ni,"So how ah, nampak macam mana ni?",ms,2,8,1,0,1,2,8
+vanilla_noprompt,s30_pq,particles,pq,alamak terlupa pulak kan boleh tolong tak,eel avocadoègak Tunun,ms,7,7,3,0,4,7,7
+vanilla_noprompt,s31_pq,particles,pq,ish lambat betul lah service ni,Ish lambat betullah servis ni,ms,3,6,2,0,1,3,6
+vanilla_noprompt,s32_pq,particles,pq,okay lah fine saya try dulu kot,"Okay, that's fine. I'll try to look good.",en,5,7,4,1,0,5,7
+vanilla_noprompt,s33_yv,numeric,yv,harga dia empat puluh lima ringgit sembilan puluh sen termasuk cukai ke tak,Harga dia 45 ringgit 90cm masuk cukai ke tak,ms,7,13,3,0,4,7,13
+vanilla_noprompt,s34_yv,numeric,yv,gaji minimum sekarang seribu lima ratus ringgit ke ah,Gaji Minimum Sekarang 1500 Rengket Keah,ms,6,9,3,0,3,6,9
+vanilla_noprompt,s35_yv,numeric,yv,saya nak transfer one thousand five hundred ringgit boleh tak,Saya nak transfer 1500 ringgit bolet,ms,6,10,2,0,4,6,10
+vanilla_noprompt,s36_yv,numeric,yv,deadline dia thirty one august twenty twenty six kan,kekat kuasa regi perniagaan lalu Near daar lymphorang advanced,ms,9,9,9,0,0,9,9
+vanilla_noprompt,s37_pq,numeric,pq,interest rate dia three point five percent setahun je,Interest rate dear 2.5% is down here.,en,7,9,5,0,2,7,9
+vanilla_noprompt,s38_pq,numeric,pq,kena bayar deposit dua ribu lima ratus ringgit,Kena bayar di posis 2500 rupiah seringkit,ms,6,8,5,0,1,6,8
+vanilla_noprompt,s39_pq,numeric,pq,cukai jualan naik dari enam peratus ke lapan peratus ke,Cukai jualan nak dari 6-8 peratus ke?,ms,5,10,2,0,3,5,10
+vanilla_noprompt,s40_pq,numeric,pq,buka pukul nine in the morning tutup pukul five in the evening kan,"Buka buku nol di pagi, tutup buku foi di tengah hari.",ms,11,13,9,0,2,11,13
+vanilla_noprompt,s41_yv,entity,yv,macam mana nak renew roadtax kat MyJPJ,Macam mana nak renew Roadtank Scott My JBJ?,ms,4,7,3,1,0,4,7
+vanilla_noprompt,s42_yv,entity,yv,boleh guna Touch n Go eWallet tak kat sini,Boleh guna touch and go iwala tak kat sini?,ms,2,9,2,0,0,2,9
+vanilla_noprompt,s43_yv,entity,yv,saya nak semak baki KWSP guna i-Akaun,Saya nak semak bagi KWSP Guner Eye Account.,ms,4,7,3,1,0,4,7
+vanilla_noprompt,s44_yv,entity,yv,LHDN dah buka e-Filing untuk tahun ni ke,LHDN dah buka e-feeling untuk tahun ni ke?,ms,1,8,1,0,0,1,8
+vanilla_noprompt,s45_pq,entity,pq,nak apply MyKad baru kat JPN macam mana,Apply mic cק baru ke jeb 오 sieht nıpé macam mana,ms,8,8,5,3,0,8,8
+vanilla_noprompt,s46_pq,entity,pq,boleh bayar bil TNB guna Maybank2u tak,Boleh bayar Beauty & Beguna Beving 2U Tak,ms,4,7,4,0,0,4,7
+vanilla_noprompt,s47_pq,entity,pq,Grab dengan foodpanda mana lagi murah ah,Grap dengan Fependa mana lagi murah?,ms,3,7,2,0,1,3,7
+vanilla_noprompt,s48_pq,entity,pq,nak tanya pasal bantuan STR tahun ni,Natanya pasal bantuan es kia dahoni,ms,5,7,4,0,1,5,7
+vanilla_prompt,s01_yv,ms_dom,yv,macam mana nak apply lesen memandu baru,macam mana nak apply lesson memandu baru.,ms,1,7,1,0,0,1,7
+vanilla_prompt,s02_yv,ms_dom,yv,saya nak tanya pasal insurance kereta ni,saya nak tanya pasal influence greater ni.,ms,2,7,2,0,0,2,7
+vanilla_prompt,s03_yv,ms_dom,yv,boleh tak awak explain apa itu inflation,boleh tak awak explain apa itu inflation.,ms,0,7,0,0,0,0,7
+vanilla_prompt,s04_yv,ms_dom,yv,nak cari tempat makan yang murah dekat sini,nak cari tempat makan yang murah dekat sini.,ms,0,8,0,0,0,0,8
+vanilla_prompt,s05_pq,ms_dom,pq,camne nak transfer duit guna online banking,cham na na transfer duit guna online banking,ms,3,7,2,1,0,3,7
+vanilla_prompt,s06_pq,ms_dom,pq,saya lupa password akaun macam mana nak reset,saya lupa password account macam mana nak reset.,ms,1,8,1,0,0,0,8
+vanilla_prompt,s07_pq,ms_dom,pq,berapa lama proses renew passport ambil masa,브라포 람어 프로세스 리뉴 파스포 안벨마스,ko,7,7,6,0,1,7,7
+vanilla_prompt,s08_pq,ms_dom,pq,tolong bagitahu cara nak book appointment klinik,the,my,7,7,1,0,6,7,7
+vanilla_prompt,s09_yv,en_dom,yv,how do i check my epf balance ah,how do i check my epf balancer.,ms,2,8,1,0,1,2,8
+vanilla_prompt,s10_yv,en_dom,yv,can you explain what is compound interest lah,can you explain what is compound interest lah.,ms,0,8,0,0,0,0,8
+vanilla_prompt,s11_yv,en_dom,yv,where can i find cheap flight ticket meh,teman dadai? iya bahagia di mana boleh aku menemui panggahan matahari kataopath ini?,ms,13,8,8,5,0,13,8
+vanilla_prompt,s12_yv,en_dom,yv,i want to know how to save money properly one,i want to know how to save money properly one.,ms,0,10,0,0,0,0,10
+vanilla_prompt,s13_pq,en_dom,pq,is it safe to invest in unit trust ke,is this safe to invest in uni trustee?,en,4,9,3,0,1,4,9
+vanilla_prompt,s14_pq,en_dom,pq,tell me how to cook nasi lemak lah,惜後頭烤那隻設模啦,zh,8,8,1,0,7,8,8
+vanilla_prompt,s15_pq,en_dom,pq,what time the post office close ah,what time the post office close ah?,en,0,7,0,0,0,0,7
+vanilla_prompt,s16_pq,en_dom,pq,can i renew my licence online or not,can i renew my license online or not.,en,1,8,1,0,0,0,8
+vanilla_prompt,s17_yv,balanced,yv,saya dah submit application tapi belum dapat approval lagi,saya dah submit application tapi belum dapat approval lagi.,ms,0,9,0,0,0,0,9
+vanilla_prompt,s18_yv,balanced,yv,nak tanya pasal tax relief untuk medical expenses,nak tanya pasal text relief untuk medical expenses.,ms,1,8,1,0,0,1,8
+vanilla_prompt,s19_yv,balanced,yv,macam mana nak cancel subscription yang auto renew tu,macam mana nak cancel subscription yang autor bernil tu.,ms,2,9,2,0,0,2,9
+vanilla_prompt,s20_yv,balanced,yv,boleh tak explain difference antara savings dengan current account,boleh tak explain difference and thorough savings dengan current account.,ms,2,9,1,1,0,2,9
+vanilla_prompt,s21_pq,balanced,pq,saya nak update alamat kat identity card,saya nak update alamak ke identi dekat.,ms,4,7,4,0,0,4,7
+vanilla_prompt,s22_pq,balanced,pq,camne nak claim insurance kalau accident kereta,begging sirForce.com,ms,7,7,2,0,5,7,7
+vanilla_prompt,s23_pq,balanced,pq,nak tahu requirement untuk apply credit card,now dah call requirement untuk apply credit card.,ms,3,7,2,1,0,3,7
+vanilla_prompt,s24_pq,balanced,pq,tolong terangkan macam mana interest rate affect loan,tolong terangkan macam mana interest rate effect lul.,ms,2,8,2,0,0,2,8
+vanilla_prompt,s25_yv,particles,yv,eh betul ke ni macam tak kena je lor,"eh betul ke ni, macam tak kena je lho.",ms,1,9,1,0,0,1,9
+vanilla_prompt,s26_yv,particles,yv,aiyo susah sangat lah macam ni,ayo susah sangat lah macam ni.,ms,1,6,1,0,0,0,6
+vanilla_prompt,s27_yv,particles,yv,can one lah don't worry so much,"kan what lah, don't worry so much.",ms,2,7,2,0,0,2,7
+vanilla_prompt,s28_yv,particles,yv,wah mahal gila meh ada yang murah tak,"wah, makham gila me, ada yang murah tak.",ms,2,8,2,0,0,2,8
+vanilla_prompt,s29_pq,particles,pq,so how ah nak buat macam mana ni,"so how ah, nampak macam mana ni.",ms,2,8,1,0,1,2,8
+vanilla_prompt,s30_pq,particles,pq,alamak terlupa pulak kan boleh tolong tak,alamat olah pupulah kan boleh tolong tak.,ms,3,7,3,0,0,3,7
+vanilla_prompt,s31_pq,particles,pq,ish lambat betul lah service ni,ish lambat betul lah servis ni.,ms,1,6,1,0,0,1,6
+vanilla_prompt,s32_pq,particles,pq,okay lah fine saya try dulu kot,"okay that's fine, so i try to look good.",en,6,7,4,2,0,6,7
+vanilla_prompt,s33_yv,numeric,yv,harga dia empat puluh lima ringgit sembilan puluh sen termasuk cukai ke tak,harga dia 45 ringgit 90cm masuk cuaca ke tak.,ms,8,13,4,0,4,8,13
+vanilla_prompt,s34_yv,numeric,yv,gaji minimum sekarang seribu lima ratus ringgit ke ah,gaji minimum sekarang 1500 ringgit ke ah,ms,3,9,1,0,2,3,9
+vanilla_prompt,s35_yv,numeric,yv,saya nak transfer one thousand five hundred ringgit boleh tak,saya nak transfer 1500 ringgit boleh tak.,ms,4,10,1,0,3,4,10
+vanilla_prompt,s36_yv,numeric,yv,deadline dia thirty one august twenty twenty six kan,deadline near 31 august 2026 kan,ms,6,9,3,0,3,6,9
+vanilla_prompt,s37_pq,numeric,pq,interest rate dia three point five percent setahun je,interest rate dear 2.5% is down here.,en,7,9,5,0,2,7,9
+vanilla_prompt,s38_pq,numeric,pq,kena bayar deposit dua ribu lima ratus ringgit,kena bayar di posis 2500 rupiah seringkit.,ms,6,8,5,0,1,6,8
+vanilla_prompt,s39_pq,numeric,pq,cukai jualan naik dari enam peratus ke lapan peratus ke,"Adejuah anak dari 6,8?",ms,9,10,3,0,6,9,10
+vanilla_prompt,s40_pq,numeric,pq,buka pukul nine in the morning tutup pukul five in the evening kan,buka buku nai di pagi untuk buku file di tengah hari ni kan.,ms,11,13,11,0,0,11,13
+vanilla_prompt,s41_yv,entity,yv,macam mana nak renew roadtax kat MyJPJ,macam mana nak renew roadtags kat main JBJ.,ms,3,7,2,1,0,3,7
+vanilla_prompt,s42_yv,entity,yv,boleh guna Touch n Go eWallet tak kat sini,boleh guna touch and go i walat tak kat sini.,ms,3,9,2,1,0,3,9
+vanilla_prompt,s43_yv,entity,yv,saya nak semak baki KWSP guna i-Akaun,saya nak semak bagi ke WSP guna iAccount.,ms,4,7,3,1,0,4,7
+vanilla_prompt,s44_yv,entity,yv,LHDN dah buka e-Filing untuk tahun ni ke,LHDN dah buka e-filling untuk tahun ni ke?,ms,1,8,1,0,0,1,8
+vanilla_prompt,s45_pq,entity,pq,nak apply MyKad baru kat JPN macam mana,nak reply maikak baru ke jebiah macam mana?,ms,4,8,4,0,0,4,8
+vanilla_prompt,s46_pq,entity,pq,boleh bayar bil TNB guna Maybank2u tak,bagi hotbaga.,ms,7,7,2,0,5,7,7
+vanilla_prompt,s47_pq,entity,pq,Grab dengan foodpanda mana lagi murah ah,grep dengan fukh henda mana lagi murah?,ms,4,7,2,1,1,4,7
+vanilla_prompt,s48_pq,entity,pq,nak tanya pasal bantuan STR tahun ni,Natanya pasal bantuan di siadah hari ni.,ms,5,7,3,1,1,5,7
+malaysian_noprompt,s01_yv,ms_dom,yv,macam mana nak apply lesen memandu baru,Macam mana nak apply lesen memandu baru?,ms,0,7,0,0,0,0,7
+malaysian_noprompt,s02_yv,ms_dom,yv,saya nak tanya pasal insurance kereta ni,Saya ingin menghantar insurans insurans.,ms,6,7,4,0,2,6,7
+malaysian_noprompt,s03_yv,ms_dom,yv,boleh tak awak explain apa itu inflation,Bolehkah anda menjelaskan bahawa itu adalah inflasi?,ms,7,7,7,0,0,7,7
+malaysian_noprompt,s04_yv,ms_dom,yv,nak cari tempat makan yang murah dekat sini,Nak cari tempat makan yang murah dekat sini.,ms,0,8,0,0,0,0,8
+malaysian_noprompt,s05_pq,ms_dom,pq,camne nak transfer duit guna online banking,"Jangan lupa like, share dan subscribe channel ini untuk dapatkan maklumat terkini.",ms,12,7,7,5,0,12,7
+malaysian_noprompt,s06_pq,ms_dom,pq,saya lupa password akaun macam mana nak reset,Saya lupa akaun kata laluan macam mana nak reset?,ms,3,8,2,1,0,3,8
+malaysian_noprompt,s07_pq,ms_dom,pq,berapa lama proses renew passport ambil masa,Berapa lama proses pembolehubah pasport ambil masa?,ms,2,7,2,0,0,2,7
+malaysian_noprompt,s08_pq,ms_dom,pq,tolong bagitahu cara nak book appointment klinik,Tolong bagi Tahu Charanabuk Appointment Clinic.,ms,5,7,4,0,1,5,7
+malaysian_noprompt,s09_yv,en_dom,yv,how do i check my epf balance ah,Bagaimanakah saya memeriksa keseimbangan EPF saya?,ms,7,8,5,0,2,7,8
+malaysian_noprompt,s10_yv,en_dom,yv,can you explain what is compound interest lah,Bolehkah anda menerangkan kepentingan kompaun apa?,ms,8,8,6,0,2,8,8
+malaysian_noprompt,s11_yv,en_dom,yv,where can i find cheap flight ticket meh,Di manakah saya boleh mencari tiket penerbangan yang murah?,ms,9,8,8,1,0,9,8
+malaysian_noprompt,s12_yv,en_dom,yv,i want to know how to save money properly one,Saya ingin tahu bagaimana untuk menyimpan wang dengan betul.,ms,10,10,9,0,1,10,10
+malaysian_noprompt,s13_pq,en_dom,pq,is it safe to invest in unit trust ke,Adakah ini selamat untuk melabur di Unitrasca?,ms,9,9,7,0,2,9,9
+malaysian_noprompt,s14_pq,en_dom,pq,tell me how to cook nasi lemak lah,Beritahu saya cara memasak nasi lemak.,ms,6,8,4,0,2,6,8
+malaysian_noprompt,s15_pq,en_dom,pq,what time the post office close ah,Apakah masa pos pejabat berhenti?,ms,7,7,5,0,2,7,7
+malaysian_noprompt,s16_pq,en_dom,pq,can i renew my licence online or not,Bolehkah saya memperbaiki lesen saya dalam talian atau tidak?,ms,9,8,8,1,0,9,8
+malaysian_noprompt,s17_yv,balanced,yv,saya dah submit application tapi belum dapat approval lagi,Saya telah mengemukakan aplikasi tetapi belum mendapat pengesahan lagi.,ms,6,9,6,0,0,6,9
+malaysian_noprompt,s18_yv,balanced,yv,nak tanya pasal tax relief untuk medical expenses,Naktanya Pasal Tax Relief Untuk Pembelian Perubatan,ms,4,8,3,0,1,4,8
+malaysian_noprompt,s19_yv,balanced,yv,macam mana nak cancel subscription yang auto renew tu,Macam mana nak cancel subscription yang auto renew tu?,ms,0,9,0,0,0,0,9
+malaysian_noprompt,s20_yv,balanced,yv,boleh tak explain difference antara savings dengan current account,Bolehkah anda menjelaskan perbezaan antara perkhidmatan dengan akaun semasa?,ms,7,9,7,0,0,7,9
+malaysian_noprompt,s21_pq,balanced,pq,saya nak update alamat kat identity card,Saya nak update alamakka identiti dekat.,ms,4,7,3,0,1,4,7
+malaysian_noprompt,s22_pq,balanced,pq,camne nak claim insurance kalau accident kereta,Jamna Naklam dalam karakter kejadian Surin Kalao?,ms,7,7,7,0,0,7,7
+malaysian_noprompt,s23_pq,balanced,pq,nak tahu requirement untuk apply credit card,Atau keperluan untuk menggunakan kad kredit.,ms,6,7,5,0,1,6,7
+malaysian_noprompt,s24_pq,balanced,pq,tolong terangkan macam mana interest rate affect loan,Tolong terangkan macam mana interest rate affect loan?,ms,0,8,0,0,0,0,8
+malaysian_noprompt,s25_yv,particles,yv,eh betul ke ni macam tak kena je lor,"Eh, betul ke ni? Macam tak kena je lor.",ms,0,9,0,0,0,0,9
+malaysian_noprompt,s26_yv,particles,yv,aiyo susah sangat lah macam ni,"Ayo, susah sangat lah macam ni",ms,1,6,1,0,0,0,6
+malaysian_noprompt,s27_yv,particles,yv,can one lah don't worry so much,Boleh atau tidak? Jangan risau begitu banyak.,ms,7,7,7,0,0,7,7
+malaysian_noprompt,s28_yv,particles,yv,wah mahal gila meh ada yang murah tak,"Wah, maham gila meh, ada yang murah tak?",ms,1,8,1,0,0,1,8
+malaysian_noprompt,s29_pq,particles,pq,so how ah nak buat macam mana ni,Jadi bagaimana? Nombor macam mana ni?,ms,5,8,3,0,2,5,8
+malaysian_noprompt,s30_pq,particles,pq,alamak terlupa pulak kan boleh tolong tak,Alamak terlupa pula kan boleh tolong tak?,ms,1,7,1,0,0,1,7
+malaysian_noprompt,s31_pq,particles,pq,ish lambat betul lah service ni,"Ish, lambat betul lah servis ni.",ms,1,6,1,0,0,1,6
+malaysian_noprompt,s32_pq,particles,pq,okay lah fine saya try dulu kot,"Okay, baiklah, saya cuba kelihatan baik.",ms,5,7,4,0,1,5,7
+malaysian_noprompt,s33_yv,numeric,yv,harga dia empat puluh lima ringgit sembilan puluh sen termasuk cukai ke tak,Harga ialah RM45.90 masuk jukai ke tak.,ms,10,13,4,0,6,10,13
+malaysian_noprompt,s34_yv,numeric,yv,gaji minimum sekarang seribu lima ratus ringgit ke ah,"Gaji minimum sekarang RM1,500 ke Ah.",ms,4,9,1,0,3,4,9
+malaysian_noprompt,s35_yv,numeric,yv,saya nak transfer one thousand five hundred ringgit boleh tak,"Saya ingin memindahkan 1,500 ringgit boleh ditangkap.",ms,7,10,4,0,3,7,10
+malaysian_noprompt,s36_yv,numeric,yv,deadline dia thirty one august twenty twenty six kan,Langit mati berhampiran 31 Ogos 2026 Kan.,ms,8,9,6,0,2,8,9
+malaysian_noprompt,s37_pq,numeric,pq,interest rate dia three point five percent setahun je,"kadar faedah ialah 2.5% daripada 1,000.",ms,9,9,6,0,3,9,9
+malaysian_noprompt,s38_pq,numeric,pq,kena bayar deposit dua ribu lima ratus ringgit,Kena bayar deposit dua ribu lima ratus ringgit.,ms,0,8,0,0,0,0,8
+malaysian_noprompt,s39_pq,numeric,pq,cukai jualan naik dari enam peratus ke lapan peratus ke,Juga jual naik dari 6% ke 8% ke?,ms,6,10,4,0,2,6,10
+malaysian_noprompt,s40_pq,numeric,pq,buka pukul nine in the morning tutup pukul five in the evening kan,Buka buku 9 pagi untuk tutup buku 5 petang kan?,ms,10,13,7,0,3,10,13
+malaysian_noprompt,s41_yv,entity,yv,macam mana nak renew roadtax kat MyJPJ,Macam mana nak renew road tax card main JBJ?,ms,5,7,3,2,0,5,7
+malaysian_noprompt,s42_yv,entity,yv,boleh guna Touch n Go eWallet tak kat sini,Bolehkah anda menyentuh dan pergi ke Wala Takkatsini?,ms,9,9,8,0,1,9,9
+malaysian_noprompt,s43_yv,entity,yv,saya nak semak baki KWSP guna i-Akaun,Saya ingin memulakan akaun KWSP Guna Aing.,ms,4,7,4,0,0,4,7
+malaysian_noprompt,s44_yv,entity,yv,LHDN dah buka e-Filing untuk tahun ni ke,LHDN dah buka e-filling untuk tahun ni ke?,ms,1,8,1,0,0,1,8
+malaysian_noprompt,s45_pq,entity,pq,nak apply MyKad baru kat JPN macam mana,Nak apply my card baru kat Jepun macam mana?,ms,3,8,2,1,0,3,8
+malaysian_noprompt,s46_pq,entity,pq,boleh bayar bil TNB guna Maybank2u tak,Boleh beli TNB guna bebank tu yu tak?,ms,5,7,2,2,1,5,7
+malaysian_noprompt,s47_pq,entity,pq,Grab dengan foodpanda mana lagi murah ah,"Grab dengan foodpanda mana lagi, Mora?",ms,2,7,1,0,1,2,7
+malaysian_noprompt,s48_pq,entity,pq,nak tanya pasal bantuan STR tahun ni,Nak tanya pasal bantuan SCR tahun ni?,ms,1,7,1,0,0,1,7
+malaysian_prompt,s01_yv,ms_dom,yv,macam mana nak apply lesen memandu baru,macam mana nak apply lesen memandu baru.,ms,0,7,0,0,0,0,7
+malaysian_prompt,s02_yv,ms_dom,yv,saya nak tanya pasal insurance kereta ni,Saya nak tanya pasal insurance kereta ni.,ms,0,7,0,0,0,0,7
+malaysian_prompt,s03_yv,ms_dom,yv,boleh tak awak explain apa itu inflation,boleh tak awak explain apa itu inflation?,ms,0,7,0,0,0,0,7
+malaysian_prompt,s04_yv,ms_dom,yv,nak cari tempat makan yang murah dekat sini,nak cari tempat makan yang murah dekat sini.,ms,0,8,0,0,0,0,8
+malaysian_prompt,s05_pq,ms_dom,pq,camne nak transfer duit guna online banking,macam mana nak transfer duit guna online banking?,ms,2,7,1,1,0,2,7
+malaysian_prompt,s06_pq,ms_dom,pq,saya lupa password akaun macam mana nak reset,Saya lupa password account macam mana nak reset.,ms,1,8,1,0,0,0,8
+malaysian_prompt,s07_pq,ms_dom,pq,berapa lama proses renew passport ambil masa,berapa lama proses renew pasport ambil masa?,ms,1,7,1,0,0,1,7
+malaysian_prompt,s08_pq,ms_dom,pq,tolong bagitahu cara nak book appointment klinik,tolong bagi tauhu charanabuk appointment clinic.,ms,5,7,4,0,1,5,7
+malaysian_prompt,s09_yv,en_dom,yv,how do i check my epf balance ah,bagaimana saya boleh mengesan keseimbangan EPF saya?,ms,7,8,6,0,1,7,8
+malaysian_prompt,s10_yv,en_dom,yv,can you explain what is compound interest lah,can you explain what is compound interest lah.,ms,0,8,0,0,0,0,8
+malaysian_prompt,s11_yv,en_dom,yv,where can i find cheap flight ticket meh,di mana saya boleh mencari tiket penerbangan yang murah?,ms,9,8,8,1,0,9,8
+malaysian_prompt,s12_yv,en_dom,yv,i want to know how to save money properly one,Saya ingin tahu bagaimana untuk menyimpan wang dengan betul.,ms,10,10,9,0,1,10,10
+malaysian_prompt,s13_pq,en_dom,pq,is it safe to invest in unit trust ke,adakah ini sendiri untuk melabur di Unitrasca?,ms,9,9,7,0,2,9,9
+malaysian_prompt,s14_pq,en_dom,pq,tell me how to cook nasi lemak lah,tell me how to cook nasi lemala.,ms,2,8,1,0,1,2,8
+malaysian_prompt,s15_pq,en_dom,pq,what time the post office close ah,bila pos pejabat panggil ah?,ms,6,7,4,0,2,6,7
+malaysian_prompt,s16_pq,en_dom,pq,can i renew my licence online or not,bolehkah saya memperbaiki lesen saya dalam talian atau tidak?,ms,9,8,8,1,0,9,8
+malaysian_prompt,s17_yv,balanced,yv,saya dah submit application tapi belum dapat approval lagi,Saya dah submit application tapi belum dapat approval lagi.,ms,0,9,0,0,0,0,9
+malaysian_prompt,s18_yv,balanced,yv,nak tanya pasal tax relief untuk medical expenses,nak tanya pasal tax relief untuk perbelanjaan perubatan.,ms,2,8,2,0,0,2,8
+malaysian_prompt,s19_yv,balanced,yv,macam mana nak cancel subscription yang auto renew tu,macam mana nak cancel subscription yang auto renew tu.,ms,0,9,0,0,0,0,9
+malaysian_prompt,s20_yv,balanced,yv,boleh tak explain difference antara savings dengan current account,Boleh tak explain difference antara savings dengan current account?,ms,0,9,0,0,0,0,9
+malaysian_prompt,s21_pq,balanced,pq,saya nak update alamat kat identity card,saya nak update alamaka identity card.,ms,2,7,1,0,1,2,7
+malaysian_prompt,s22_pq,balanced,pq,camne nak claim insurance kalau accident kereta,chiamnna nak klaim insurin kalao asiden karator?,ms,6,7,6,0,0,5,7
+malaysian_prompt,s23_pq,balanced,pq,nak tahu requirement untuk apply credit card,nak tahu keperluan untuk menggunakan kad kredit?,ms,4,7,4,0,0,4,7
+malaysian_prompt,s24_pq,balanced,pq,tolong terangkan macam mana interest rate affect loan,tolong terangkan macam mana interest rate effect loan.,ms,1,8,1,0,0,1,8
+malaysian_prompt,s25_yv,particles,yv,eh betul ke ni macam tak kena je lor,eh betul ke ni macam tak kena je lor.,ms,0,9,0,0,0,0,9
+malaysian_prompt,s26_yv,particles,yv,aiyo susah sangat lah macam ni,"ayo, susah sangat lah macam ni.",ms,1,6,1,0,0,0,6
+malaysian_prompt,s27_yv,particles,yv,can one lah don't worry so much,"can one lah, don't worry so much.",ms,0,7,0,0,0,0,7
+malaysian_prompt,s28_yv,particles,yv,wah mahal gila meh ada yang murah tak,"wah, maham gila meh, ada yang murah tak?",ms,1,8,1,0,0,1,8
+malaysian_prompt,s29_pq,particles,pq,so how ah nak buat macam mana ni,"so how ah, nampak macam mana ni.",ms,2,8,1,0,1,2,8
+malaysian_prompt,s30_pq,particles,pq,alamak terlupa pulak kan boleh tolong tak,alamat terlupa pula kan boleh tolong tak.,ms,2,7,2,0,0,2,7
+malaysian_prompt,s31_pq,particles,pq,ish lambat betul lah service ni,ish lambat betul lah service ni.,ms,0,6,0,0,0,0,6
+malaysian_prompt,s32_pq,particles,pq,okay lah fine saya try dulu kot,"okay lah fine, say I try to look good.",ms,5,7,3,2,0,5,7
+malaysian_prompt,s33_yv,numeric,yv,harga dia empat puluh lima ringgit sembilan puluh sen termasuk cukai ke tak,harga dia RM45.90 termasuk cukai ke tak.,ms,7,13,1,0,6,7,13
+malaysian_prompt,s34_yv,numeric,yv,gaji minimum sekarang seribu lima ratus ringgit ke ah,gaji minimum sekarang RM1500 ke ah.,ms,4,9,1,0,3,4,9
+malaysian_prompt,s35_yv,numeric,yv,saya nak transfer one thousand five hundred ringgit boleh tak,Saya nak transfer RM1500 boleh tak?,ms,5,10,1,0,4,5,10
+malaysian_prompt,s36_yv,numeric,yv,deadline dia thirty one august twenty twenty six kan,deadline near 31 august 2026 kan.,ms,6,9,3,0,3,6,9
+malaysian_prompt,s37_pq,numeric,pq,interest rate dia three point five percent setahun je,"harga faedah 2.5% adalah 1,000.",ms,9,9,5,0,4,9,9
+malaysian_prompt,s38_pq,numeric,pq,kena bayar deposit dua ribu lima ratus ringgit,kena bayar deposit dua ribu lima ratus ringgit.,ms,0,8,0,0,0,0,8
+malaysian_prompt,s39_pq,numeric,pq,cukai jualan naik dari enam peratus ke lapan peratus ke,cukai jual naik dari 6% ke 8% ke?,ms,5,10,3,0,2,5,10
+malaysian_prompt,s40_pq,numeric,pq,buka pukul nine in the morning tutup pukul five in the evening kan,"bukan pukul 9 pagi, tutup pukul 5 petang kan.",ms,9,13,5,0,4,9,13
+malaysian_prompt,s41_yv,entity,yv,macam mana nak renew roadtax kat MyJPJ,macam mana nak renew road tax card main jbj?,ms,5,7,3,2,0,5,7
+malaysian_prompt,s42_yv,entity,yv,boleh guna Touch n Go eWallet tak kat sini,"boleh kena touch and go, i wala tak kat sini.",ms,4,9,3,1,0,4,9
+malaysian_prompt,s43_yv,entity,yv,saya nak semak baki KWSP guna i-Akaun,Saya nak semak bagi KWSP guna I account.,ms,3,7,2,1,0,3,7
+malaysian_prompt,s44_yv,entity,yv,LHDN dah buka e-Filing untuk tahun ni ke,LHDN dah buka e-filling untuk tahun ni ke?,ms,1,8,1,0,0,1,8
+malaysian_prompt,s45_pq,entity,pq,nak apply MyKad baru kat JPN macam mana,nak apply my card baru kat Jepya macam mana?,ms,3,8,2,1,0,3,8
+malaysian_prompt,s46_pq,entity,pq,boleh bayar bil TNB guna Maybank2u tak,boleh beli bil TNB guna bebank tu you tak.,ms,4,7,2,2,0,4,7
+malaysian_prompt,s47_pq,entity,pq,Grab dengan foodpanda mana lagi murah ah,grab dengan foodpanda mana lagi mora?,ms,2,7,1,0,1,2,7
+malaysian_prompt,s48_pq,entity,pq,nak tanya pasal bantuan STR tahun ni,nak tanya pasal bantuan STR tahun ni.,ms,0,7,0,0,0,0,7
+malaysian_prompt_auto,s01_yv,ms_dom,yv,macam mana nak apply lesen memandu baru,macam mana nak apply lesen memandu baru.,auto,0,7,0,0,0,0,7
+malaysian_prompt_auto,s02_yv,ms_dom,yv,saya nak tanya pasal insurance kereta ni,Saya nak tanya pasal insurance kereta ni.,auto,0,7,0,0,0,0,7
+malaysian_prompt_auto,s03_yv,ms_dom,yv,boleh tak awak explain apa itu inflation,boleh tak awak explain apa itu inflation?,auto,0,7,0,0,0,0,7
+malaysian_prompt_auto,s04_yv,ms_dom,yv,nak cari tempat makan yang murah dekat sini,nak cari tempat makan yang murah dekat sini.,auto,0,8,0,0,0,0,8
+malaysian_prompt_auto,s05_pq,ms_dom,pq,camne nak transfer duit guna online banking,macam mana nak transfer duit guna online banking?,auto,2,7,1,1,0,2,7
+malaysian_prompt_auto,s06_pq,ms_dom,pq,saya lupa password akaun macam mana nak reset,Saya lupa password account macam mana nak reset.,auto,1,8,1,0,0,0,8
+malaysian_prompt_auto,s07_pq,ms_dom,pq,berapa lama proses renew passport ambil masa,berapa lama proses renew pasport ambil masa?,auto,1,7,1,0,0,1,7
+malaysian_prompt_auto,s08_pq,ms_dom,pq,tolong bagitahu cara nak book appointment klinik,tolong bagi tauhu charanabuk appointment clinic.,auto,5,7,4,0,1,5,7
+malaysian_prompt_auto,s09_yv,en_dom,yv,how do i check my epf balance ah,bagaimana saya boleh mengesan keseimbangan EPF saya?,auto,7,8,6,0,1,7,8
+malaysian_prompt_auto,s10_yv,en_dom,yv,can you explain what is compound interest lah,can you explain what is compound interest lah.,auto,0,8,0,0,0,0,8
+malaysian_prompt_auto,s11_yv,en_dom,yv,where can i find cheap flight ticket meh,di mana saya boleh mencari tiket penerbangan yang murah?,auto,9,8,8,1,0,9,8
+malaysian_prompt_auto,s12_yv,en_dom,yv,i want to know how to save money properly one,Saya ingin tahu bagaimana untuk menyimpan wang dengan betul.,auto,10,10,9,0,1,10,10
+malaysian_prompt_auto,s13_pq,en_dom,pq,is it safe to invest in unit trust ke,adakah ini sendiri untuk melabur di Unitrasca?,auto,9,9,7,0,2,9,9
+malaysian_prompt_auto,s14_pq,en_dom,pq,tell me how to cook nasi lemak lah,tell me how to cook nasi lemala.,auto,2,8,1,0,1,2,8
+malaysian_prompt_auto,s15_pq,en_dom,pq,what time the post office close ah,bila pos pejabat panggil ah?,auto,6,7,4,0,2,6,7
+malaysian_prompt_auto,s16_pq,en_dom,pq,can i renew my licence online or not,bolehkah saya memperbaiki lesen saya dalam talian atau tidak?,auto,9,8,8,1,0,9,8
+malaysian_prompt_auto,s17_yv,balanced,yv,saya dah submit application tapi belum dapat approval lagi,Saya dah submit application tapi belum dapat approval lagi.,auto,0,9,0,0,0,0,9
+malaysian_prompt_auto,s18_yv,balanced,yv,nak tanya pasal tax relief untuk medical expenses,nak tanya pasal tax relief untuk perbelanjaan perubatan.,auto,2,8,2,0,0,2,8
+malaysian_prompt_auto,s19_yv,balanced,yv,macam mana nak cancel subscription yang auto renew tu,macam mana nak cancel subscription yang auto renew tu.,auto,0,9,0,0,0,0,9
+malaysian_prompt_auto,s20_yv,balanced,yv,boleh tak explain difference antara savings dengan current account,Boleh tak explain difference antara savings dengan current account?,auto,0,9,0,0,0,0,9
+malaysian_prompt_auto,s21_pq,balanced,pq,saya nak update alamat kat identity card,saya nak update alamaka identity card.,auto,2,7,1,0,1,2,7
+malaysian_prompt_auto,s22_pq,balanced,pq,camne nak claim insurance kalau accident kereta,chiamnna nak klaim insurin kalao asiden karator?,auto,6,7,6,0,0,5,7
+malaysian_prompt_auto,s23_pq,balanced,pq,nak tahu requirement untuk apply credit card,nak tahu keperluan untuk menggunakan kad kredit?,auto,4,7,4,0,0,4,7
+malaysian_prompt_auto,s24_pq,balanced,pq,tolong terangkan macam mana interest rate affect loan,tolong terangkan macam mana interest rate effect loan.,auto,1,8,1,0,0,1,8
+malaysian_prompt_auto,s25_yv,particles,yv,eh betul ke ni macam tak kena je lor,eh betul ke ni macam tak kena je lor.,auto,0,9,0,0,0,0,9
+malaysian_prompt_auto,s26_yv,particles,yv,aiyo susah sangat lah macam ni,"ayo, susah sangat lah macam ni.",auto,1,6,1,0,0,0,6
+malaysian_prompt_auto,s27_yv,particles,yv,can one lah don't worry so much,"can one lah, don't worry so much.",auto,0,7,0,0,0,0,7
+malaysian_prompt_auto,s28_yv,particles,yv,wah mahal gila meh ada yang murah tak,"wah, maham gila meh, ada yang murah tak?",auto,1,8,1,0,0,1,8
+malaysian_prompt_auto,s29_pq,particles,pq,so how ah nak buat macam mana ni,"so how ah, nampak macam mana ni.",auto,2,8,1,0,1,2,8
+malaysian_prompt_auto,s30_pq,particles,pq,alamak terlupa pulak kan boleh tolong tak,alamat terlupa pula kan boleh tolong tak.,auto,2,7,2,0,0,2,7
+malaysian_prompt_auto,s31_pq,particles,pq,ish lambat betul lah service ni,ish lambat betul lah service ni.,auto,0,6,0,0,0,0,6
+malaysian_prompt_auto,s32_pq,particles,pq,okay lah fine saya try dulu kot,"okay lah fine, say I try to look good.",auto,5,7,3,2,0,5,7
+malaysian_prompt_auto,s33_yv,numeric,yv,harga dia empat puluh lima ringgit sembilan puluh sen termasuk cukai ke tak,harga dia RM45.90 termasuk cukai ke tak.,auto,7,13,1,0,6,7,13
+malaysian_prompt_auto,s34_yv,numeric,yv,gaji minimum sekarang seribu lima ratus ringgit ke ah,gaji minimum sekarang RM1500 ke ah.,auto,4,9,1,0,3,4,9
+malaysian_prompt_auto,s35_yv,numeric,yv,saya nak transfer one thousand five hundred ringgit boleh tak,Saya nak transfer RM1500 boleh tak?,auto,5,10,1,0,4,5,10
+malaysian_prompt_auto,s36_yv,numeric,yv,deadline dia thirty one august twenty twenty six kan,deadline near 31 august 2026 kan.,auto,6,9,3,0,3,6,9
+malaysian_prompt_auto,s37_pq,numeric,pq,interest rate dia three point five percent setahun je,"harga faedah 2.5% adalah 1,000.",auto,9,9,5,0,4,9,9
+malaysian_prompt_auto,s38_pq,numeric,pq,kena bayar deposit dua ribu lima ratus ringgit,kena bayar deposit dua ribu lima ratus ringgit.,auto,0,8,0,0,0,0,8
+malaysian_prompt_auto,s39_pq,numeric,pq,cukai jualan naik dari enam peratus ke lapan peratus ke,cukai jual naik dari 6% ke 8% ke?,auto,5,10,3,0,2,5,10
+malaysian_prompt_auto,s40_pq,numeric,pq,buka pukul nine in the morning tutup pukul five in the evening kan,"bukan pukul 9 pagi, tutup pukul 5 petang kan.",auto,9,13,5,0,4,9,13
+malaysian_prompt_auto,s41_yv,entity,yv,macam mana nak renew roadtax kat MyJPJ,macam mana nak renew road tax card main jbj?,auto,5,7,3,2,0,5,7
+malaysian_prompt_auto,s42_yv,entity,yv,boleh guna Touch n Go eWallet tak kat sini,"boleh kena touch and go, i wala tak kat sini.",auto,4,9,3,1,0,4,9
+malaysian_prompt_auto,s43_yv,entity,yv,saya nak semak baki KWSP guna i-Akaun,Saya nak semak bagi KWSP guna I account.,auto,3,7,2,1,0,3,7
+malaysian_prompt_auto,s44_yv,entity,yv,LHDN dah buka e-Filing untuk tahun ni ke,LHDN dah buka e-filling untuk tahun ni ke?,auto,1,8,1,0,0,1,8
+malaysian_prompt_auto,s45_pq,entity,pq,nak apply MyKad baru kat JPN macam mana,nak apply my card baru kat Jepya macam mana?,auto,3,8,2,1,0,3,8
+malaysian_prompt_auto,s46_pq,entity,pq,boleh bayar bil TNB guna Maybank2u tak,boleh beli bil TNB guna bebank tu you tak.,auto,4,7,2,2,0,4,7
+malaysian_prompt_auto,s47_pq,entity,pq,Grab dengan foodpanda mana lagi murah ah,grab dengan foodpanda mana lagi mora?,auto,2,7,1,0,1,2,7
+malaysian_prompt_auto,s48_pq,entity,pq,nak tanya pasal bantuan STR tahun ni,nak tanya pasal bantuan STR tahun ni.,auto,0,7,0,0,0,0,7
+malaysian_noprompt_auto,s01_yv,ms_dom,yv,macam mana nak apply lesen memandu baru,Macam mana nak apply lesen memandu baru?,auto,0,7,0,0,0,0,7
+malaysian_noprompt_auto,s02_yv,ms_dom,yv,saya nak tanya pasal insurance kereta ni,Saya ingin menghantar insurans insurans.,auto,6,7,4,0,2,6,7
+malaysian_noprompt_auto,s03_yv,ms_dom,yv,boleh tak awak explain apa itu inflation,Bolehkah anda menjelaskan bahawa itu adalah inflasi?,auto,7,7,7,0,0,7,7
+malaysian_noprompt_auto,s04_yv,ms_dom,yv,nak cari tempat makan yang murah dekat sini,Nak cari tempat makan yang murah dekat sini.,auto,0,8,0,0,0,0,8
+malaysian_noprompt_auto,s05_pq,ms_dom,pq,camne nak transfer duit guna online banking,"Jangan lupa like, share dan subscribe channel ini untuk dapatkan maklumat terkini.",auto,12,7,7,5,0,12,7
+malaysian_noprompt_auto,s06_pq,ms_dom,pq,saya lupa password akaun macam mana nak reset,Saya lupa akaun kata laluan macam mana nak reset?,auto,3,8,2,1,0,3,8
+malaysian_noprompt_auto,s07_pq,ms_dom,pq,berapa lama proses renew passport ambil masa,Berapa lama proses pembolehubah pasport ambil masa?,auto,2,7,2,0,0,2,7
+malaysian_noprompt_auto,s08_pq,ms_dom,pq,tolong bagitahu cara nak book appointment klinik,Tolong bagi Tahu Charanabuk Appointment Clinic.,auto,5,7,4,0,1,5,7
+malaysian_noprompt_auto,s09_yv,en_dom,yv,how do i check my epf balance ah,Bagaimanakah saya memeriksa keseimbangan EPF saya?,auto,7,8,5,0,2,7,8
+malaysian_noprompt_auto,s10_yv,en_dom,yv,can you explain what is compound interest lah,Can you explain what is compound interest?,auto,1,8,0,0,1,1,8
+malaysian_noprompt_auto,s11_yv,en_dom,yv,where can i find cheap flight ticket meh,Di manakah saya boleh mencari tiket penerbangan yang murah?,auto,9,8,8,1,0,9,8
+malaysian_noprompt_auto,s12_yv,en_dom,yv,i want to know how to save money properly one,Saya ingin tahu bagaimana untuk menyimpan wang dengan betul.,auto,10,10,9,0,1,10,10
+malaysian_noprompt_auto,s13_pq,en_dom,pq,is it safe to invest in unit trust ke,Adakah ini selamat untuk melabur di Unitrasca?,auto,9,9,7,0,2,9,9
+malaysian_noprompt_auto,s14_pq,en_dom,pq,tell me how to cook nasi lemak lah,Beritahu saya cara memasak nasi lemak.,auto,6,8,4,0,2,6,8
+malaysian_noprompt_auto,s15_pq,en_dom,pq,what time the post office close ah,Apakah masa pos pejabat berhenti?,auto,7,7,5,0,2,7,7
+malaysian_noprompt_auto,s16_pq,en_dom,pq,can i renew my licence online or not,Bolehkah saya memperbaiki lesen saya dalam talian atau tidak?,auto,9,8,8,1,0,9,8
+malaysian_noprompt_auto,s17_yv,balanced,yv,saya dah submit application tapi belum dapat approval lagi,Saya telah mengemukakan aplikasi tetapi belum mendapat pengesahan lagi.,auto,6,9,6,0,0,6,9
+malaysian_noprompt_auto,s18_yv,balanced,yv,nak tanya pasal tax relief untuk medical expenses,Naktanya Pasal Tax Relief Untuk Pembelian Perubatan,auto,4,8,3,0,1,4,8
+malaysian_noprompt_auto,s19_yv,balanced,yv,macam mana nak cancel subscription yang auto renew tu,Macam mana nak cancel subscription yang auto renew tu?,auto,0,9,0,0,0,0,9
+malaysian_noprompt_auto,s20_yv,balanced,yv,boleh tak explain difference antara savings dengan current account,Bolehkah anda menjelaskan perbezaan antara perkhidmatan dengan akaun semasa?,auto,7,9,7,0,0,7,9
+malaysian_noprompt_auto,s21_pq,balanced,pq,saya nak update alamat kat identity card,Saya nak update alamakka identiti dekat.,auto,4,7,3,0,1,4,7
+malaysian_noprompt_auto,s22_pq,balanced,pq,camne nak claim insurance kalau accident kereta,Jamna Naklam dalam karakter kejadian Surin Kalao?,auto,7,7,7,0,0,7,7
+malaysian_noprompt_auto,s23_pq,balanced,pq,nak tahu requirement untuk apply credit card,Atau keperluan untuk menggunakan kad kredit.,auto,6,7,5,0,1,6,7
+malaysian_noprompt_auto,s24_pq,balanced,pq,tolong terangkan macam mana interest rate affect loan,Tolong terangkan macam mana interest rate affect loan?,auto,0,8,0,0,0,0,8
+malaysian_noprompt_auto,s25_yv,particles,yv,eh betul ke ni macam tak kena je lor,"Eh, betul ke ni? Macam tak kena je lor.",auto,0,9,0,0,0,0,9
+malaysian_noprompt_auto,s26_yv,particles,yv,aiyo susah sangat lah macam ni,"Ayo, susah sangat lah macam ni",auto,1,6,1,0,0,0,6
+malaysian_noprompt_auto,s27_yv,particles,yv,can one lah don't worry so much,Boleh atau tidak? Jangan risau begitu banyak.,auto,7,7,7,0,0,7,7
+malaysian_noprompt_auto,s28_yv,particles,yv,wah mahal gila meh ada yang murah tak,"Wah, maham gila meh, ada yang murah tak?",auto,1,8,1,0,0,1,8
+malaysian_noprompt_auto,s29_pq,particles,pq,so how ah nak buat macam mana ni,Jadi bagaimana? Nombor macam mana ni?,auto,5,8,3,0,2,5,8
+malaysian_noprompt_auto,s30_pq,particles,pq,alamak terlupa pulak kan boleh tolong tak,Alamak terlupa pula kan boleh tolong tak?,auto,1,7,1,0,0,1,7
+malaysian_noprompt_auto,s31_pq,particles,pq,ish lambat betul lah service ni,"Ish, lambat betul lah servis ni.",auto,1,6,1,0,0,1,6
+malaysian_noprompt_auto,s32_pq,particles,pq,okay lah fine saya try dulu kot,"Okay, baiklah, saya cuba kelihatan baik.",auto,5,7,4,0,1,5,7
+malaysian_noprompt_auto,s33_yv,numeric,yv,harga dia empat puluh lima ringgit sembilan puluh sen termasuk cukai ke tak,Harga ialah RM45.90 masuk jukai ke tak.,auto,10,13,4,0,6,10,13
+malaysian_noprompt_auto,s34_yv,numeric,yv,gaji minimum sekarang seribu lima ratus ringgit ke ah,"Gaji minimum sekarang RM1,500 ke Ah.",auto,4,9,1,0,3,4,9
+malaysian_noprompt_auto,s35_yv,numeric,yv,saya nak transfer one thousand five hundred ringgit boleh tak,"Saya ingin memindahkan 1,500 ringgit boleh ditangkap.",auto,7,10,4,0,3,7,10
+malaysian_noprompt_auto,s36_yv,numeric,yv,deadline dia thirty one august twenty twenty six kan,Langit mati berhampiran 31 Ogos 2026 Kan.,auto,8,9,6,0,2,8,9
+malaysian_noprompt_auto,s37_pq,numeric,pq,interest rate dia three point five percent setahun je,"kadar faedah ialah 2.5% daripada 1,000.",auto,9,9,6,0,3,9,9
+malaysian_noprompt_auto,s38_pq,numeric,pq,kena bayar deposit dua ribu lima ratus ringgit,Kena bayar deposit dua ribu lima ratus ringgit.,auto,0,8,0,0,0,0,8
+malaysian_noprompt_auto,s39_pq,numeric,pq,cukai jualan naik dari enam peratus ke lapan peratus ke,Juga jual naik dari 6% ke 8% ke?,auto,6,10,4,0,2,6,10
+malaysian_noprompt_auto,s40_pq,numeric,pq,buka pukul nine in the morning tutup pukul five in the evening kan,Buka buku 9 pagi untuk tutup buku 5 petang kan?,auto,10,13,7,0,3,10,13
+malaysian_noprompt_auto,s41_yv,entity,yv,macam mana nak renew roadtax kat MyJPJ,Macam mana nak renew road tax card main JBJ?,auto,5,7,3,2,0,5,7
+malaysian_noprompt_auto,s42_yv,entity,yv,boleh guna Touch n Go eWallet tak kat sini,Bolehkah anda menyentuh dan pergi ke Wala Takkatsini?,auto,9,9,8,0,1,9,9
+malaysian_noprompt_auto,s43_yv,entity,yv,saya nak semak baki KWSP guna i-Akaun,Saya ingin memulakan akaun KWSP Guna Aing.,auto,4,7,4,0,0,4,7
+malaysian_noprompt_auto,s44_yv,entity,yv,LHDN dah buka e-Filing untuk tahun ni ke,LHDN dah buka e-filling untuk tahun ni ke?,auto,1,8,1,0,0,1,8
+malaysian_noprompt_auto,s45_pq,entity,pq,nak apply MyKad baru kat JPN macam mana,Nak apply my card baru kat Jepun macam mana?,auto,3,8,2,1,0,3,8
+malaysian_noprompt_auto,s46_pq,entity,pq,boleh bayar bil TNB guna Maybank2u tak,Boleh beli TNB guna bebank tu yu tak?,auto,5,7,2,2,1,5,7
+malaysian_noprompt_auto,s47_pq,entity,pq,Grab dengan foodpanda mana lagi murah ah,"Grab dengan foodpanda mana lagi, Mora?",auto,2,7,1,0,1,2,7
+malaysian_noprompt_auto,s48_pq,entity,pq,nak tanya pasal bantuan STR tahun ni,Nak tanya pasal bantuan SCR tahun ni?,auto,1,7,1,0,0,1,7
+malaysian_prompt_en,s01_yv,ms_dom,yv,macam mana nak apply lesen memandu baru,macam mana nak apply lesen memandu baru.,en,0,7,0,0,0,0,7
+malaysian_prompt_en,s02_yv,ms_dom,yv,saya nak tanya pasal insurance kereta ni,saya nak tanya pasal insurance kereta ni.,en,0,7,0,0,0,0,7
+malaysian_prompt_en,s03_yv,ms_dom,yv,boleh tak awak explain apa itu inflation,boleh tak awak explain apa itu inflation?,en,0,7,0,0,0,0,7
+malaysian_prompt_en,s04_yv,ms_dom,yv,nak cari tempat makan yang murah dekat sini,nak cari tempat makan yang murah dekat sini.,en,0,8,0,0,0,0,8
+malaysian_prompt_en,s05_pq,ms_dom,pq,camne nak transfer duit guna online banking,do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not. do you want to join us or not do you want to join us or not do you want to join us or not do you want to join us or not do you want to join us or not do you want to join us or not do you want to join us or not do you want to join us or do you want to join us or not do you want to join us or do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do we do,en,369,7,7,362,0,369,7
+malaysian_prompt_en,s06_pq,ms_dom,pq,saya lupa password akaun macam mana nak reset,saya lupa password account macam mana nak reset.,en,1,8,1,0,0,0,8
+malaysian_prompt_en,s07_pq,ms_dom,pq,berapa lama proses renew passport ambil masa,berapa lama process renew passport ambil masa?,en,1,7,1,0,0,1,7
+malaysian_prompt_en,s08_pq,ms_dom,pq,tolong bagitahu cara nak book appointment klinik,tolong bagi tauho charanabuk appointment clinic.,en,5,7,4,0,1,5,7
+malaysian_prompt_en,s09_yv,en_dom,yv,how do i check my epf balance ah,how do i check my epf balance ah.,en,0,8,0,0,0,0,8
+malaysian_prompt_en,s10_yv,en_dom,yv,can you explain what is compound interest lah,can you explain what is compound interest lah.,en,0,8,0,0,0,0,8
+malaysian_prompt_en,s11_yv,en_dom,yv,where can i find cheap flight ticket meh,where can i find cheap flight ticket meh?,en,0,8,0,0,0,0,8
+malaysian_prompt_en,s12_yv,en_dom,yv,i want to know how to save money properly one,i want to know how to save money properly one.,en,0,10,0,0,0,0,10
+malaysian_prompt_en,s13_pq,en_dom,pq,is it safe to invest in unit trust ke,is this self to invest in unitrasca?,en,5,9,3,0,2,5,9
+malaysian_prompt_en,s14_pq,en_dom,pq,tell me how to cook nasi lemak lah,tell me how to cook nasi lemak lah.,en,0,8,0,0,0,0,8
+malaysian_prompt_en,s15_pq,en_dom,pq,what time the post office close ah,what time the post office calls ah?,en,1,7,1,0,0,1,7
+malaysian_prompt_en,s16_pq,en_dom,pq,can i renew my licence online or not,can i renew my license online or not?,en,1,8,1,0,0,0,8
+malaysian_prompt_en,s17_yv,balanced,yv,saya dah submit application tapi belum dapat approval lagi,saya dah submit application tapi belum dapat approval lagi.,en,0,9,0,0,0,0,9
+malaysian_prompt_en,s18_yv,balanced,yv,nak tanya pasal tax relief untuk medical expenses,nak tanya pasal tax reliefs untuk medical expenses.,en,1,8,1,0,0,1,8
+malaysian_prompt_en,s19_yv,balanced,yv,macam mana nak cancel subscription yang auto renew tu,macam mana nak cancel subscription yang auto renew tu.,en,0,9,0,0,0,0,9
+malaysian_prompt_en,s20_yv,balanced,yv,boleh tak explain difference antara savings dengan current account,Boleh tak explain difference antara savings dengan current account.,en,0,9,0,0,0,0,9
+malaysian_prompt_en,s21_pq,balanced,pq,saya nak update alamat kat identity card,saya nak update alamaka identity card.,en,2,7,1,0,1,2,7
+malaysian_prompt_en,s22_pq,balanced,pq,camne nak claim insurance kalau accident kereta,chiamnna naklam insurin kalao asiden karator?,en,7,7,6,0,1,6,7
+malaysian_prompt_en,s23_pq,balanced,pq,nak tahu requirement untuk apply credit card,a towel requirement untuk apply credit card.,en,2,7,2,0,0,2,7
+malaysian_prompt_en,s24_pq,balanced,pq,tolong terangkan macam mana interest rate affect loan,Tolong terangkan macam mana interest rate effect loan.,en,1,8,1,0,0,1,8
+malaysian_prompt_en,s25_yv,particles,yv,eh betul ke ni macam tak kena je lor,"eh betul ke ni, macam tak kena je lor.",en,0,9,0,0,0,0,9
+malaysian_prompt_en,s26_yv,particles,yv,aiyo susah sangat lah macam ni,"ayo, susah sangat lah macam ni.",en,1,6,1,0,0,0,6
+malaysian_prompt_en,s27_yv,particles,yv,can one lah don't worry so much,"can one lah, don't worry so much.",en,0,7,0,0,0,0,7
+malaysian_prompt_en,s28_yv,particles,yv,wah mahal gila meh ada yang murah tak,"wah, maham gila meh, ada yang murah tak?",en,1,8,1,0,0,1,8
+malaysian_prompt_en,s29_pq,particles,pq,so how ah nak buat macam mana ni,"so how ah, nampak macam mana ni.",en,2,8,1,0,1,2,8
+malaysian_prompt_en,s30_pq,particles,pq,alamak terlupa pulak kan boleh tolong tak,alamak terlupa pula kan boleh turun tak.,en,2,7,2,0,0,2,7
+malaysian_prompt_en,s31_pq,particles,pq,ish lambat betul lah service ni,ish lambak betul lah service ni.,en,1,6,1,0,0,1,6
+malaysian_prompt_en,s32_pq,particles,pq,okay lah fine saya try dulu kot,"okay that's fine, let's try to look good.",en,5,7,4,1,0,5,7
+malaysian_prompt_en,s33_yv,numeric,yv,harga dia empat puluh lima ringgit sembilan puluh sen termasuk cukai ke tak,harga dia RM45.90 the muscle chukai ke tak.,en,9,13,4,0,5,9,13
+malaysian_prompt_en,s34_yv,numeric,yv,gaji minimum sekarang seribu lima ratus ringgit ke ah,Gaji minimum sekarang RM1500 ke ah.,en,4,9,1,0,3,4,9
+malaysian_prompt_en,s35_yv,numeric,yv,saya nak transfer one thousand five hundred ringgit boleh tak,"saya nak transfer 1,500 ringgit boleh tak.",en,4,10,1,0,3,4,10
+malaysian_prompt_en,s36_yv,numeric,yv,deadline dia thirty one august twenty twenty six kan,deadline near 31 August 2026 kan.,en,6,9,3,0,3,6,9
+malaysian_prompt_en,s37_pq,numeric,pq,interest rate dia three point five percent setahun je,"interest rate dear 2.5% is 1,000.",en,7,9,4,0,3,7,9
+malaysian_prompt_en,s38_pq,numeric,pq,kena bayar deposit dua ribu lima ratus ringgit,gonna buy a deposit to a ribo lima ratos ringgit.,en,7,8,5,2,0,7,8
+malaysian_prompt_en,s39_pq,numeric,pq,cukai jualan naik dari enam peratus ke lapan peratus ke,do you want to join us from 6% to 8%?,en,10,10,10,0,0,10,10
+malaysian_prompt_en,s40_pq,numeric,pq,buka pukul nine in the morning tutup pukul five in the evening kan,"bukan puku 9 in the morning, tutup puku 5 in the evening kan.",en,5,13,5,0,0,5,13
+malaysian_prompt_en,s41_yv,entity,yv,macam mana nak renew roadtax kat MyJPJ,"macam mana nak renew road tax card, my jbj.",en,5,7,3,2,0,5,7
+malaysian_prompt_en,s42_yv,entity,yv,boleh guna Touch n Go eWallet tak kat sini,boleh guna touch and go i wala tak kat sini.,en,3,9,2,1,0,3,9
+malaysian_prompt_en,s43_yv,entity,yv,saya nak semak baki KWSP guna i-Akaun,saya nak semak baki KWSP guna i account.,en,2,7,1,1,0,2,7
+malaysian_prompt_en,s44_yv,entity,yv,LHDN dah buka e-Filing untuk tahun ni ke,LHDN dah buka e feeling untuk tahun ni ke?,en,2,8,1,1,0,2,8
+malaysian_prompt_en,s45_pq,entity,pq,nak apply MyKad baru kat JPN macam mana,nak apply my card baru kat Jepia macam mana?,en,3,8,2,1,0,3,8
+malaysian_prompt_en,s46_pq,entity,pq,boleh bayar bil TNB guna Maybank2u tak,boleh buy a beauty and be good and be a bank to you that.,en,13,7,6,7,0,13,7
+malaysian_prompt_en,s47_pq,entity,pq,Grab dengan foodpanda mana lagi murah ah,grab dengan food pendah mana lagi mora?,en,4,7,2,1,1,4,7
+malaysian_prompt_en,s48_pq,entity,pq,nak tanya pasal bantuan STR tahun ni,nak tanya pasal bantuan eskiya tahun ni.,en,1,7,1,0,0,1,7
+malaysian_prompt_routed,s01_yv,ms_dom,yv,macam mana nak apply lesen memandu baru,macam mana nak apply lesen memandu baru.,ms,0,7,0,0,0,0,7
+malaysian_prompt_routed,s02_yv,ms_dom,yv,saya nak tanya pasal insurance kereta ni,Saya nak tanya pasal insurance kereta ni.,ms,0,7,0,0,0,0,7
+malaysian_prompt_routed,s03_yv,ms_dom,yv,boleh tak awak explain apa itu inflation,boleh tak awak explain apa itu inflation?,ms,0,7,0,0,0,0,7
+malaysian_prompt_routed,s04_yv,ms_dom,yv,nak cari tempat makan yang murah dekat sini,nak cari tempat makan yang murah dekat sini.,ms,0,8,0,0,0,0,8
+malaysian_prompt_routed,s05_pq,ms_dom,pq,camne nak transfer duit guna online banking,macam mana nak transfer duit guna online banking?,ms,2,7,1,1,0,2,7
+malaysian_prompt_routed,s06_pq,ms_dom,pq,saya lupa password akaun macam mana nak reset,Saya lupa password account macam mana nak reset.,ms,1,8,1,0,0,0,8
+malaysian_prompt_routed,s07_pq,ms_dom,pq,berapa lama proses renew passport ambil masa,berapa lama proses renew pasport ambil masa?,ms,1,7,1,0,0,1,7
+malaysian_prompt_routed,s08_pq,ms_dom,pq,tolong bagitahu cara nak book appointment klinik,tolong bagi tauhu charanabuk appointment clinic.,ms,5,7,4,0,1,5,7
+malaysian_prompt_routed,s09_yv,en_dom,yv,how do i check my epf balance ah,bagaimana saya boleh mengesan keseimbangan EPF saya?,ms,7,8,6,0,1,7,8
+malaysian_prompt_routed,s10_yv,en_dom,yv,can you explain what is compound interest lah,can you explain what is compound interest lah.,ms,0,8,0,0,0,0,8
+malaysian_prompt_routed,s11_yv,en_dom,yv,where can i find cheap flight ticket meh,di mana saya boleh mencari tiket penerbangan yang murah?,ms,9,8,8,1,0,9,8
+malaysian_prompt_routed,s12_yv,en_dom,yv,i want to know how to save money properly one,Saya ingin tahu bagaimana untuk menyimpan wang dengan betul.,ms,10,10,9,0,1,10,10
+malaysian_prompt_routed,s13_pq,en_dom,pq,is it safe to invest in unit trust ke,is this self to invest in unitrasca?,en,5,9,3,0,2,5,9
+malaysian_prompt_routed,s14_pq,en_dom,pq,tell me how to cook nasi lemak lah,tell me how to cook nasi lemala.,ms,2,8,1,0,1,2,8
+malaysian_prompt_routed,s15_pq,en_dom,pq,what time the post office close ah,what time the post office calls ah?,en,1,7,1,0,0,1,7
+malaysian_prompt_routed,s16_pq,en_dom,pq,can i renew my licence online or not,can i renew my license online or not?,en,1,8,1,0,0,0,8
+malaysian_prompt_routed,s17_yv,balanced,yv,saya dah submit application tapi belum dapat approval lagi,Saya dah submit application tapi belum dapat approval lagi.,ms,0,9,0,0,0,0,9
+malaysian_prompt_routed,s18_yv,balanced,yv,nak tanya pasal tax relief untuk medical expenses,nak tanya pasal tax relief untuk perbelanjaan perubatan.,ms,2,8,2,0,0,2,8
+malaysian_prompt_routed,s19_yv,balanced,yv,macam mana nak cancel subscription yang auto renew tu,macam mana nak cancel subscription yang auto renew tu.,ms,0,9,0,0,0,0,9
+malaysian_prompt_routed,s20_yv,balanced,yv,boleh tak explain difference antara savings dengan current account,Boleh tak explain difference antara savings dengan current account?,ms,0,9,0,0,0,0,9
+malaysian_prompt_routed,s21_pq,balanced,pq,saya nak update alamat kat identity card,saya nak update alamaka identity card.,ms,2,7,1,0,1,2,7
+malaysian_prompt_routed,s22_pq,balanced,pq,camne nak claim insurance kalau accident kereta,chiamnna nak klaim insurin kalao asiden karator?,ms,6,7,6,0,0,5,7
+malaysian_prompt_routed,s23_pq,balanced,pq,nak tahu requirement untuk apply credit card,nak tahu keperluan untuk menggunakan kad kredit?,ms,4,7,4,0,0,4,7
+malaysian_prompt_routed,s24_pq,balanced,pq,tolong terangkan macam mana interest rate affect loan,tolong terangkan macam mana interest rate effect loan.,ms,1,8,1,0,0,1,8
+malaysian_prompt_routed,s25_yv,particles,yv,eh betul ke ni macam tak kena je lor,eh betul ke ni macam tak kena je lor.,ms,0,9,0,0,0,0,9
+malaysian_prompt_routed,s26_yv,particles,yv,aiyo susah sangat lah macam ni,"ayo, susah sangat lah macam ni.",ms,1,6,1,0,0,0,6
+malaysian_prompt_routed,s27_yv,particles,yv,can one lah don't worry so much,"can one lah, don't worry so much.",ms,0,7,0,0,0,0,7
+malaysian_prompt_routed,s28_yv,particles,yv,wah mahal gila meh ada yang murah tak,"wah, maham gila meh, ada yang murah tak?",ms,1,8,1,0,0,1,8
+malaysian_prompt_routed,s29_pq,particles,pq,so how ah nak buat macam mana ni,"so how ah, nampak macam mana ni.",ms,2,8,1,0,1,2,8
+malaysian_prompt_routed,s30_pq,particles,pq,alamak terlupa pulak kan boleh tolong tak,alamat terlupa pula kan boleh tolong tak.,ms,2,7,2,0,0,2,7
+malaysian_prompt_routed,s31_pq,particles,pq,ish lambat betul lah service ni,ish lambat betul lah service ni.,ms,0,6,0,0,0,0,6
+malaysian_prompt_routed,s32_pq,particles,pq,okay lah fine saya try dulu kot,"okay lah fine, say I try to look good.",ms,5,7,3,2,0,5,7
+malaysian_prompt_routed,s33_yv,numeric,yv,harga dia empat puluh lima ringgit sembilan puluh sen termasuk cukai ke tak,harga dia RM45.90 termasuk cukai ke tak.,ms,7,13,1,0,6,7,13
+malaysian_prompt_routed,s34_yv,numeric,yv,gaji minimum sekarang seribu lima ratus ringgit ke ah,gaji minimum sekarang RM1500 ke ah.,ms,4,9,1,0,3,4,9
+malaysian_prompt_routed,s35_yv,numeric,yv,saya nak transfer one thousand five hundred ringgit boleh tak,Saya nak transfer RM1500 boleh tak?,ms,5,10,1,0,4,5,10
+malaysian_prompt_routed,s36_yv,numeric,yv,deadline dia thirty one august twenty twenty six kan,deadline near 31 august 2026 kan.,ms,6,9,3,0,3,6,9
+malaysian_prompt_routed,s37_pq,numeric,pq,interest rate dia three point five percent setahun je,"interest rate dear 2.5% is 1,000.",en,7,9,4,0,3,7,9
+malaysian_prompt_routed,s38_pq,numeric,pq,kena bayar deposit dua ribu lima ratus ringgit,kena bayar deposit dua ribu lima ratus ringgit.,ms,0,8,0,0,0,0,8
+malaysian_prompt_routed,s39_pq,numeric,pq,cukai jualan naik dari enam peratus ke lapan peratus ke,cukai jual naik dari 6% ke 8% ke?,ms,5,10,3,0,2,5,10
+malaysian_prompt_routed,s40_pq,numeric,pq,buka pukul nine in the morning tutup pukul five in the evening kan,"bukan pukul 9 pagi, tutup pukul 5 petang kan.",ms,9,13,5,0,4,9,13
+malaysian_prompt_routed,s41_yv,entity,yv,macam mana nak renew roadtax kat MyJPJ,macam mana nak renew road tax card main jbj?,ms,5,7,3,2,0,5,7
+malaysian_prompt_routed,s42_yv,entity,yv,boleh guna Touch n Go eWallet tak kat sini,"boleh kena touch and go, i wala tak kat sini.",ms,4,9,3,1,0,4,9
+malaysian_prompt_routed,s43_yv,entity,yv,saya nak semak baki KWSP guna i-Akaun,Saya nak semak bagi KWSP guna I account.,ms,3,7,2,1,0,3,7
+malaysian_prompt_routed,s44_yv,entity,yv,LHDN dah buka e-Filing untuk tahun ni ke,LHDN dah buka e-filling untuk tahun ni ke?,ms,1,8,1,0,0,1,8
+malaysian_prompt_routed,s45_pq,entity,pq,nak apply MyKad baru kat JPN macam mana,nak apply my card baru kat Jepya macam mana?,ms,3,8,2,1,0,3,8
+malaysian_prompt_routed,s46_pq,entity,pq,boleh bayar bil TNB guna Maybank2u tak,boleh beli bil TNB guna bebank tu you tak.,ms,4,7,2,2,0,4,7
+malaysian_prompt_routed,s47_pq,entity,pq,Grab dengan foodpanda mana lagi murah ah,grab dengan foodpanda mana lagi mora?,ms,2,7,1,0,1,2,7
+malaysian_prompt_routed,s48_pq,entity,pq,nak tanya pasal bantuan STR tahun ni,nak tanya pasal bantuan STR tahun ni.,ms,0,7,0,0,0,0,7
+vanilla_prompt_routed,s01_yv,ms_dom,yv,macam mana nak apply lesen memandu baru,macam mana nak apply lesson memandu baru.,ms,1,7,1,0,0,1,7
+vanilla_prompt_routed,s02_yv,ms_dom,yv,saya nak tanya pasal insurance kereta ni,saya nak tanya pasal influence greater ni.,ms,2,7,2,0,0,2,7
+vanilla_prompt_routed,s03_yv,ms_dom,yv,boleh tak awak explain apa itu inflation,boleh tak awak explain apa itu inflation.,ms,0,7,0,0,0,0,7
+vanilla_prompt_routed,s04_yv,ms_dom,yv,nak cari tempat makan yang murah dekat sini,nak cari tempat makan yang murah dekat sini.,ms,0,8,0,0,0,0,8
+vanilla_prompt_routed,s05_pq,ms_dom,pq,camne nak transfer duit guna online banking,cham na na transfer duit guna online banking,ms,3,7,2,1,0,3,7
+vanilla_prompt_routed,s06_pq,ms_dom,pq,saya lupa password akaun macam mana nak reset,saya lupa password account macam mana nak reset.,ms,1,8,1,0,0,0,8
+vanilla_prompt_routed,s07_pq,ms_dom,pq,berapa lama proses renew passport ambil masa,berapa lama proses renew pasport ambil masa?,ms,1,7,1,0,0,1,7
+vanilla_prompt_routed,s08_pq,ms_dom,pq,tolong bagitahu cara nak book appointment klinik,tolong bagi daho cari nabuk appointment clinic.,ms,5,7,5,0,0,5,7
+vanilla_prompt_routed,s09_yv,en_dom,yv,how do i check my epf balance ah,how do i check my epf balancer.,ms,2,8,1,0,1,2,8
+vanilla_prompt_routed,s10_yv,en_dom,yv,can you explain what is compound interest lah,can you explain what is compound interest lah.,ms,0,8,0,0,0,0,8
+vanilla_prompt_routed,s11_yv,en_dom,yv,where can i find cheap flight ticket meh,tempat AFD di mana crash bait magikorma.,ms,8,8,7,0,1,8,8
+vanilla_prompt_routed,s12_yv,en_dom,yv,i want to know how to save money properly one,i want to know how to save money properly one.,ms,0,10,0,0,0,0,10
+vanilla_prompt_routed,s13_pq,en_dom,pq,is it safe to invest in unit trust ke,is this safe to invest in uni trustee?,en,4,9,3,0,1,4,9
+vanilla_prompt_routed,s14_pq,en_dom,pq,tell me how to cook nasi lemak lah,masak cintakan cantik yuk ok mapped gleich nama voll function,ms,10,8,8,2,0,10,8
+vanilla_prompt_routed,s15_pq,en_dom,pq,what time the post office close ah,what time the post office close ah?,en,0,7,0,0,0,0,7
+vanilla_prompt_routed,s16_pq,en_dom,pq,can i renew my licence online or not,can i renew my license online or not.,en,1,8,1,0,0,0,8
+vanilla_prompt_routed,s17_yv,balanced,yv,saya dah submit application tapi belum dapat approval lagi,saya dah submit application tapi belum dapat approval lagi.,ms,0,9,0,0,0,0,9
+vanilla_prompt_routed,s18_yv,balanced,yv,nak tanya pasal tax relief untuk medical expenses,nak tanya pasal text relief untuk medical expenses.,ms,1,8,1,0,0,1,8
+vanilla_prompt_routed,s19_yv,balanced,yv,macam mana nak cancel subscription yang auto renew tu,macam mana nak cancel subscription yang autor bernil tu.,ms,2,9,2,0,0,2,9
+vanilla_prompt_routed,s20_yv,balanced,yv,boleh tak explain difference antara savings dengan current account,boleh tak explain difference and thorough savings dengan current account.,ms,2,9,1,1,0,2,9
+vanilla_prompt_routed,s21_pq,balanced,pq,saya nak update alamat kat identity card,saya nak update alamak ke identi dekat.,ms,4,7,4,0,0,4,7
+vanilla_prompt_routed,s22_pq,balanced,pq,camne nak claim insurance kalau accident kereta,cemnon nak claim insurin kalaour accident kereta?,ms,3,7,3,0,0,2,7
+vanilla_prompt_routed,s23_pq,balanced,pq,nak tahu requirement untuk apply credit card,"now, dialAll Requirements untukNEgarlikasi kreatifikasinya.",ms,7,7,5,0,2,7,7
+vanilla_prompt_routed,s24_pq,balanced,pq,tolong terangkan macam mana interest rate affect loan,tolong terangkan macam mana interest rate effect lul.,ms,2,8,2,0,0,2,8
+vanilla_prompt_routed,s25_yv,particles,yv,eh betul ke ni macam tak kena je lor,"eh betul ke ni, macam tak kena je lho.",ms,1,9,1,0,0,1,9
+vanilla_prompt_routed,s26_yv,particles,yv,aiyo susah sangat lah macam ni,ayo susah sangat lah macam ni.,ms,1,6,1,0,0,0,6
+vanilla_prompt_routed,s27_yv,particles,yv,can one lah don't worry so much,"kan what lah, don't worry so much.",ms,2,7,2,0,0,2,7
+vanilla_prompt_routed,s28_yv,particles,yv,wah mahal gila meh ada yang murah tak,"wah, makham gila me, ada yang murah tak.",ms,2,8,2,0,0,2,8
+vanilla_prompt_routed,s29_pq,particles,pq,so how ah nak buat macam mana ni,"so how ah, nampak macam mana ni.",ms,2,8,1,0,1,2,8
+vanilla_prompt_routed,s30_pq,particles,pq,alamak terlupa pulak kan boleh tolong tak,alamat olah pupulah kan boleh tolong tak.,ms,3,7,3,0,0,3,7
+vanilla_prompt_routed,s31_pq,particles,pq,ish lambat betul lah service ni,ish lambat betul lah servis ni.,ms,1,6,1,0,0,1,6
+vanilla_prompt_routed,s32_pq,particles,pq,okay lah fine saya try dulu kot,"ok dah, fine. so you try to look good.",ms,7,7,5,2,0,7,7
+vanilla_prompt_routed,s33_yv,numeric,yv,harga dia empat puluh lima ringgit sembilan puluh sen termasuk cukai ke tak,harga dia 45 ringgit 90cm masuk cuaca ke tak.,ms,8,13,4,0,4,8,13
+vanilla_prompt_routed,s34_yv,numeric,yv,gaji minimum sekarang seribu lima ratus ringgit ke ah,gaji minimum sekarang 1500 ringgit ke ah,ms,3,9,1,0,2,3,9
+vanilla_prompt_routed,s35_yv,numeric,yv,saya nak transfer one thousand five hundred ringgit boleh tak,saya nak transfer 1500 ringgit boleh tak.,ms,4,10,1,0,3,4,10
+vanilla_prompt_routed,s36_yv,numeric,yv,deadline dia thirty one august twenty twenty six kan,deadline near 31 august 2026 kan,ms,6,9,3,0,3,6,9
+vanilla_prompt_routed,s37_pq,numeric,pq,interest rate dia three point five percent setahun je,interest rate dear 2.5% is down here.,en,7,9,5,0,2,7,9
+vanilla_prompt_routed,s38_pq,numeric,pq,kena bayar deposit dua ribu lima ratus ringgit,kena bayar di posis 2500 rupiah seringkit.,ms,6,8,5,0,1,6,8
+vanilla_prompt_routed,s39_pq,numeric,pq,cukai jualan naik dari enam peratus ke lapan peratus ke,cuka jual nak dari 6-8 peratus ke?,ms,7,10,4,0,3,7,10
+vanilla_prompt_routed,s40_pq,numeric,pq,buka pukul nine in the morning tutup pukul five in the evening kan,buka buku nai di pagi untuk buku file di tengah hari ni kan.,ms,11,13,11,0,0,11,13
+vanilla_prompt_routed,s41_yv,entity,yv,macam mana nak renew roadtax kat MyJPJ,macam mana nak renew roadtags kat main JBJ.,ms,3,7,2,1,0,3,7
+vanilla_prompt_routed,s42_yv,entity,yv,boleh guna Touch n Go eWallet tak kat sini,boleh guna touch and go i walat tak kat sini.,ms,3,9,2,1,0,3,9
+vanilla_prompt_routed,s43_yv,entity,yv,saya nak semak baki KWSP guna i-Akaun,saya nak semak bagi ke WSP guna iAccount.,ms,4,7,3,1,0,4,7
+vanilla_prompt_routed,s44_yv,entity,yv,LHDN dah buka e-Filing untuk tahun ni ke,LHDN dah buka e-filling untuk tahun ni ke?,ms,1,8,1,0,0,1,8
+vanilla_prompt_routed,s45_pq,entity,pq,nak apply MyKad baru kat JPN macam mana,nak reply maikak baru ke jebiah macam mana?,ms,4,8,4,0,0,4,8
+vanilla_prompt_routed,s46_pq,entity,pq,boleh bayar bil TNB guna Maybank2u tak,"Bolate bio, description below.",ms,7,7,4,0,3,7,7
+vanilla_prompt_routed,s47_pq,entity,pq,Grab dengan foodpanda mana lagi murah ah,grep dengan fukh henda mana lagi murah?,ms,4,7,2,1,1,4,7
+vanilla_prompt_routed,s48_pq,entity,pq,nak tanya pasal bantuan STR tahun ni,Nur tan yah pas ad werden-ton ni tiah dah unfun ni.,ms,10,7,6,4,0,10,7

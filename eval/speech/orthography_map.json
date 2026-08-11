@@ -1,0 +1,12 @@
+{
+  "_README": "Same word, different orthography. Whisper picks one language's spelling per segment (proposal S5.6), so these are formatting differences, not mishearings. Translations (how->bagaimana) are NOT listed: the meaning survives but the transcript is still wrong for the downstream normaliser. Extend this from substitutions.csv, and justify every entry -- lenient scoring is a decision you defend, not a way to lower the number.",
+  "cek": "check",
+  "akaun": "account",
+  "ayo": "aiyo",
+  "bil": "bill",
+  "lesen": "licence",
+  "license": "licence",
+  "insurin": "insurance",
+  "epf": "epf",
+  "kwsp": "kwsp"
+}

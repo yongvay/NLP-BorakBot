@@ -1,0 +1,77 @@
+domain: immigration_passport
+agency: Jabatan Imigresen Malaysia
+portal: https://www.imi.gov.my/
+description: >
+  Malaysian passport application and renewal — fees, validity options and where
+  each type must be applied for. Does not cover visa rules for other countries,
+  which are out of domain.
+
+facts:
+  - id: imm.passport.fee_5yr
+    fact: >
+      The Malaysian 5-year passport costs RM200 and can be renewed entirely
+      online through MyOnline Passport at imigresen-online.imi.gov.my.
+    check: ["RM200", "5"]
+    stability: slow
+    verified: secondary
+    source: https://malaysia4u.com/passport-guide
+    retrieved: 2026-08-10
+    tags: [passport, fee, renewal]
+
+  - id: imm.passport.fee_10yr
+    fact: >
+      A 10-year Malaysian passport was introduced on 1 July 2026 and costs RM350.
+      It can only be applied for in person at a passport-issuing office, not
+      online.
+    check: ["RM350", "10", "in person"]
+    stability: slow
+    verified: secondary
+    source: https://www.buzzkini.com/review/malaysian-passport-2026/
+    retrieved: 2026-08-10
+    tags: [passport, fee, new]
+    notes: >
+      Introduced after most base models' training cut-off, so this is a clean
+      fine-tuned-vs-base comparison item. It is also the newest and least stable
+      fact in the KB — re-verify against imi.gov.my before the demo.
+
+  - id: imm.passport.online_eligibility
+    fact: >
+      MyOnline Passport handles 5-year renewals for straightforward adult cases
+      only. First-time, child, lost, damaged and 10-year applications must be
+      made in person.
+    check: [in person, online]
+    stability: slow
+    verified: secondary
+    source: https://malaysia4u.com/passport-guide
+    retrieved: 2026-08-10
+    tags: [passport, eligibility, online]
+
+  - id: imm.passport.online_requirements
+    fact: >
+      To renew a passport online the existing passport must be available and in
+      good condition, the applicant's personal details must be unchanged, and a
+      compliant photograph must be uploaded.
+    check: [good condition, unchanged]
+    stability: slow
+    verified: secondary
+    source: https://malaysia4u.com/passport-guide
+    retrieved: 2026-08-10
+    tags: [passport, requirements, online]
+
+  - id: imm.passport.payment_methods
+    fact: >
+      MyOnline Passport accepts payment by FPX online banking through Malaysian
+      banks, and by credit or debit card.
+    check: [FPX, card]
+    stability: slow
+    verified: secondary
+    source: https://malaysia4u.com/passport-guide
+    retrieved: 2026-08-10
+    tags: [passport, payment, online]
+
+# --- Known gap, deliberately not yet a fact ---------------------------------
+# Secondary sources disagree on the senior-citizen passport rate: one reports a
+# total of RM175 for applicants aged 60+, and in the same breath says MyOnline
+# Passport charges seniors the standard RM200 "not RM100". Three different
+# figures, so none of them is trustworthy. Verify against imi.gov.my directly
+# before adding. Do not guess — a wrong fee at the demo is worse than a gap.
