@@ -15,7 +15,7 @@ this repository.
 | Module | Status |
 |---|---|
 | **Speech-to-text (Stage 1)** | **Closed** — built, evaluated, written up, packaged |
-| **Streamlit UI shell** | **Stage 1 only** — records and transcribes, nothing else |
+| **Streamlit UI shell** | **Stage 1 only** — records and transcribes, nothing else. Verified end to end on Windows, 11 Aug: ~6.6 s/utterance on CPU |
 | Knowledge base | Scoped; **28 of ~165 facts** |
 | Synthetic dataset generator | **Not written** ← the next thing to do |
 | Rojak normalisation (Stage 2) | Not started |
@@ -43,6 +43,10 @@ spend more time on speech.** It is finished.
 4. Two claims in Handoff 1 turned out to be **wrong** and are corrected in §3.
 5. `app/stt.py`, `app/streamlit_app.py` and a verification script were written.
 6. The knowledge base was **rescoped** — narrower domain, now deviation #6.
+7. The Streamlit app was **actually run** for the first time and works end to end
+   (§5). `requirements.txt` now exists and pins the environment that produced it.
+   The Windows environment fight it took to get there is in §12 — read it before
+   setting up a second machine.
 
 ---
 
@@ -137,6 +141,33 @@ and it means the `en_dom` figure is partly a property of who recorded the corpus
 is in report §8 (Threats to Validity) worded that way. The stratified test design is
 what made it visible; say that too.
 
+### Same-utterance instability — observed live, NOT yet evidence
+
+During the first Streamlit run on 11 August, yv recorded one English sentence twice:
+
+| take | length | `p_en` | routed | transcript |
+|---|---|---|---|---|
+| 1 | 4 s | 0.505 | `en` | "hello hello, can you hear me?" |
+| 2 | 10 s | 0.406 | `ms` | "hello hello can you hear me" |
+
+Same sentence, same speaker, same room, minutes apart — and opposite routing
+decisions, straddling the cutoff by about ±0.05. Both transcripts are correct
+English; the misroute cost punctuation, not words.
+
+**This is deliberately not in the report.** It is n = 2, uncontrolled (the takes
+differ in length), and logged nowhere, so writing it up would break the "never
+hand-copy numbers into the report" rule below and invite a fair objection at the
+demo. To make it reportable: record N ≥ 10 takes of one utterance through the app,
+log `p_en` per take to a CSV, report the spread.
+
+Worth doing, because it would *strengthen* report §5 rather than complicate it. That
+section currently argues against tuning the threshold on two grounds — leakage, and
+the cliff at t = 0.05. Test-retest spread of ±0.05 on a single utterance would be a
+third and more intuitive one: the quantity being thresholded is not stable enough to
+carry a precisely tuned cutoff. Note also that take 1's 0.505 exceeds every `en_dom`
+clip yv recorded for the corpus (max 0.263), which hints the eval set does not span
+this speaker's own range.
+
 ---
 
 ## 5. What was built this session
@@ -166,17 +197,32 @@ fail when deliberately broken. **Run the second one and paste the result** — t
 "the deployed pipeline was verified against the evaluated one" is worth making in the
 report's Coding section, and it is not true until someone runs it.
 
-### Running the Streamlit app (not yet done)
+### Running the Streamlit app — done 11 August, works end to end
+
+Record in the browser, transcribe, correct rojak text out. **~6.6 s per utterance on
+CPU, no GPU**, once the models are cached. First run downloads ~1.5 GB, and the CLI
+reports that download inside its own timing — a 190 s first call is the download, not
+the inference. The Streamlit `Time` metric is honest, because `_load_models()` runs
+before the timer starts.
 
 ```
-py -m venv .venv
-.venv\Scripts\activate
-pip install openai-whisper transformers torch streamlit pandas
+py -3.13 -m venv .venv
+.\.venv\Scripts\Activate.ps1        # the leading .\ is required in PowerShell
+pip install -r requirements.txt
 winget install Gyan.FFmpeg          # reopen the terminal afterwards
+python app/stt.py --check-config    # instant; all four constants matched on 11 Aug
 streamlit run app/streamlit_app.py
 ```
 
-`ffmpeg` missing is the most likely failure. First run downloads ~1 GB of models.
+**Read the header of `requirements.txt` before installing on a new machine.** Windows
+long paths must be enabled first or the torch install fails in a way that blames the
+wrong thing entirely — see §12. That cost about an hour.
+
+`ffmpeg` missing is the next most likely failure.
+
+The upload tab accepts `.mp4`, `.3gp`, `.ogg`, `.opus` and `.flac` as well as WAV/MP3/M4A,
+since phone voice memos rarely arrive as `.m4a`. ffmpeg sniffs the container and ignores
+the extension, so widening the whitelist was the entire change.
 
 ---
 
@@ -222,6 +268,7 @@ out-of-domain general knowledge — rather than one flattering average.
 
 ```
 CLAUDE.md                          project rules
+requirements.txt                   pinned app environment; READ ITS HEADER on Windows
 handoffs/HANDOFF_2.md              this file — current
 handoffs/HANDOFF_1.md              superseded; see §3 for what it gets wrong
 app/
@@ -354,3 +401,23 @@ evaluated against a baseline, and demoable.
 - `_strip_prompt` had a real defect (a coarse grid search left prompt fragments in the
   transcript). It is fixed in both copies. It was **latent** — none of the 288 prompted
   transcripts took that branch — so no published figure changed. Verified before fixing.
+- **Enable Windows long paths before `pip install torch`.** torch nests its third-party
+  licences about seven directories deep. Under the 260-character `MAX_PATH` the install
+  dies partway with `OSError: [WinError 206] The filename or extension is too long` —
+  *after* `torch/` unpacks but *before* `torchgen/` does. Every later run then fails with
+  `ModuleNotFoundError: No module named 'torchgen'`, which names the symptom and hides
+  the cause completely. Roughly an hour lost on 11 August. Once per machine, in an
+  **administrator** PowerShell, then **reboot**:
+  `New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name LongPathsEnabled -Value 1 -PropertyType DWORD -Force`
+  The repo path spends 65 characters before the venv even begins, so a venv at
+  `C:\v\borak` is the no-admin alternative. Full writeup in `requirements.txt`.
+- **There is a `torchgen` package on PyPI and it is not PyTorch's.** Unrelated, version
+  0.0.1. Installing it to satisfy that import masks the real fault. The real `torchgen`
+  ships *inside* the torch wheel — if it is missing, the wheel is broken.
+- **A half-deleted package still imports.** `pip uninstall torch` refused with `no RECORD
+  file`, and deleting `site-packages\torch` by hand left the DLLs behind because
+  Streamlit was still running and holding them open. A directory with no `__init__.py`
+  is a namespace package, so `import torch` then *succeeds*, with `__file__ = None` and
+  no `__version__` — a confusing state that looks like a torch bug. Stop every
+  `python.exe` first, and do **not** pass `-ErrorAction SilentlyContinue` to
+  `Remove-Item`: it hides precisely the failure you need to see.

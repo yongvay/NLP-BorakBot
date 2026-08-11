@@ -58,7 +58,13 @@ tab_record, tab_upload = st.tabs(["Record", "Upload a file"])
 with tab_record:
     recorded = st.audio_input("Press record and speak in rojak")
 with tab_upload:
-    uploaded = st.file_uploader("WAV, MP3 or M4A", type=["wav", "mp3", "m4a"])
+    # Phone voice memos arrive as .mp4 or .3gp containers, not just .m4a -- the same
+    # point .gitignore makes. ffmpeg sniffs the container and ignores the extension,
+    # so the decode path is identical; only this whitelist had to widen.
+    uploaded = st.file_uploader(
+        "WAV, MP3, M4A, MP4, 3GP or OGG",
+        type=["wav", "mp3", "m4a", "mp4", "3gp", "ogg", "opus", "flac"],
+    )
 
 audio = recorded or uploaded
 
