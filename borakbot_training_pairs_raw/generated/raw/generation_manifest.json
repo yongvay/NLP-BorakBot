@@ -1,0 +1,130 @@
+{
+  "date": "2026-08-11",
+  "model": "GPT-5.6 Sol",
+  "prompt_file": "generate_pairs_prompt.md",
+  "source_files": [
+    "slang_meanings.yaml",
+    "small_talk.yaml"
+  ],
+  "total_facts": 26,
+  "total_pairs": 260,
+  "combined_file": "all_training_pairs.jsonl",
+  "batches": [
+    {
+      "file": "slang_meanings_b01.jsonl",
+      "domain": "slang_meanings",
+      "batch": 1,
+      "date": "2026-08-11",
+      "model": "GPT-5.6 Sol",
+      "prompt_git_commit": "not provided in uploaded materials",
+      "fact_ids": [
+        "slang.gostan",
+        "slang.tapau",
+        "slang.lepak",
+        "slang.syok",
+        "slang.paiseh"
+      ],
+      "pairs_produced": 50,
+      "pairs_rejected_at_generation_review": 0,
+      "review_status": "generation-time structural/check-string pass completed; human acceptance review still required",
+      "official_validator_status": "not run; scripts/validate_pairs.py was not included in the uploaded files"
+    },
+    {
+      "file": "slang_meanings_b02.jsonl",
+      "domain": "slang_meanings",
+      "batch": 2,
+      "date": "2026-08-11",
+      "model": "GPT-5.6 Sol",
+      "prompt_git_commit": "not provided in uploaded materials",
+      "fact_ids": [
+        "slang.kiasu",
+        "slang.cincai",
+        "slang.sien",
+        "slang.bojio",
+        "slang.mamak"
+      ],
+      "pairs_produced": 50,
+      "pairs_rejected_at_generation_review": 0,
+      "review_status": "generation-time structural/check-string pass completed; human acceptance review still required",
+      "official_validator_status": "not run; scripts/validate_pairs.py was not included in the uploaded files"
+    },
+    {
+      "file": "slang_meanings_b03.jsonl",
+      "domain": "slang_meanings",
+      "batch": 3,
+      "date": "2026-08-11",
+      "model": "GPT-5.6 Sol",
+      "prompt_git_commit": "not provided in uploaded materials",
+      "fact_ids": [
+        "slang.outstation",
+        "slang.terror",
+        "slang.action",
+        "slang.yumcha",
+        "slang.particle_lah"
+      ],
+      "pairs_produced": 50,
+      "pairs_rejected_at_generation_review": 0,
+      "review_status": "generation-time structural/check-string pass completed; human acceptance review still required",
+      "official_validator_status": "not run; scripts/validate_pairs.py was not included in the uploaded files"
+    },
+    {
+      "file": "slang_meanings_b04.jsonl",
+      "domain": "slang_meanings",
+      "batch": 4,
+      "date": "2026-08-11",
+      "model": "GPT-5.6 Sol",
+      "prompt_git_commit": "not provided in uploaded materials",
+      "fact_ids": [
+        "slang.alamak"
+      ],
+      "pairs_produced": 10,
+      "pairs_rejected_at_generation_review": 0,
+      "review_status": "generation-time structural/check-string pass completed; human acceptance review still required",
+      "official_validator_status": "not run; scripts/validate_pairs.py was not included in the uploaded files"
+    },
+    {
+      "file": "small_talk_b01.jsonl",
+      "domain": "small_talk",
+      "batch": 1,
+      "date": "2026-08-11",
+      "model": "GPT-5.6 Sol",
+      "prompt_git_commit": "not provided in uploaded materials",
+      "fact_ids": [
+        "talk.identity",
+        "talk.capability",
+        "talk.boundary",
+        "talk.not_human",
+        "talk.languages"
+      ],
+      "pairs_produced": 50,
+      "pairs_rejected_at_generation_review": 0,
+      "review_status": "generation-time structural/check-string pass completed; human acceptance review still required",
+      "official_validator_status": "not run; scripts/validate_pairs.py was not included in the uploaded files"
+    },
+    {
+      "file": "small_talk_b02.jsonl",
+      "domain": "small_talk",
+      "batch": 2,
+      "date": "2026-08-11",
+      "model": "GPT-5.6 Sol",
+      "prompt_git_commit": "not provided in uploaded materials",
+      "fact_ids": [
+        "talk.how_to_ask",
+        "talk.greeting",
+        "talk.wellbeing",
+        "talk.thanks",
+        "talk.goodbye"
+      ],
+      "pairs_produced": 50,
+      "pairs_rejected_at_generation_review": 0,
+      "review_status": "generation-time structural/check-string pass completed; human acceptance review still required",
+      "official_validator_status": "not run; scripts/validate_pairs.py was not included in the uploaded files"
+    }
+  ],
+  "notes": [
+    "Raw output only; per prompt, human review is required before committing to the reviewed corpus.",
+    "All source_fact IDs were found in the supplied YAML files.",
+    "Every non-empty check string was found verbatim and case-sensitively in every corresponding answer.",
+    "All facts have 10 pairs; no numeric switch_type was used because these supplied facts contain no numeric fee/duration facts."
+  ]
+}
