@@ -1,8 +1,13 @@
 # BorakBot — Handoff 2
 
-Written 11 August 2026. **This is the current handoff.** Read it first, then
-`CLAUDE.md` for the project rules. `HANDOFF_1.md` is kept for history; where the two
-disagree, this one is right.
+> **SUPERSEDED by `HANDOFF_3.md` (11 August 2026).** Kept for history. Where the
+> two disagree, Handoff 3 is right. In particular: §6's seven-domain knowledge
+> base table, §10 step 1 ("write `scripts/generate_pairs.py`" — that script was
+> never written and should not be), and §11 open decision 1 (resolved) are all
+> out of date.
+
+Written 11 August 2026. `CLAUDE.md` has the project rules. `HANDOFF_1.md` is kept
+for history; where it and this file disagree, this one is right.
 
 ---
 
