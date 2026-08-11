@@ -1,0 +1,188 @@
+domain: slang_meanings
+agency: null
+portal: null
+description: >
+  Meanings of Malaysian slang, Manglish borrowings and discourse particles.
+  Definitional facts — no agency, no portal. These teach vocabulary and double
+  as a demonstration of rojak competence. Does not cover slang from other
+  countries, or vulgar terms.
+
+# WRITING NOTES
+#
+# `stability: stable`, `verified: official`, `source: general` — definitional
+# facts need no URL (README, `source` field).
+#
+# `check` strings are the English gloss, short and literal, and chosen so they
+# fall MID-SENTENCE in a natural answer. Check matching is case-sensitive, so a
+# gloss that tends to open a sentence will fail against a capitalised word.
+# ["hang out"] is safe; ["Reverse"] is not.
+#
+# Facts here are `general` in the _scope.md sense — the same answer for whoever
+# asks — so they sit inside the boundary even though no agency owns them.
+
+facts:
+  - id: slang.gostan
+    fact: >
+      "Gostan" means to reverse or move backwards, usually a vehicle. It comes
+      from the English nautical phrase "go astern".
+    check: [reverse]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, verb, vehicle]
+    notes: >
+      Part A's feedback-loop example, so the Stage 4 correction demo depends on
+      this entry existing. Do not remove or rename it.
+
+  - id: slang.tapau
+    fact: >
+      "Tapau" means to pack food to take away rather than eat in. It can also
+      mean to defeat someone soundly.
+    check: [take away]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, verb, food]
+
+  - id: slang.lepak
+    fact: >
+      "Lepak" means to hang out and relax with no particular purpose, often at a
+      mamak or a friend's place.
+    check: [hang out]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, verb, social]
+
+  - id: slang.syok
+    fact: >
+      "Syok" describes something enjoyable, satisfying or that feels good. It is
+      also spelt "shiok".
+    check: [enjoyable]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, adjective]
+
+  - id: slang.paiseh
+    fact: >
+      "Paiseh" means embarrassed, shy or awkward, and is borrowed from Hokkien.
+      It is often used to apologise lightly for imposing on someone.
+    check: [embarrassed]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, adjective, hokkien]
+
+  - id: slang.kiasu
+    fact: >
+      "Kiasu" describes someone afraid of losing out or missing an advantage, so
+      they overprepare or grab more than they need. It is borrowed from Hokkien.
+    check: [losing out]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, adjective, hokkien]
+
+  - id: slang.cincai
+    fact: >
+      "Cincai" means done carelessly, casually or without much thought. Ordering
+      food cincai means letting someone else decide.
+    check: [carelessly]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, adverb]
+
+  - id: slang.sien
+    fact: >
+      "Sien" means bored, fed up or listless, and is borrowed from Hokkien.
+    check: [bored]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, adjective, hokkien]
+
+  - id: slang.bojio
+    fact: >
+      "Bojio" is a complaint that someone went somewhere or did something
+      without inviting you. It is borrowed from Hokkien.
+    check: [without inviting]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, hokkien, social]
+
+  - id: slang.mamak
+    fact: >
+      A "mamak" is an Indian-Muslim eatery, many of which open late or around
+      the clock. The word also refers to the Indian-Muslim community itself.
+    check: [Indian-Muslim]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, noun, food]
+
+  - id: slang.outstation
+    fact: >
+      "Outstation" means away from your usual town or base, typically for work
+      travel.
+    check: [away from]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, adjective, work]
+
+  - id: slang.terror
+    fact: >
+      In Malaysian usage "terror" is a compliment meaning very good or highly
+      skilled at something, not something frightening.
+    check: [very good]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, adjective, false-friend]
+    notes: >
+      A false friend against standard English. Worth keeping as a demo item —
+      an un-fine-tuned base model is likely to read it in the English sense.
+
+  - id: slang.action
+    fact: >
+      Used as an adjective, "action" describes someone showing off or behaving
+      arrogantly.
+    check: [showing off]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, adjective, false-friend]
+
+  - id: slang.yumcha
+    fact: >
+      "Yumcha" means to go out for drinks and a chat, usually tea or coffee at a
+      kopitiam or mamak. It is borrowed from Cantonese.
+    check: [drinks]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, verb, cantonese, social]
+
+  - id: slang.particle_lah
+    fact: >
+      The particle "lah" is attached to the end of a sentence to soften it, add
+      emphasis, or make it sound more friendly and less abrupt. It carries no
+      meaning of its own.
+    check: [hujung ayat]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, particle, grammar]
+
+  - id: slang.alamak
+    fact: >
+      "Alamak" is an exclamation of dismay, surprise or mild frustration, close
+      to "oh no" in English.
+    check: ["oh no"]
+    stability: stable
+    verified: official
+    source: general
+    tags: [slang, exclamation]

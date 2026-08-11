@@ -1,0 +1,43 @@
+domain: lhdn_tax
+agency: Lembaga Hasil Dalam Negeri (LHDN)
+portal: https://www.hasil.gov.my/
+description: >
+  Personal income tax basics — who must file, how to register and file, common
+  reliefs, and deadlines. Covers procedure and published rates. Does not cover a
+  specific user's tax position, and does not give tax-planning or avoidance
+  advice — both fall back.
+
+# WRITING NOTES — READ BEFORE WRITING
+#
+# Every fact here is `stability: slow`, needs a real hasil.gov.my URL you
+# actually opened, and a `retrieved` date.
+#
+# BOUNDARY WARNING. This domain sits right next to a fallback category.
+# "How does e-Filing work" is in scope. "How should I declare to pay less tax"
+# is professional advice and must fall back — it is already a near_miss probe
+# in _out_of_scope.yaml. When writing a fact, ask whether answering it is
+# explaining a published rule or advising on someone's affairs. Only the first
+# belongs here.
+#
+# Tax reliefs and brackets change with each Budget. Write the assessment year
+# into the fact text itself ("for YA 2025, ...") so a stale fact is visibly
+# stale rather than silently wrong.
+#
+# `check` strings short and literal: ["RM9,000"], ["30 April"].
+#
+# TARGET ~25. Topic checklist — delete a line as you write it.
+#
+#   WHO FILES      income threshold for mandatory filing, residents vs
+#                  non-residents, employees vs sole proprietors
+#   REGISTRATION   e-Daftar, getting a tax reference number, what you need
+#   FORMS          Form BE, Form B, Form M — who uses which
+#   DEADLINES      30 April (BE), 30 June (B), extension for e-Filing
+#   FILING         MyTax / e-Filing, how to log in, digital certificate
+#   RELIEFS        individual relief, EPF + life insurance, medical, education,
+#                  lifestyle, parents, disabled, SSPN
+#   RATES          resident individual bands, non-resident flat rate
+#   PCB / MTD      what monthly tax deduction is, and when it is final tax
+#   PENALTIES      late filing, failure to file
+#   REFUNDS        how a refund is issued, how long it takes
+
+facts: []
