@@ -11,6 +11,20 @@ Recording uses `st.audio_input`, which is built into Streamlit (1.35+). CLAUDE.m
 rules out custom front-end work, and a built-in component also means no extra
 dependency to justify at the demo.
 
+STARTUP COST — WHY IT PAUSES, AND WHY THAT IS NOT A DOWNLOAD
+------------------------------------------------------------
+Starting the server costs about 13 s on this machine: ~6 s importing torch and
+transformers, then ~7 s reading roughly 930 MB of weights off disk into RAM. Only
+the very first run downloads anything; after that the files sit in the user cache
+and the pause is pure deserialisation, which no cache can remove from a fresh
+process. An earlier version of this file said "first run downloads ~1 GB" on
+*every* start, which made a routine disk load look like a repeated 1 GB download.
+The messages below are chosen from `stt.cache_status()` so they say what is
+actually happening.
+
+The way to avoid the pause is not to restart the server: Streamlit hot-reloads on
+save and `@st.cache_resource` keeps both models in RAM across reruns.
+
 Usage
     pip install streamlit openai-whisper transformers torch
     streamlit run app/streamlit_app.py
@@ -27,7 +41,7 @@ from app import stt  # noqa: E402
 st.set_page_config(page_title="BorakBot", page_icon="🎙", layout="centered")
 
 
-@st.cache_resource(show_spinner="Loading Whisper models — first run downloads ~1 GB...")
+@st.cache_resource(show_spinner=False)
 def _load_models():
     """Cached across reruns, so the models load once per server, not once per click."""
     stt.warm_up()
@@ -36,6 +50,22 @@ def _load_models():
 
 st.title("BorakBot")
 st.caption("Bahasa Rojak speech-to-text — Stage 1 of the pipeline")
+
+# Load before the widgets rather than on the first clip. The wait is the same either
+# way, but here it overlaps with the user reading the page instead of landing in the
+# silence after they press record.
+_cache = stt.cache_status()
+_missing = [m["name"] for m in _cache.values() if not m["cached"]]
+if _missing:
+    _msg = (
+        f"Downloading {', '.join(_missing)} — about 930 MB, once only. "
+        "Later runs read it back from disk."
+    )
+else:
+    _msg = "Loading ~930 MB of weights from disk (~13 s) — nothing is being downloaded."
+
+with st.spinner(_msg):
+    _load_models()
 
 with st.sidebar:
     st.subheader("Configuration")
@@ -54,6 +84,15 @@ Measured WER on the 48-clip evaluation set: **0.349** strict, **0.339** lenient.
         "the transcribing either way."
     )
 
+    # Where the weights live. Worth surfacing: the start-up pause reads as a repeated
+    # download until you can see the files already sitting on disk.
+    st.divider()
+    _total = sum(m["bytes"] for m in _cache.values())
+    st.caption(f"**Model cache** — {stt.human_bytes(_total)} on disk, loaded once per server")
+    for _m in _cache.values():
+        _where = _m["path"] if _m["cached"] else "not downloaded yet"
+        st.caption(f"`{_m['name']}`  \n{_where}")
+
 tab_record, tab_upload = st.tabs(["Record", "Upload a file"])
 with tab_record:
     recorded = st.audio_input("Press record and speak in rojak")
@@ -69,7 +108,6 @@ with tab_upload:
 audio = recorded or uploaded
 
 if audio is not None:
-    _load_models()
     with st.spinner("Transcribing..."):
         try:
             result = stt.transcribe_detailed(audio)

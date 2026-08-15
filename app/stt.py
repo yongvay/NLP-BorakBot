@@ -37,12 +37,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import tempfile
 import time
+from contextlib import contextmanager
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import IO, Union
+from typing import IO, Optional, Union
 
 # --------------------------------------------------------------------- settings
 # Mirrored from eval/speech/run_wer.py. Changing either without the other makes the
@@ -73,14 +75,122 @@ AudioInput = Union[str, Path, bytes, IO[bytes]]
 _models: dict = {}
 
 
+# ------------------------------------------------------------------- model cache
+# Neither checkpoint ships with the repo (.gitignore forbids weights), so the first
+# run downloads about 930 MB and every run after that reads it back from the paths
+# below. Distinguishing those two cases is the whole point of this section: a fresh
+# process spends ~13 s loading the weights into RAM, which looks exactly like a
+# download unless the interface says otherwise. See streamlit_app.py.
+
+def _vanilla_checkpoint() -> Path:
+    """Where openai-whisper keeps small.pt.
+
+    Mirrors the resolution inside `whisper.load_model` -- XDG_CACHE_HOME if set,
+    otherwise ~/.cache -- so the file probed here is the file it would load.
+    """
+    root = Path(os.getenv("XDG_CACHE_HOME") or (Path.home() / ".cache"))
+    return root / "whisper" / f"{VANILLA_MODEL}.pt"
+
+
+def _malaysian_snapshot() -> Optional[Path]:
+    """The cached Mesolitica snapshot directory, or None if never downloaded.
+
+    Asks huggingface_hub rather than globbing the cache: the hub layout splits
+    blobs from snapshots and reaches them through a `refs/main` indirection, and
+    reimplementing that here would break the first time the layout changed.
+    """
+    from huggingface_hub import try_to_load_from_cache
+
+    hit = try_to_load_from_cache(MALAYSIAN_MODEL, "config.json")
+    return Path(hit).parent if isinstance(hit, str) else None   # else: miss sentinel
+
+
+def _dir_size(d: Path) -> int:
+    """Bytes on disk under `d`. stat() follows the hub's blob links, so this is real."""
+    return sum(f.stat().st_size for f in d.rglob("*") if f.is_file())
+
+
+def human_bytes(n: int) -> str:
+    return f"{n / 1e6:.0f} MB" if n < 1e9 else f"{n / 1e9:.2f} GB"
+
+
+def cache_status() -> dict:
+    """Whether each model is already on disk, where, and how big.
+
+    Returned rather than printed so the CLI and the Streamlit sidebar can report
+    the same facts. `cached` false means the next load hits the network.
+    """
+    ckpt = _vanilla_checkpoint()
+    snap = _malaysian_snapshot()
+    return {
+        "vanilla": {
+            "name": VANILLA_MODEL,
+            "cached": ckpt.is_file(),
+            "path": ckpt,
+            "bytes": ckpt.stat().st_size if ckpt.is_file() else 0,
+        },
+        "malaysian": {
+            "name": MALAYSIAN_MODEL,
+            "cached": snap is not None,
+            "path": snap,
+            "bytes": _dir_size(snap) if snap is not None else 0,
+        },
+    }
+
+
 # ------------------------------------------------------------------ model access
 
 def _vanilla():
     """Base Whisper. Used only as a language detector, never to transcribe."""
     if "vanilla" not in _models:
         import whisper
-        _models["vanilla"] = whisper.load_model(VANILLA_MODEL)
+
+        # Load by PATH when the checkpoint is already cached, by NAME only to fetch
+        # it the first time. The name branch routes through whisper's _download(),
+        # which reads all 483 MB into memory and recomputes its SHA256 on every
+        # process start -- before torch.load reopens the same file and reads it
+        # again. The path branch skips that (1.90 s -> 1.14 s here). What it gives
+        # up is set_alignment_heads, which exists only to produce word-level
+        # timestamps; this module calls detect_language and nothing else.
+        ckpt = _vanilla_checkpoint()
+        _models["vanilla"] = whisper.load_model(
+            str(ckpt) if ckpt.is_file() else VANILLA_MODEL
+        )
     return _models["vanilla"]
+
+
+@contextmanager
+def _offline(enabled: bool):
+    """Stop huggingface_hub reaching for the network inside this block.
+
+    The obvious `local_files_only=True` cannot be used here: `pipeline()` forwards
+    kwargs it does not recognise all the way down to `generate()`, which rejects it
+    at transcription time -- so the model loads and the first clip crashes.
+
+    Setting HF_HUB_OFFLINE in the environment is not enough either. huggingface_hub
+    evaluates it into `constants.HF_HUB_OFFLINE` at import, and cache_status() has
+    already imported the package by the time we get here. What both libraries read
+    per request is `constants.is_offline_mode()`, which returns that module
+    attribute -- so patching the attribute is what actually takes effect. The
+    environment variable is set alongside it only to keep the two consistent.
+    """
+    if not enabled:
+        yield
+        return
+
+    from huggingface_hub import constants
+
+    was, env = constants.HF_HUB_OFFLINE, os.environ.get("HF_HUB_OFFLINE")
+    constants.HF_HUB_OFFLINE = True
+    os.environ["HF_HUB_OFFLINE"] = "1"
+    try:
+        yield
+    finally:
+        constants.HF_HUB_OFFLINE = was
+        if env is None:
+            os.environ.pop("HF_HUB_OFFLINE", None)
+        else:
+            os.environ["HF_HUB_OFFLINE"] = env
 
 
 def _malaysian():
@@ -88,12 +198,31 @@ def _malaysian():
     if "malaysian" not in _models:
         import torch
         from transformers import pipeline
-        _models["malaysian"] = pipeline(
-            "automatic-speech-recognition",
-            model=MALAYSIAN_MODEL,
-            device=0 if torch.cuda.is_available() else -1,
-            torch_dtype=torch.float32,
-        )
+
+        def build():
+            return pipeline(
+                "automatic-speech-recognition",
+                model=MALAYSIAN_MODEL,
+                device=0 if torch.cuda.is_available() else -1,
+                torch_dtype=torch.float32,
+            )
+
+        # Read straight from the cache once it is populated. Left to itself the
+        # pipeline makes an unauthenticated revision check against the Hub on every
+        # start: wasted time on a good network, and a stall on a bad one. Campus
+        # wi-fi during the demo is the wrong place to discover that.
+        cached = cache_status()["malaysian"]["cached"]
+        try:
+            with _offline(cached):
+                _models["malaysian"] = build()
+        except OSError:
+            # Every offline miss lands here -- LocalEntryNotFoundError and
+            # OfflineModeIsEnabled are both OSError subclasses. Reached when the
+            # cache is present but incomplete, as an interrupted first download
+            # leaves config.json behind without the weights. Retry with the network.
+            if not cached:
+                raise
+            _models["malaysian"] = build()
     return _models["malaysian"]
 
 
@@ -289,14 +418,28 @@ def main() -> int:
     ap.add_argument("--json", action="store_true", help="print language and timing too")
     ap.add_argument("--check-config", action="store_true",
                     help="verify settings match eval/speech/run_wer.py")
-    ap.add_argument("--warm-up", action="store_true", help="download and cache both models")
+    ap.add_argument("--warm-up", action="store_true",
+                    help="load both models, downloading only if absent; report the cache")
     args = ap.parse_args()
 
     if args.check_config:
         return check_config()
     if args.warm_up:
+        # Report the cache before and after, so it is obvious which runs downloaded
+        # anything and which merely read from disk.
+        before = cache_status()
+        started = time.perf_counter()
         warm_up()
-        print("both models cached.")
+        elapsed = time.perf_counter() - started
+
+        total = 0
+        for key, info in cache_status().items():
+            total += info["bytes"]
+            action = "downloaded" if not before[key]["cached"] else "already cached"
+            print(f"  {info['name']}")
+            print(f"    {human_bytes(info['bytes']):>8}  {action}")
+            print(f"    {info['path']}")
+        print(f"\n{human_bytes(total)} on disk, loaded in {elapsed:.1f}s.")
         return 0
     if not args.audio:
         ap.print_help()
