@@ -23,8 +23,8 @@ Both are dropped, and both are counted in the manifest so the reduction is
 reported rather than hidden. Provenance (`batch`) is stamped onto every row so
 a pair in the corpus can still be traced to the run that produced it.
 
-    python scripts/build_corpus.py
-    python scripts/build_corpus.py --dry-run
+    python archive/scripts/build_corpus.py
+    python archive/scripts/build_corpus.py --dry-run
 """
 
 from __future__ import annotations

@@ -16,8 +16,8 @@ Catches the failure modes that matter for a generated corpus:
 
 Exit code is non-zero if any pair fails, so this can gate a commit.
 
-    python scripts/validate_pairs.py
-    python scripts/validate_pairs.py --dir data/generated/raw
+    python archive/scripts/validate_pairs.py
+    python archive/scripts/validate_pairs.py --dir data/generated/raw
 """
 
 from __future__ import annotations

@@ -10,8 +10,8 @@ sentences in the order they appear in the spreadsheet. It refuses to run if the 
 do not match, and prints the pairing for you to check before touching anything.
 
 Usage:
-    python scripts/prepare_audio.py --speaker yv --raw "C:/path/to/raw"   # preview
-    python scripts/prepare_audio.py --speaker yv --raw "C:/path/to/raw" --go
+    python archive/scripts/prepare_audio.py --speaker yv --raw "C:/path/to/raw"   # preview
+    python archive/scripts/prepare_audio.py --speaker yv --raw "C:/path/to/raw" --go
 """
 
 import argparse
@@ -33,9 +33,9 @@ def natural_key(p: Path):
     return [int(t) if t.isdigit() else t for t in re.split(r"(\d+)", p.name.lower())]
 
 AUDIO_EXT = {".mp4", ".m4a", ".mp3", ".wav", ".aac", ".3gp", ".ogg", ".opus"}
-REPO = Path(__file__).resolve().parent.parent
-MANIFEST = REPO / "eval" / "speech" / "manifest.csv"
-OUT_DIR = REPO / "eval" / "speech" / "audio"
+SPEECH = Path(__file__).resolve().parent.parent / "eval" / "speech"   # archive/eval/speech
+MANIFEST = SPEECH / "manifest.csv"
+OUT_DIR = SPEECH / "audio"
 
 
 def main() -> int:
@@ -90,7 +90,7 @@ def main() -> int:
             # only if you never have to trust the data afterwards.
             print("REFUSING TO CONVERT.")
             print("Pass --by-name as well if the filenames are in recording order:")
-            print(f'  python scripts/prepare_audio.py --speaker {args.speaker} '
+            print(f'  python archive/scripts/prepare_audio.py --speaker {args.speaker} '
                   f'--raw "{args.raw}" --by-name --go')
             print("Or pass --force-time if you really do want timestamp order.")
             return 1
@@ -116,7 +116,7 @@ def main() -> int:
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for src, r in zip(raw, rows):
-        dst = REPO / "eval" / "speech" / r["audio_path"]
+        dst = SPEECH / r["audio_path"]
         subprocess.run(
             ["ffmpeg", "-y", "-loglevel", "error", "-i", str(src),
              "-vn",                  # drop video stream if the mp4 has one

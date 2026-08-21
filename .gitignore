@@ -53,8 +53,8 @@ feedback.db
 *.opus
 *.flac
 recordings/
-eval/speech/audio/
-eval/speech/raw/
+archive/eval/speech/audio/
+archive/eval/speech/raw/
 
 # --- Intermediate generation runs (commit only the validated dataset) ---
 data/generated/raw/
@@ -76,9 +76,5 @@ Thumbs.db
 desktop.ini
 .vscode/settings.json
 .idea/
+.vs/
 .~lock.*#
-
-# --- generated ---
-# sync_report_figures.py writes this before editing the report. Git already holds the
-# previous version of the .docx, so the .bak is a convenience, not the real backup.
-*.docx.bak

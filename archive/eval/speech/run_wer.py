@@ -43,7 +43,6 @@ from pathlib import Path
 import pandas as pd
 
 HERE = Path(__file__).resolve().parent
-REPO = HERE.parent.parent
 MANIFEST = HERE / "manifest.csv"
 AUDIO_ROOT = HERE
 ORTHO_MAP = HERE / "orthography_map.json"
