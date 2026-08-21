@@ -61,13 +61,19 @@ WER on code-switched audio; ASR errors are reported apart from NLP errors.
 
 ## Repo layout
 
+The live application is two files. Everything else is data, documentation, or
+tooling that has already run. Keep it that way — see `archive/README.md`.
+
 ```
-data/        seed/, slang_dict.json, knowledge_base/, generated/
-scripts/     synthetic generation, filtering, splitting
-training/    qlora_config.yaml, kaggle bootstrap
-app/         streamlit_app.py, normalise.py, stt.py, inference.py, feedback.py
-eval/        metrics, comparison tables
-notebooks/   thin Kaggle wrapper only — repo is the source of truth
+app/         streamlit_app.py, stt.py          <- the only code that runs live
+             normalise.py, inference.py, feedback.py   (Stages 2-4, not built yet)
+data/        knowledge_base/ (5 YAML domains), generated/pairs_v1.jsonl
+docs/        DESIGN.md — every non-obvious decision, with evidence. Read first.
+             Part A proposal, rubrics, Part B draft
+training/    qlora_config.yaml, kaggle bootstrap   (Stage 3, not built yet)
+handoffs/    session-to-session state; HANDOFF_3.md is current
+archive/     finished tooling: the WER harness, its committed results, the
+             corpus builders, the Colab wrapper. Nothing here is imported.
 ```
 
 ## Working agreements
@@ -77,12 +83,19 @@ notebooks/   thin Kaggle wrapper only — repo is the source of truth
 - Never commit model weights, adapters, audio files, or `feedback.db`.
   Commit `schema.sql` instead of the database.
 - Prefer small, frequent commits with descriptive messages.
-- Explain non-obvious design choices in comments — both team members are
-  individually questioned on this code during the demo.
+- Explain non-obvious design choices — but put the *reasoning* in `docs/DESIGN.md`
+  and leave a one-line pointer in the code. Both team members are individually
+  questioned on this code during the demo, and a decision is easier to defend from
+  one document than from comments scattered across five files.
+- Keep the live path small. When a script has run and produced its committed
+  output, move it to `archive/` rather than leaving it looking live.
 - All AI-generated training data and AI tool assistance must be declared per
-  TARUMT academic integrity policy.
+  TARUMT academic integrity policy. The generation prompt is kept at
+  `archive/scripts/prompts/generate_pairs_prompt.md` for exactly this reason.
 
 ## Reference documents
-- docs/proposal_part_a.pdf — full Part A proposal (Sections 5–7 have the
+- docs/DESIGN.md — every non-obvious Stage 1 decision, with the numbers behind it
+- docs/NLP Assignment Part A.pdf — full Part A proposal (Sections 5–7 have the
   literature justification and evaluation plan)
-- docs/rubric.pdf — grading criteria; item 11 is individual Q&A on this code
+- docs/Rubrics.pdf — grading criteria; item 11 is individual Q&A on this code
+- docs/PartB_Draft_STT.docx — the Stage 1 write-up

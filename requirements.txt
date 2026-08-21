@@ -55,26 +55,29 @@ torch==2.13.0+cpu
 openai-whisper==20250625
 
 # Hosts mesolitica/malaysian-whisper-small-v3, which does all transcription.
-# NOTE: this is transformers 5.x. app/stt.py depends on tokenizer.get_prompt_ids()
-# and on how prompt_ids echo into the decoded output — _strip_prompt() exists for
-# exactly that, and its behaviour is version-dependent. If a Colab or Kaggle run
-# resolves a different major version, expect the transcripts to differ from the
-# ones behind the reported 0.349 WER.
+# NOTE: this is transformers 5.x. app/stt.py depends on tokenizer.get_prompt_ids(),
+# and on prompt_ids NOT echoing into the decoded output — earlier versions echoed
+# them, which is why the app once carried a _strip_prompt() helper. See
+# docs/DESIGN.md §3. If a Colab or Kaggle run resolves a different major version,
+# expect the transcripts to differ from the ones behind the reported 0.349 WER.
 transformers==5.15.0
 
 # The UI. st.audio_input (in-browser recording) needs >= 1.35.
 streamlit==1.61.1
 
+# Imported directly by the archived corpus scripts and the WER harness. Both also
+# arrive transitively (pandas via streamlit, PyYAML via huggingface-hub), but a
+# direct import deserves a direct declaration.
+pandas==3.0.5
+PyYAML
+
 # ---------------------------------------------------------------------------
-# Evaluation and report tooling — NOT required to run the app
+# Evaluation tooling — NOT required to run the app
 # ---------------------------------------------------------------------------
-# eval/speech/run_wer.py and threshold_sweep.py need jiwer and pandas;
-# eval/speech/sync_report_figures.py needs python-docx. pandas arrives anyway as
-# a Streamlit dependency (3.0.5 here). jiwer and python-docx are not installed in
-# the venv this file was generated from, so they are deliberately left unpinned
-# rather than pinned to a version nobody has actually run.
+# archive/eval/speech/run_wer.py and threshold_sweep.py need jiwer, which is not
+# installed in the venv this file was generated from — so it is deliberately left
+# unpinned rather than pinned to a version nobody has actually run.
 #
-# Uncomment if you are running the WER harness locally rather than on Colab:
+# Uncomment if you are re-running the WER harness locally rather than on Colab:
 #
 # jiwer
-# python-docx
