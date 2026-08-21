@@ -61,6 +61,12 @@ data/generated/raw/
 data/generated/tmp/
 data/**/*.tmp.jsonl
 
+# --- LLaMA-Factory build artefact ---
+# Rebuilt by training/to_llamafactory.py from the committed splits. It is 770 KB
+# of the same system prompt repeated 569 times, and it is derived, not evidence.
+# The splits and the converter are committed; this is not.
+training/data/
+
 # --- Logs ---
 *.log
 logs/
