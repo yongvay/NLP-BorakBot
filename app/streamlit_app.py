@@ -47,6 +47,7 @@ with st.sidebar:
     st.markdown(
         f"""
 **Detector** `whisper-{stt.VANILLA_MODEL}`
+
 **Transcriber** `{stt.MALAYSIAN_MODEL.split('/')[-1]}`
 **English threshold** `{stt.EN_THRESHOLD}`
 
