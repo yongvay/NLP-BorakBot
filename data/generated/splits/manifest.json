@@ -1,0 +1,23 @@
+{
+  "built": "2026-08-22",
+  "source": "data/generated/pairs_v1.jsonl",
+  "seed": 20260822,
+  "strategy": "pair-level, stratified by fact, carried-remainder quota",
+  "fractions": {
+    "train": 0.8,
+    "val": 0.1,
+    "test": 0.1
+  },
+  "counts": {
+    "train": 506,
+    "val": 63,
+    "test": 63
+  },
+  "refusal_counts": {
+    "train": 108,
+    "val": 11,
+    "test": 11
+  },
+  "facts_total": 76,
+  "facts_in_train": 76
+}
