@@ -1,0 +1,81 @@
+# BorakBot — QLoRA round 1. LLaMA-Factory, 4-bit, one T4.
+#
+#   llamafactory-cli train training/qlora_config.yaml
+#
+# Run training/to_llamafactory.py first — it builds training/data/, which is
+# gitignored and will not be there after a fresh clone.
+#
+# TWO FIELDS DEPEND ON THE BAKE-OFF and are set to the Qwen placeholder until
+# docs/model_selection.md names a winner: `model_name_or_path` and `template`.
+# The template must match the checkpoint's own chat format. Getting it wrong does
+# not raise — it trains happily on mis-delimited text and produces a model that
+# rambles past its stop token, which is expensive to diagnose after the fact.
+# Check LLaMA-Factory's template registry for the right name; do not guess.
+
+### model
+model_name_or_path: Qwen/Qwen2.5-3B-Instruct
+template: qwen
+trust_remote_code: true
+
+### quantisation
+# 4-bit NF4 with double quantisation: a 3B base is ~6 GB in fp16, and the T4's
+# 16 GB has to hold weights, activations and optimiser state at once.
+quantization_bit: 4
+quantization_method: bnb
+double_quantization: true
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_rank: 16
+lora_alpha: 32
+lora_dropout: 0.05
+# All linear layers, not just q_proj/v_proj. The task is memorising facts and a
+# register, which lives in the MLP blocks as much as in attention; restricting
+# to the attention projections is the cheaper default, not the better one here.
+lora_target: all
+
+### dataset
+dataset_dir: training/data
+dataset: borakbot_train
+eval_dataset: borakbot_val
+# The system prompt is ~350 tokens and answers are capped at three sentences, so
+# 1024 leaves generous headroom. Raising it costs memory for padding nobody uses.
+cutoff_len: 1024
+overwrite_cache: true
+preprocessing_num_workers: 2
+
+### output
+output_dir: /kaggle/working/borakbot-qlora-r1
+logging_steps: 5
+plot_loss: true
+overwrite_output_dir: true
+
+# CHECKPOINTING IS NOT OPTIONAL. Kaggle kills a session at 12 hours and can drop
+# one earlier; an uncheckpointed run that dies is a run that never happened. With
+# ~160 total steps, every 25 costs almost nothing and caps the loss at one epoch.
+save_steps: 25
+save_total_limit: 3
+
+### train
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 8      # effective batch 16
+learning_rate: 2.0e-4
+# 506 examples is a small set and the goal is memorisation, not generalisation to
+# new facts, so this runs longer than the usual 3 epochs. Watch eval loss: if it
+# turns up while train loss keeps falling, cut back rather than shipping the last
+# checkpoint. Report the curve either way — it is the honest evidence for how
+# much of the corpus the model actually absorbed.
+num_train_epochs: 5.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+# T4 is compute capability 7.5 and has NO bf16. Setting bf16 here fails at load,
+# or silently falls back and slows the run to a crawl on some stacks.
+fp16: true
+gradient_checkpointing: true
+
+### eval
+per_device_eval_batch_size: 2
+eval_strategy: steps
+eval_steps: 25
