@@ -7,12 +7,13 @@
     "probe_set": "probe_set.jsonl",
     "refusals_only": false,
     "system_prompt": true,
-    "chat_template": true,
+    "chat_template": "auto",
+    "chat_format_requested": "auto",
     "four_bit": true,
     "decoding": "greedy",
     "max_new_tokens": 160,
     "n": 20,
-    "generated_utc": "2026-08-22T02:09:29+00:00"
+    "generated_utc": "2026-08-22T04:10:06+00:00"
   },
   "records": [
     {

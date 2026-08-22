@@ -1,0 +1,100 @@
+﻿row_id,system,stratum,user,gold,prediction,fluency,rojak_naturalness,factual_consistency,notes
+08_sys_b,sys_b,slang_meanings,eh wei dia cakap terror tu apa doh,"Terror tu compliment lah, meaning very good atau highly skilled.","""Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?""
+
+""Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?""
+
+""Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?""
+
+""Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?""
+
+""Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?""
+
+""Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?""
+
+""Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?""
+
+""Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?""
+
+""Maaf, saya tak pasti pasal",,,,
+14_sys_a,sys_a,refusal,how do I cook rendang ah?,"Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?","Maaf, saya tak pasti pasal resep rendang tu lah — boleh tanya benda lain tak?",,,,
+09_sys_b,sys_b,immigration_passport,passport aku ada tapi cover dia dah koyak sikit,"Syarat renewal online, passport kena dalam good condition. Details peribadi pun kena unchanged dan gambar kena comply spec.","Maaf, saya tidak dapat membantu dalam situasi yang memerlukan jawapan yang tidak pasti atau tidak jelas. Adakah terdapat apa-apa lagi yang boleh saya bantu?",,,,
+07_sys_b,sys_b,slang_meanings,so term mamak boleh refer Indian-Muslim community itself jugak ke?,"Ya, mamak boleh refer Indian-Muslim community itself, selain meaning Indian-Muslim eatery.","Ya, betul. Mamak boleh merujuk kepada komuniti India-Muslim sendiri.",,,,
+05_sys_b,sys_b,jpj_vehicle_licence,JPJ check insurance ke bila renew?,"Ya, JPJ verify insurance secara elektronik. Kalau takde policy insurance atau takaful aktif, road tax tak boleh diissue.","Ya, anda boleh bertanya tentang insurans kenderaan kepada JPJ. Anda boleh bertanya tentang jenis insurans yang ditawarkan dan jika anda memerlukan maklumat lanjut.",,,,
+02_sys_b,sys_b,slang_meanings,tapau meaning apa ah,"Tapau ni pack makanan untuk take away, rather than eat in.","- Cakap Bahasa Rojak (campur Melayu-Inggeris) macam kawan Malaysia. Santai, mesra, guna particle macam ""lah"", ""eh"", ""kan"" bila natural.
+- Jawab ringkas. Dua tiga ayat cukup.
+- Kalau soalan tu pasal domain kau, jawab terus dengan fakta yang kau tahu.
+
+Bila kau TAK BOLEH jawab:
+- Soalan luar domain (contoh: sains, sukan, masakan, movie)
+- Harga atau nilai live (contoh: harga bitcoin, kadar tukaran wang, cuaca)
+- Maklumat peribadi user (contoh: status permohonan passport dia, bila roadtax
+  dia expired)
+- Berita atau kejadian terkini
+- Nasihat perubatan, undang-undang, atau pelaburan
+
+Untuk semua kes di atas,",,,,
+18_sys_a,sys_a,refusal,boleh saman company saya tak kalau kena fire?,"Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?","Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?",,,,
+14_sys_b,sys_b,refusal,how do I cook rendang ah?,"Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?","Untuk memasak rendang, anda perlu menggunakan bahan-bahan seperti daging lembu, santan kelapa, serai, lengkuas, bawang merah, bawang putih, halia, daun kunyit, daun limau purut, dan rempah-rempah seperti serai, lengkuas, bawang merah, bawang putih, halia, dan daun kunyit.
+
+Langkah-langkah memasak rendang adalah seperti berikut:
+1. Rendam daging dalam air asam jawa untuk melembutkan daging.
+2. Tumbuk atau kisar bawang merah, bawang putih, halia, lengkuas, dan rempah-rempah sehingga halus.
+3. Panaskan minyak dalam kuali dan tumis rempah-rempah sehingga wangi.
+4. Masukkan daging",,,,
+05_sys_a,sys_a,jpj_vehicle_licence,JPJ check insurance ke bila renew?,"Ya, JPJ verify insurance secara elektronik. Kalau takde policy insurance atau takaful aktif, road tax tak boleh diissue.","Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?",,,,
+04_sys_b,sys_b,jpj_vehicle_licence,kelas mana yang RM30?,"Kelas D, E, F, G, H dan I. Semua tu RM30 setahun untuk warganegara Malaysia.",Kelas A. RM30.,,,,
+18_sys_b,sys_b,refusal,boleh saman company saya tak kalau kena fire?,"Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?","Boleh, tiada masalah. Anda boleh saman syarikat anda jika anda tidak tahu.",,,,
+03_sys_b,sys_b,small_talk,okay ke,Okay je! Nak help dengan apa?,"Saya faham. Anda ingin tahu cara menjawab soalan berkaitan dengan urusan kerajaan dan admin harian. Anda boleh bertanya tentang cara menjawab soalan seperti ""Cakap Bahasa Rojak"" dan ""Jawab ringkas"". Jika anda tidak boleh menjawab, anda boleh bertanya tentang harga atau nilai hidupan, harga atau nilai hidupan, berita atau kejadian terkini, nasihat perubatan, undang-undang, pelaburan, dan nasihat perubatan, undang-undang, atau pelaburan. Anda juga boleh bertanya tentang harga atau nilai hidupan, harga atau nilai hidupan, berita atau kejadian terkini, nasihat perubatan, undang-undang, atau pelaburan.",,,,
+17_sys_b,sys_b,jpj_vehicle_licence,beza fee kelas A dengan A1 ada tak?,Takde beza. Kedua-dua kelas A dan A1 RM2 setahun untuk warganegara Malaysia.,"Bayaran kelas A1 adalah RM100, manakala kelas A2 adalah RM200.",,,,
+13_sys_a,sys_a,small_talk,What is BorakBot supposed to help with lah?,"BorakBot helps with questions about Malaysian government services dan everyday personal admin, guna Bahasa Rojak.","BorakBot tu dapat membantu dengan soalan pasal urusan kerajaan dan admin harian, seperti:
+
+* JPJ (lesen memandu), MyKad, sijil lahir (JPN), dan pasport (imigresen)
+* Soalan pasal roadtax dan bayaran-bayaran lain-lain
+
+Jadi, kalau kau punya soalan pasal urusan kerajaan, BorakBot boleh membantu, lah!",,,,
+12_sys_b,sys_b,jpj_vehicle_licence,what documents do I need to renew my licence?,"Your original MyKad or passport. If a representative is doing it for you, a copy is accepted.","Anda perlu mendapatkan lesen memandu Malaysia (JPJ) dan dokumen-dokumen yang berkaitan seperti berikut:
+
+1. Lesen Memandu: Anda perlu mendapatkan lesen memandu Malaysia (JPJ) yang sah. Dokumen yang diperlukan termasuk:
+   - Kad Pengenalan (MyKad)
+   - Lesen Memandu
+   - Surat Lulus Lesen Memandu (LKM)
+   - Sijil Kelahiran (Sijil Kelahiran)
+   - Sijil Lahir (Sijil Lahir)
+   - Sijil Perkahwinan (Sijil Perkahwinan)
+   - Sijil Kewarganegaraan (Sijil Kewarganegaraan)
+   - Sijil Perkahwinan (Sijil Perkahwinan)
+   - Sijil Lahir (Sijil Lahir)
+   - Sijil Perkahwinan (Sijil Perkahwinan)
+   - Sijil Kewarganegaraan (Sijil Kewarganegaraan)
+   - Sijil",,,,
+03_sys_a,sys_a,small_talk,okay ke,Okay je! Nak help dengan apa?,"Sama-sama lah! Apa yang diinginkan, kawan?",,,,
+10_sys_a,sys_a,small_talk,"aku ingat road tax boleh tapi passport tak boleh, betul ke?","Tak, BorakBot cover both road tax dan passport, plus driving licences, MyKad dan Malaysian slang.","Maaf, saya tak pasti pasal passport tu lah. Saya tak tahu siapa masa dia boleh atau tidak.",,,,
+04_sys_a,sys_a,jpj_vehicle_licence,kelas mana yang RM30?,"Kelas D, E, F, G, H dan I. Semua tu RM30 setahun untuk warganegara Malaysia.","Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?",,,,
+01_sys_a,sys_a,slang_meanings,What does kiasu describe in Malaysian slang lah?,"In Malaysian slang, kiasu describes someone afraid of losing out atau missing an advantage, sampai overprepare atau grab more than needed.","Kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu, kiasu ni kiasu,",,,,
+12_sys_a,sys_a,jpj_vehicle_licence,what documents do I need to renew my licence?,"Your original MyKad or passport. If a representative is doing it for you, a copy is accepted.","Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?",,,,
+11_sys_a,sys_a,jpj_vehicle_licence,eh berapa lama aku kena pakai P ni eh?,Tempoh PDL 2 years.,"Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?",,,,
+19_sys_b,sys_b,jpn_identity,boleh apply online tak untuk MyKad hilang?,"Boleh, tapi untuk first loss je. Kalau dah kali kedua ke atas kena pergi counter JPN.","Boleh, anda boleh memohon untuk mendapatkan MyKad yang hilang melalui Jabatan Pendaftaran Negara (JPN). Anda perlu mengisi borang permohonan dan mengemukakannya kepada JPN. JPN akan memproses permohonan anda dan mengeluarkan MyKad baharu kepada anda.",,,,
+19_sys_a,sys_a,jpn_identity,boleh apply online tak untuk MyKad hilang?,"Boleh, tapi untuk first loss je. Kalau dah kali kedua ke atas kena pergi counter JPN.","Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?",,,,
+11_sys_b,sys_b,jpj_vehicle_licence,eh berapa lama aku kena pakai P ni eh?,Tempoh PDL 2 years.,Berapa lama anda perlu memakai P ini?,,,,
+10_sys_b,sys_b,small_talk,"aku ingat road tax boleh tapi passport tak boleh, betul ke?","Tak, BorakBot cover both road tax dan passport, plus driving licences, MyKad dan Malaysian slang.","Betul, roadtax dan lesen memandu (JPJ) adalah dokumen penting yang perlu dimiliki oleh semua individu. Walau bagaimanapun, terdapat beberapa pengecualian untuk roadtax dan lesen memandu. Ini adalah untuk memastikan keselamatan dan kemudahan pengguna jalan raya.
+
+Untuk soalan tentang urusan kerajaan dan admin harian, jawapan yang diberikan adalah ringkas dan mudah difahami. Pengguna juga boleh bertanya tentang perkara lain seperti harga atau nilai hidup, berita atau kejadian terkini, nasihat perubatan, undang-undang, dan pelaburan.
+
+Untuk semua kes di atas, jawapan yang diberikan adalah ""Maaf, saya tidak pasti tentang itu.""
+
+Jika anda mempunyai soalan lain, jangan ragu untuk bertanya. Saya sedia membantu!",,,,
+16_sys_a,sys_a,refusal,eh ada peraturan JPJ baru ke minggu ni?,"Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?","Maaf, saya tak pasti pasal peraturan JPJ baru ke minggu ni lah.",,,,
+15_sys_a,sys_a,slang_meanings,"aku ingat sien just means sleepy, betul ke?","Bukan sleepy; sien means bored, fed up atau listless.","Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?",,,,
+02_sys_a,sys_a,slang_meanings,tapau meaning apa ah,"Tapau ni pack makanan untuk take away, rather than eat in.","Tapau bermakna ""tidak"" atau ""tidak pasti"" dalam Bahasa Melayu.",,,,
+07_sys_a,sys_a,slang_meanings,so term mamak boleh refer Indian-Muslim community itself jugak ke?,"Ya, mamak boleh refer Indian-Muslim community itself, selain meaning Indian-Muslim eatery.","Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?",,,,
+06_sys_b,sys_b,immigration_passport,is there a 10 year passport now?,"Yes, the 10 year passport started on 1 July 2026 and costs RM350. You have to apply in person at a passport issuing office though, not online.","Ya, terdapat 10 tahun pasport yang masih sah.",,,,
+00_sys_b,sys_b,jpn_identity,"aku duduk Sarawak, nak tahu berapa lama proses kad ni","Untuk Sabah, Sarawak dan Labuan lebih kurang 7 working days. Kat Semenanjung cawangan biasa 5 working days, tapi ibu pejabat negeri dan UTC boleh siap dalam 33 minit.","Proses kad ini mengambil masa kira-kira 2 hingga 3 hari bekerja. Jika anda memerlukan bantuan lanjut, sila hubungi pihak berkenaan.",,,,
+01_sys_b,sys_b,slang_meanings,What does kiasu describe in Malaysian slang lah?,"In Malaysian slang, kiasu describes someone afraid of losing out atau missing an advantage, sampai overprepare atau grab more than needed.",Kiasu ialah slanga Malaysia yang digunakan untuk menggambarkan seseorang yang sombong atau sombong.,,,,
+17_sys_a,sys_a,jpj_vehicle_licence,beza fee kelas A dengan A1 ada tak?,Takde beza. Kedua-dua kelas A dan A1 RM2 setahun untuk warganegara Malaysia.,"Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?",,,,
+00_sys_a,sys_a,jpn_identity,"aku duduk Sarawak, nak tahu berapa lama proses kad ni","Untuk Sabah, Sarawak dan Labuan lebih kurang 7 working days. Kat Semenanjung cawangan biasa 5 working days, tapi ibu pejabat negeri dan UTC boleh siap dalam 33 minit.","Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?",,,,
+15_sys_b,sys_b,slang_meanings,"aku ingat sien just means sleepy, betul ke?","Bukan sleepy; sien means bored, fed up atau listless.","Saya ingat sien bermaksud tidur, betul ke?",,,,
+09_sys_a,sys_a,immigration_passport,passport aku ada tapi cover dia dah koyak sikit,"Syarat renewal online, passport kena dalam good condition. Details peribadi pun kena unchanged dan gambar kena comply spec.","Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?",,,,
+16_sys_b,sys_b,refusal,eh ada peraturan JPJ baru ke minggu ni?,"Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?","Ya, terdapat peraturan baharu yang diperkenalkan oleh Jabatan Pengangkutan Jalan (JPJ) berkaitan dengan penggunaan kenderaan di jalan raya. Peraturan baharu ini bertujuan untuk meningkatkan keselamatan jalan raya dan mengurangkan kemalangan. Peraturan baharu ini juga memberi tumpuan kepada penggunaan kenderaan yang mematuhi piawaian keselamatan yang ditetapkan.",,,,
+08_sys_a,sys_a,slang_meanings,eh wei dia cakap terror tu apa doh,"Terror tu compliment lah, meaning very good atau highly skilled.","Aku tak pasti pasal roadtax dia expired ni, lah. Aku tak tahu kapan dia perlu bayar roadtax terbaru.",,,,
+06_sys_a,sys_a,immigration_passport,is there a 10 year passport now?,"Yes, the 10 year passport started on 1 July 2026 and costs RM350. You have to apply in person at a passport issuing office though, not online.","Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?",,,,
+13_sys_b,sys_b,small_talk,What is BorakBot supposed to help with lah?,"BorakBot helps with questions about Malaysian government services dan everyday personal admin, guna Bahasa Rojak.",BorakBot ialah chatbot yang membantu menjawab soalan berkaitan urusan kerajaan dan admin harian. Ia membantu menjawab soalan dalam bahasa Melayu dan Inggeris.,,,,

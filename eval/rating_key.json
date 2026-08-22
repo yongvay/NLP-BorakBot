@@ -1,0 +1,9 @@
+{
+  "seed": 20260822,
+  "blind_map": {
+    "llama": "sys_a",
+    "mallam": "sys_b"
+  },
+  "items": 20,
+  "rows": 40
+}
