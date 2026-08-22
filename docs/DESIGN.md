@@ -1,14 +1,18 @@
-# BorakBot — design notes for Stage 1 (speech-to-text)
+# BorakBot — design notes
 
-Every non-obvious decision in `app/stt.py`, with the evidence behind it. The code carries
-one-line comments pointing at the sections here. This is the document to read before the
-demo.
+Every non-obvious decision, with the evidence behind it. The code carries one-line comments
+pointing at the sections here. This is the document to read before the demo.
+
+- **§1–§5 — Stage 1, speech-to-text.** Decisions in `app/stt.py`.
+- **§6–§7 — Stage 3, fine-tuning.** Training environment and base-model choice.
+
+---
+
+# Stage 1 decisions (speech-to-text)
 
 All numbers come from `archive/eval/speech/results/`, produced by
 `archive/eval/speech/run_wer.py` over 48 clips / 387 reference words, two speakers, six
 code-switching categories.
-
----
 
 ## §1 Why two models instead of one
 
@@ -157,3 +161,72 @@ without touching the acoustic model.
 how to re-run it. The full nine-configuration comparison is
 `archive/eval/speech/results/results_summary.csv`; per-clip transcripts are in
 `results_detail.csv`.
+
+---
+
+# Stage 3 decisions (fine-tuning)
+
+Same contract as above: non-obvious choices, with the reason that will be asked
+for at the demo.
+
+## §6 Why training moved from Kaggle to Colab
+
+**Part A named Kaggle Notebooks as the training environment. Stage 3 runs on
+Google Colab instead. This is deviation #8.**
+
+Kaggle disables notebook networking per session and gates the toggle that
+re-enables it behind **phone verification of the Kaggle account**. Verification
+could not be completed on the team's account. Without networking a Kaggle
+notebook cannot reach PyPI, GitHub, or the Hugging Face Hub — the first cell
+dies in pip's DNS retry loop with `Temporary failure in name resolution` after
+about five minutes. Every part of this pipeline needs the network: installing
+the stack, cloning the repo, pulling base weights, and pushing the adapter back
+to the Hub. There is no offline variant of the plan, so the environment had to
+change.
+
+The trade is real and is not being presented as a free swap:
+
+| | Kaggle (planned) | Colab free (actual) |
+|---|---|---|
+| GPU | T4 x2 or P100 | single T4 |
+| Quota | 30 h/week, stated | opaque, can be cut mid-run |
+| Session cap | 12 h | ~12 h, plus idle disconnect |
+| Networking | off by default, phone-gated | on by default |
+
+What this costs the project: the second T4 is lost, which does not matter for a
+QLoRA run that was already configured for one; and quota becomes unpredictable
+rather than budgeted, which does matter. The mitigation is in
+`training/qlora_config.yaml` — checkpoints are written every 25 steps **directly
+to Google Drive**, not to `/content`. Colab wipes `/content` on disconnect, so a
+run that completes into local disk can still be lost in the gap between
+finishing and being copied out. A rank-16 adapter is roughly 100 MB, so keeping
+three checkpoints on Drive is cheap insurance.
+
+Secrets moved with the environment: the Hugging Face token lives in **Colab
+Secrets** (left sidebar key icon, *Notebook access* enabled), which is the direct
+equivalent of Kaggle Secrets. It is still never pasted into a cell — notebook
+source is committed and notebook output is shared.
+
+## §7 Why the base model is chosen by measurement, not assertion
+
+`docs/model_selection.md` records the bake-off; this is why it is shaped the way
+it is.
+
+**Selection uses human ratings and refusal counts, not BLEU/ROUGE/BERTScore.**
+Every candidate is un-fine-tuned at this point, so all of them score in the same
+low band against rojak gold answers, and the differences between them are noise
+rather than signal. A blinded Likert pass over a fixed 20-item probe set
+measures the thing that actually differs: whether the register is plausible
+Malaysian speech.
+
+**Perplexity is deliberately absent from the cross-model comparison.**
+Perplexity is not comparable across different tokenizers — the candidates
+segment the same sentence into different numbers of tokens, so the per-token
+likelihoods are not measuring the same quantity. It appears only in the
+fine-tuned-vs-base table, where the tokenizer is held constant and the
+comparison is valid.
+
+**The ratings are blinded and shuffled** (`eval/make_rating_sheet.py`) because
+the two raters are the same people who picked the candidates and wrote the
+corpus. Inter-rater agreement is reported before the means, since a mean over
+two raters who disagree is a number with nothing behind it.

@@ -30,8 +30,11 @@ through logged human corrections.
 - **Base model**: 3B-class instruct model (Llama-3.2-3B-Instruct /
   Qwen2.5-3B-Instruct / Mesolitica MaLLaM). Must fit QLoRA 4-bit on one T4.
 - **Fine-tuning**: QLoRA via LLaMA-Factory + bitsandbytes, YAML-configured.
-- **Training environment**: Kaggle Notebooks (free T4 x2 or P100, 30h/week,
-  12h max session). Checkpoint so runs survive session limits.
+- **Training environment**: Google Colab (free T4). Checkpoint to Drive so runs
+  survive disconnects. *Changed 22 Aug 2026 from Kaggle Notebooks — Kaggle gates
+  notebook networking behind phone verification, which the team's account cannot
+  complete, and without networking pip, git and the Hub are all unreachable.
+  Deviation #8; reasoning in `docs/DESIGN.md`.*
 - **Adapters/checkpoints**: pushed to Hugging Face Hub, never committed to git.
 - **STT**: OpenAI Whisper, small model.
 - **UI**: Streamlit defaults. Functional, not designed.
@@ -70,7 +73,10 @@ app/         streamlit_app.py, stt.py          <- the only code that runs live
 data/        knowledge_base/ (5 YAML domains), generated/pairs_v1.jsonl
 docs/        DESIGN.md — every non-obvious decision, with evidence. Read first.
              Part A proposal, rubrics, Part B draft
-training/    qlora_config.yaml, kaggle bootstrap   (Stage 3, not built yet)
+training/    qlora_config.yaml, to_llamafactory.py, colab_bakeoff.ipynb
+eval/        generate.py + the bake-off scoring scripts, probe_set.jsonl,
+             results/ (committed — the evidence behind model choice)
+scripts/     split_corpus.py   (validate_pairs/build_corpus are in archive/)
 handoffs/    session-to-session state; HANDOFF_3.md is current
 archive/     finished tooling: the WER harness, its committed results, the
              corpus builders, the Colab wrapper. Nothing here is imported.
@@ -79,7 +85,7 @@ archive/     finished tooling: the WER harness, its committed results, the
 ## Working agreements
 
 - Never commit secrets. HF token and any generation API key live in `.env`
-  locally and Kaggle Secrets on Kaggle.
+  locally and Colab Secrets (left sidebar key icon) on Colab.
 - Never commit model weights, adapters, audio files, or `feedback.db`.
   Commit `schema.sql` instead of the database.
 - Prefer small, frequent commits with descriptive messages.
