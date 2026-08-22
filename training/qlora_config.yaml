@@ -5,16 +5,25 @@
 # Run training/to_llamafactory.py first — it builds training/data/, which is
 # gitignored and will not be there after a fresh clone.
 #
-# TWO FIELDS DEPEND ON THE BAKE-OFF and are set to the Qwen placeholder until
-# docs/model_selection.md names a winner: `model_name_or_path` and `template`.
+# BASE MODEL SETTLED 22 Aug 2026 by the bake-off — reasoning in
+# docs/model_selection.md. Llama beat MaLLaM on hallucination control (declined
+# 3/3 out-of-knowledge probes against MaLLaM's 1/3), which CLAUDE.md grades.
+#
 # The template must match the checkpoint's own chat format. Getting it wrong does
 # not raise — it trains happily on mis-delimited text and produces a model that
 # rambles past its stop token, which is expensive to diagnose after the fact.
-# Check LLaMA-Factory's template registry for the right name; do not guess.
+# This is not hypothetical: it is exactly what invalidated MaLLaM's round-1
+# bake-off run. `llama3` is the registry name covering Llama 3.x including 3.2,
+# but confirm on Colab before the run rather than trusting this line:
+#
+#   python -c "from llamafactory.data.template import TEMPLATES; print('llama3' in TEMPLATES)"
+#
+# Llama-3.2 is a GATED repo. The HF token in Colab Secrets must belong to an
+# account that has accepted Meta's licence, or this fails at model load.
 
 ### model
-model_name_or_path: Qwen/Qwen2.5-3B-Instruct
-template: qwen
+model_name_or_path: meta-llama/Llama-3.2-3B-Instruct
+template: llama3
 trust_remote_code: true
 
 ### quantisation

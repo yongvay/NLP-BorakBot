@@ -212,12 +212,16 @@ source is committed and notebook output is shared.
 `docs/model_selection.md` records the bake-off; this is why it is shaped the way
 it is.
 
-**Selection uses human ratings and refusal counts, not BLEU/ROUGE/BERTScore.**
+**Selection uses refusal counts and failure modes, not BLEU/ROUGE/BERTScore.**
 Every candidate is un-fine-tuned at this point, so all of them score in the same
 low band against rojak gold answers, and the differences between them are noise
-rather than signal. A blinded Likert pass over a fixed 20-item probe set
-measures the thing that actually differs: whether the register is plausible
-Malaysian speech.
+rather than signal. What differs measurably is behaviour on the 3 designed
+out-of-knowledge probes, and the qualitative failure modes on the other 17.
+
+*Amended 22 Aug 2026.* This paragraph originally specified a blinded Likert pass
+as the selection instrument, and the sheet was built. It was not rated. The
+decision is recorded in `docs/model_selection.md` on refusal counts and quoted
+failure modes instead — see §8 for why, and treat that as deviation #9.
 
 **Perplexity is deliberately absent from the cross-model comparison.**
 Perplexity is not comparable across different tokenizers — the candidates
@@ -230,3 +234,36 @@ comparison is valid.
 the two raters are the same people who picked the candidates and wrote the
 corpus. Inter-rater agreement is reported before the means, since a mean over
 two raters who disagree is a number with nothing behind it.
+
+That blinding machinery still matters. It was built for this bake-off and went
+unused here, but the fine-tuned-vs-base human evaluation §8 leaves outstanding is
+the one the assignment actually grades, and it has the same rater-bias problem in
+a sharper form — there the raters know which system they spent three weeks
+training. Keep `eval/make_rating_sheet.py` and `eval/score_ratings.py`.
+
+## §8 Why the model choice has no Likert numbers behind it
+
+**Deviation #9 from the Part A evaluation plan.** Part A specified human ratings
+for fluency, rojak naturalness and factual consistency as the instrument for
+choosing between candidate bases. The sheet was generated
+(`eval/rating_sheet.csv`, blinded, 40 rows) and never filled in.
+
+The reason is that the bake-off produced a categorical result rather than a
+marginal one. On the 3 out-of-knowledge probes, Llama declined 3/3 and MaLLaM
+declined 1/3, fabricating a JPJ regulation and offering legal advice on the other
+two. Both fabrications are quotable verbatim from `eval/results/mallam.json`.
+Against evidence of that kind, a subjective 1-5 mean from the two people who
+picked the candidates and wrote the corpus adds little, and is the weaker of the
+two artifacts to defend under questioning.
+
+The honest statement of the risk: this substitutes an objective measure on a
+narrow axis (3 items) for a subjective measure on a broad one (20 items × 3
+axes). MaLLaM is the more fluent model on a read-through and that is not
+captured anywhere in the decision. The counter is that fluency is what QLoRA
+fine-tuning supplies and hallucination is not, so the axis kept is the axis that
+survives training.
+
+**This does not discharge the graded human evaluation.** That one compares the
+fine-tuned model against its own un-fine-tuned base with the tokenizer held
+constant. It is a different comparison, it is still required, and it is still
+outstanding.

@@ -27,8 +27,11 @@ through logged human corrections.
 
 ## Fixed decisions
 
-- **Base model**: 3B-class instruct model (Llama-3.2-3B-Instruct /
-  Qwen2.5-3B-Instruct / Mesolitica MaLLaM). Must fit QLoRA 4-bit on one T4.
+- **Base model**: `meta-llama/Llama-3.2-3B-Instruct`, LLaMA-Factory template
+  `llama3`. *Settled 22 Aug 2026 by the bake-off against Mesolitica MaLLaM;
+  Qwen2.5-3B was never run. Llama declined 3/3 out-of-knowledge probes to
+  MaLLaM's 1/3. Reasoning and evidence in `docs/model_selection.md`.* Gated
+  repo — the HF token must have accepted Meta's licence.
 - **Fine-tuning**: QLoRA via LLaMA-Factory + bitsandbytes, YAML-configured.
 - **Training environment**: Google Colab (free T4). Checkpoint to Drive so runs
   survive disconnects. *Changed 22 Aug 2026 from Kaggle Notebooks — Kaggle gates
