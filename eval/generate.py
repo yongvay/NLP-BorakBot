@@ -172,20 +172,37 @@ def load_model(model_id: str, adapter: str | None, four_bit: bool):
     return tok, model
 
 
-def build_inputs(tok, system: str | None, user: str):
-    """Format one turn with the model's own chat template.
+def build_inputs(tok, system: str | None, user: str, chat_format: str = "auto"):
+    """Format one turn in the delimiters the checkpoint was trained on.
 
-    Falls back to a plain layout if the checkpoint ships no template. A model
-    without one is a real risk for the bake-off, not a hypothetical: if a
-    candidate lands here, note it in docs/model_selection.md, because a missing
-    template is a tooling cost that counts against choosing it.
+    Returns (text, format_used) so the run records which path it took.
+
+    THE PLAIN FALLBACK IS NOT A NEUTRAL DEFAULT — it is a last resort, and the
+    first bake-off proved it. `mallam-3b-20k-instructions` ships no
+    `chat_template`, so it landed on the plain layout and produced degenerate
+    output on all 20 probes: it never emitted a turn-ending token and instead
+    carried on inventing 'User:' exchanges with itself. That measured the
+    formatting fallback, not the model.
+
+    Its model card states it uses the exact Mistral Instruct template, so pass
+    `--chat-format mistral`. Mistral has no system role: the convention is to
+    prepend the system text to the first user message, which is what happens
+    here. If a checkpoint has no declared template, look up what it was trained
+    on rather than accepting `plain`.
     """
-    msgs = ([{"role": "system", "content": system}] if system else []) + \
-           [{"role": "user", "content": user}]
-    if getattr(tok, "chat_template", None):
-        return tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True), True
+    if chat_format == "mistral":
+        content = f"{system}\n\n{user}" if system else user
+        # No literal <s>: the tokenizer prepends BOS itself, and two of them
+        # shift every position the model was trained to expect.
+        return f"[INST] {content} [/INST]", "mistral"
+
+    if chat_format == "auto" and getattr(tok, "chat_template", None):
+        msgs = ([{"role": "system", "content": system}] if system else []) + \
+               [{"role": "user", "content": user}]
+        return tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True), "auto"
+
     parts = ([system] if system else []) + [f"User: {user}", "Assistant:"]
-    return "\n\n".join(parts), False
+    return "\n\n".join(parts), "plain"
 
 
 def main() -> int:
@@ -201,6 +218,9 @@ def main() -> int:
     ap.add_argument("--no-system-prompt", action="store_true",
                     help="ablation: generate without the constrained system prompt")
     ap.add_argument("--4bit", dest="four_bit", action="store_true")
+    ap.add_argument("--chat-format", default="auto", choices=["auto", "mistral", "plain"],
+                    help="auto uses the tokenizer's own template; mistral forces the "
+                         "[INST] layout for checkpoints that ship none (MaLLaM)")
     ap.add_argument("--max-new-tokens", type=int, default=MAX_NEW_TOKENS)
     ap.add_argument("--seed", type=int, default=SEED)
     ap.add_argument("--dry-run", action="store_true",
@@ -235,11 +255,15 @@ def main() -> int:
     import torch
     records, templated = [], None
     for i, row in enumerate(rows, 1):
-        text, used_template = build_inputs(tok, system, row["user"])
+        text, used_template = build_inputs(tok, system, row["user"], args.chat_format)
         if templated is None:
             templated = used_template
-            if not used_template:
-                print("WARNING: no chat template on this checkpoint, using a plain layout")
+            print(f"prompt format: {used_template}")
+            if used_template == "plain":
+                print("WARNING: this checkpoint declares no chat template and none was "
+                      "forced. Expect degenerate output — the model has no turn-ending "
+                      "token in this layout. Look up what it was trained on and pass "
+                      "--chat-format.")
         enc = tok(text, return_tensors="pt").to(model.device)
         with torch.no_grad():
             out = model.generate(
@@ -274,6 +298,7 @@ def main() -> int:
             "refusals_only": args.refusals_only,
             "system_prompt": not args.no_system_prompt,
             "chat_template": templated,
+            "chat_format_requested": args.chat_format,
             "four_bit": args.four_bit,
             "decoding": "greedy",
             "max_new_tokens": args.max_new_tokens,
