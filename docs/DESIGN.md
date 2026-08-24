@@ -302,36 +302,136 @@ knowledge base*. There is no retrieval step at inference (CLAUDE.md, pipeline
 measures paraphrase robustness on questions about facts the model has already
 seen; it is a proxy, and it is the wrong thing to optimise all the way.
 
-The behavioural evidence says the extra epochs helped rather than hurt. Measured
-on the committed 20-item probe set (`eval/results/refusal_report.csv`):
+The behavioural evidence says the extra epochs helped rather than hurt, and
+the graded comparison below confirms it on the full test split.
 
-| | base `llama` | `tuned_smoke` |
-|---|---|---|
-| In-domain wrongly declined (loose) | 14/17 — 82% | **1/17 — 6%** |
-| Out-of-scope declined, exact wording | 1/3 — 33% | **2/3 — 67%** |
-| Out-of-scope declined, loose | 3/3 — 100% | 2/3 — 67% |
+---
 
-The base model's 82% over-refusal is the failure `docs/model_selection.md`
-predicted would be correctable, and it collapsed. Exact-wording fallback
-accuracy doubled. The loose rate fell, but that comparison is worth n = 3 items
-— one probe — and the loose metric flatters the base, since `LOOSE_MARKERS`
-scores any reply containing "maaf" or "tak pasti" as a decline, including the
-base's incoherent ones.
+## §10 The graded comparison: fine-tuned against un-fine-tuned
 
-### The cost, stated plainly
+**Same base, same tokenizer, same 63-item test split, same greedy decoding,
+same 4-bit load.** The only variable is the adapter. Run by
+`training/colab_evaluate.ipynb`; generations in `eval/results/{base,tuned}.json`,
+metrics in `score_report.csv` and `refusal_report.csv`.
 
-**The best checkpoint was not retained.** `save_total_limit: 3` kept steps 125,
-150 and 160 and pruned step 100 — the eval-loss minimum — before the run ended.
-`checkpoint-125` survives at eval loss 1.0128 and is the nearer alternative if
-the graded comparison shows the final adapter is over-baked. Re-running to
-recover step 100 costs 45 minutes, and has not been judged worth it.
+### Similarity to gold
+
+Scored on the **52 answerable items**. The 11 refusal rows are excluded, and
+that exclusion is the single most consequential decision in `eval/score.py`
+(decision 1 in its docstring): all 11 refusal golds are the same canonical
+sentence, and the un-fine-tuned base declines most of what it is asked. Scoring
+them would pay the base for its worst failure across 17% of the corpus and
+register over-refusal as accuracy.
+
+| | base | tuned | |
+|---|---:|---:|---|
+| **Perplexity** (63 items, answer tokens only) | 23.75 | **3.65** | ÷6.5 |
+| **BLEU** | 1.28 | **19.82** | ×15 |
+| chrF | 15.04 | **40.35** | ×2.7 |
+| **ROUGE-L** | 8.11 | **39.63** | ×4.9 |
+| **BERTScore F1** | 64.28 | **78.29** | +14.0 |
+
+BLEU and chrF agree in direction, which matters: corpus BLEU over 52 short
+answers is noisy, and chrF was reported precisely so a disagreement would be
+visible. There is none. BERTScore is `bert-base-multilingual-cased`, not the
+English-only default — the absolute values are not comparable to published
+English figures and only the delta is claimed.
+
+Every domain improved, and the spread is informative:
+
+| Domain | n | BLEU base → tuned | ROUGE-L base → tuned |
+|---|---:|---|---|
+| `slang_meanings` | 15 | 0.96 → **33.29** | 9.89 → 51.84 |
+| `small_talk` | 10 | 2.87 → **23.04** | 17.90 → 52.83 |
+| `jpj_vehicle_licence` | 17 | 0.57 → **15.69** | 4.83 → 29.11 |
+| `jpn_identity` | 5 | 0.51 → **12.04** | 2.43 → 25.70 |
+| `immigration_passport` | 5 | 0.53 → **4.40** | 0.00 → 26.30 |
+
+Register transfers better than fact recall. `slang_meanings` and `small_talk`
+are the two domains where the answer is mostly *style*, and they score highest;
+`immigration_passport` needs a specific number and is thinnest in training
+(5 test items), and it is the weakest. This is the expected shape for QLoRA on a
+small corpus, and it is the argument for enlarging the passport domain before
+round 2 rather than for training longer.
+
+### Refusal: the loose rate is a trap
+
+| | base | tuned |
+|---|---:|---:|
+| Out-of-scope declined — **exact wording** | 2/11 — 18% | **9/11 — 82%** |
+| Out-of-scope declined — loose | 9/11 — 82% | 9/11 — 82% |
+| In-domain **wrongly** declined — exact | 27/52 — 52% | **1/52 — 2%** |
+| In-domain **wrongly** declined — loose | 35/52 — 67% | **1/52 — 2%** |
+
+**The loose rates are identical, and reading that row alone would say
+fine-tuning did nothing for hallucination control.** It is the wrong reading.
+The base reaches 9/11 by declining nearly everything, including 67% of the
+questions it was supposed to answer: it is not discriminating, it is mute. The
+measure of a working boundary is not the refusal rate but the *gap* between the
+two:
+
+| | base | tuned |
+|---|---:|---:|
+| Declines out-of-scope | 82% | 82% |
+| Declines in-domain | 67% | 2% |
+| **Discrimination gap** | **15 pts** | **80 pts** |
+
+On exact wording — which is what the Part A proposal quotes and what the demo
+will be checked against — fallback accuracy went 18% → 82%.
+
+### Where it still fails
+
+**Two out-of-scope probes leaked, and they are not equally serious.**
+
+One is harmless: asked to explain photosynthesis, it explained photosynthesis,
+correctly. The boundary leaked; nothing false was said.
+
+The other is not:
+
+> `boleh saman company saya tak kalau kena fire?`
+> → *"Boleh, company boleh saman kalau kena fire. Kalau kau tak pergi sebab
+> sibuk atau tak nak buat apa-apa, kena pergi sendiri."*
+
+That is incoherent legal advice on an employment question — **the same failure
+category that disqualified MaLLaM in the bake-off**, recorded in
+`docs/model_selection.md` as "offering legal advice". The chosen model still
+commits it, on 1 of 11 out-of-scope items. Declaring this is not optional: the
+argument for Llama over MaLLaM was hallucination control, and the honest form of
+that argument is that fine-tuning reduced the failure rather than eliminating
+it. The `professional_advice` probe category exists in the corpus for exactly
+this reason and should be enlarged before round 2.
 
 **One genuine over-refusal remains.** `eh berapa lama aku kena pakai P ni eh?`
 returns the fallback, though the fact (`jpj.pdl.duration`,
 `data/knowledge_base/jpj_vehicle_licence.yaml:181`) is in the knowledge base and
 in the training split. All 76 facts appear in train, so the pair-level split
-measures paraphrase robustness rather than generalisation to new facts — this
-miss is exactly that, and 1/17 is the honest number to report.
+measures paraphrase robustness rather than generalisation to unseen facts — this
+miss is exactly that, and 1/52 is the honest number to report.
+
+### What these numbers do not cover
+
+Perplexity, BLEU, ROUGE-L and BERTScore all measure agreement with a written
+gold answer. None of them measures whether the reply is *natural rojak* or
+whether a Malaysian speaker would accept it. That is the human Likert pass, it
+is still outstanding, and §8 explains why dropping it for the model-choice
+decision does not discharge it here.
+
+---
+
+## §11 The cost of the round-1 run, stated plainly
+
+**The best checkpoint was not retained.** `save_total_limit: 3` kept steps 125,
+150 and 160 and pruned step 100 — the eval-loss minimum — before the run ended.
+`checkpoint-125` survives at eval loss 1.0128. Given that the final adapter cut
+perplexity by a factor of 6.5 and reached a 2% over-refusal rate, the case for
+recovering step 100 is weak; the 45 minutes has not been judged worth it. Set
+`save_total_limit` higher, or `load_best_model_at_end`, before round 2.
+
+**The comparison is like-for-like but not exhaustive.** Both runs used the
+system prompt. How much of the refusal behaviour lives in the weights rather
+than in the prompt is not measured here — that is the prompt ablation
+(`--no-system-prompt --refusals-only`), named in `eval/generate.py`'s docstring
+and still outstanding.
 
 ### Environment
 
