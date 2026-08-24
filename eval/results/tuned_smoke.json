@@ -1,0 +1,180 @@
+{
+  "meta": {
+    "tag": "tuned_smoke",
+    "model": "meta-llama/Llama-3.2-3B-Instruct",
+    "adapter": "/content/drive/MyDrive/RDS3S1/NLP/borakbot-qlora-r1",
+    "split": "test",
+    "probe_set": "probe_set.jsonl",
+    "refusals_only": false,
+    "system_prompt": true,
+    "chat_template": "auto",
+    "chat_format_requested": "auto",
+    "four_bit": true,
+    "decoding": "greedy",
+    "max_new_tokens": 160,
+    "n": 20,
+    "generated_utc": "2026-08-22T17:52:28+00:00"
+  },
+  "records": [
+    {
+      "stratum": "jpn_identity",
+      "source": "jpn.mykad.collection_time",
+      "category": null,
+      "user": "aku duduk Sarawak, nak tahu berapa lama proses kad ni",
+      "gold": "Untuk Sabah, Sarawak dan Labuan lebih kurang 7 working days. Kat Semenanjung cawangan biasa 5 working days, tapi ibu pejabat negeri dan UTC boleh siap dalam 33 minit.",
+      "prediction": "Kalau kau datang sendiri kat pejabat yang issue passport, 33 minit je dah siap. Cawangan lain kat Semenanjung ambik lebih kurang 5 working days, Sabah Sarawak Labuan pulak 7 working days."
+    },
+    {
+      "stratum": "slang_meanings",
+      "source": "slang.kiasu",
+      "category": null,
+      "user": "What does kiasu describe in Malaysian slang lah?",
+      "gold": "In Malaysian slang, kiasu describes someone afraid of losing out atau missing an advantage, sampai overprepare atau grab more than needed.",
+      "prediction": "In Malaysian slang, kiasu describes someone who is overly concerned with losing out atau missing an advantage, dan often exhibits greedy atau grabbier behavior."
+    },
+    {
+      "stratum": "slang_meanings",
+      "source": "slang.tapau",
+      "category": null,
+      "user": "tapau meaning apa ah",
+      "gold": "Tapau ni pack makanan untuk take away, rather than eat in.",
+      "prediction": "Tapau tu pack food untuk take away, bukan makan kat situ."
+    },
+    {
+      "stratum": "small_talk",
+      "source": "talk.wellbeing",
+      "category": null,
+      "user": "okay ke",
+      "gold": "Okay je! Nak help dengan apa?",
+      "prediction": "Okay je! Nak saya help pasal apa?"
+    },
+    {
+      "stratum": "jpj_vehicle_licence",
+      "source": "jpj.cdl.fee_d_above",
+      "category": null,
+      "user": "kelas mana yang RM30?",
+      "gold": "Kelas D, E, F, G, H dan I. Semua tu RM30 setahun untuk warganegara Malaysia.",
+      "prediction": "Kelas B2 dan B dan C cuma RM30 setahun."
+    },
+    {
+      "stratum": "jpj_vehicle_licence",
+      "source": "jpj.roadtax.insurance_first",
+      "category": null,
+      "user": "JPJ check insurance ke bila renew?",
+      "gold": "Ya, JPJ verify insurance secara elektronik. Kalau takde policy insurance atau takaful aktif, road tax tak boleh diissue.",
+      "prediction": "Bila renew lepas tarikh expiry, JPJ check secara elektronik. Kalau kau pergi sendiri, takde benda tosikap."
+    },
+    {
+      "stratum": "immigration_passport",
+      "source": "imm.passport.fee_10yr",
+      "category": null,
+      "user": "is there a 10 year passport now?",
+      "gold": "Yes, the 10 year passport started on 1 July 2026 and costs RM350. You have to apply in person at a passport issuing office though, not online.",
+      "prediction": "Ya, 10 tahun dah start 1 Julai 2026. Price RM350, same for citizens dan non-citizens."
+    },
+    {
+      "stratum": "slang_meanings",
+      "source": "slang.mamak",
+      "category": null,
+      "user": "so term mamak boleh refer Indian-Muslim community itself jugak ke?",
+      "gold": "Ya, mamak boleh refer Indian-Muslim community itself, selain meaning Indian-Muslim eatery.",
+      "prediction": "Ya, mamak boleh refer Indian-Muslim community di Malaysia, dan often juga Western-style eatery."
+    },
+    {
+      "stratum": "slang_meanings",
+      "source": "slang.terror",
+      "category": null,
+      "user": "eh wei dia cakap terror tu apa doh",
+      "gold": "Terror tu compliment lah, meaning very good atau highly skilled.",
+      "prediction": "Dia cakap terror tu bila someone buat sesuatu carelessly atau casually, dan boleh juga asal word tu."
+    },
+    {
+      "stratum": "immigration_passport",
+      "source": "imm.passport.online_requirements",
+      "category": null,
+      "user": "passport aku ada tapi cover dia dah koyak sikit",
+      "gold": "Syarat renewal online, passport kena dalam good condition. Details peribadi pun kena unchanged dan gambar kena comply spec.",
+      "prediction": "Kau kena buat yang baru. Fee application not renewed in time tu RM310, untuk kelas 5 tahun."
+    },
+    {
+      "stratum": "small_talk",
+      "source": "talk.capability",
+      "category": null,
+      "user": "aku ingat road tax boleh tapi passport tak boleh, betul ke?",
+      "gold": "Tak, BorakBot cover both road tax dan passport, plus driving licences, MyKad dan Malaysian slang.",
+      "prediction": "Bukan passport yang tak boleh; kau boleh renew online. Road tax dan MyKad, sijil lahir dan details pendaftaran kenderaan pun boleh jugak."
+    },
+    {
+      "stratum": "jpj_vehicle_licence",
+      "source": "jpj.pdl.duration",
+      "category": null,
+      "user": "eh berapa lama aku kena pakai P ni eh?",
+      "gold": "Tempoh PDL 2 years.",
+      "prediction": "Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?"
+    },
+    {
+      "stratum": "jpj_vehicle_licence",
+      "source": "jpj.cdl.documents",
+      "category": null,
+      "user": "what documents do I need to renew my licence?",
+      "gold": "Your original MyKad or passport. If a representative is doing it for you, a copy is accepted.",
+      "prediction": "Your MyKad, the vehicle registration details, and a valid passport are required."
+    },
+    {
+      "stratum": "small_talk",
+      "source": "talk.identity",
+      "category": null,
+      "user": "What is BorakBot supposed to help with lah?",
+      "gold": "BorakBot helps with questions about Malaysian government services dan everyday personal admin, guna Bahasa Rojak.",
+      "prediction": "BorakBot is a chatbot that helps with Malaysian government services dan everyday personal admin, dan it answers Malaysian slang."
+    },
+    {
+      "stratum": "refusal",
+      "source": "macam mana nak masak rendang?",
+      "category": "out_of_domain",
+      "user": "how do I cook rendang ah?",
+      "gold": "Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?",
+      "prediction": "Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?"
+    },
+    {
+      "stratum": "slang_meanings",
+      "source": "slang.sien",
+      "category": null,
+      "user": "aku ingat sien just means sleepy, betul ke?",
+      "gold": "Bukan sleepy; sien means bored, fed up atau listless.",
+      "prediction": "Bukan sleepy je; sien means bored, fed up atau listless, similar to bored."
+    },
+    {
+      "stratum": "refusal",
+      "source": "JPJ ada buat apa-apa announcement baru tak minggu ni?",
+      "category": "current_events",
+      "user": "eh ada peraturan JPJ baru ke minggu ni?",
+      "gold": "Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?",
+      "prediction": "Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?"
+    },
+    {
+      "stratum": "jpj_vehicle_licence",
+      "source": "jpj.cdl.fee_a",
+      "category": null,
+      "user": "beza fee kelas A dengan A1 ada tak?",
+      "gold": "Takde beza. Kedua-dua kelas A dan A1 RM2 setahun untuk warganegara Malaysia.",
+      "prediction": "Ada, RM20 setahun untuk kelas A dan A1, sama untuk warganegara dan bukan warganegara."
+    },
+    {
+      "stratum": "refusal",
+      "source": "boleh saman company saya tak kalau kena fire?",
+      "category": "professional_advice",
+      "user": "boleh saman company saya tak kalau kena fire?",
+      "gold": "Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?",
+      "prediction": "Boleh, company boleh saman kalau kena fire. Kalau kau tak pergi sebab sibuk atau tak nak buat apa-apa, kena pergi sendiri."
+    },
+    {
+      "stratum": "jpn_identity",
+      "source": "jpn.mykad.online_first_loss_only",
+      "category": null,
+      "user": "boleh apply online tak untuk MyKad hilang?",
+      "gold": "Boleh, tapi untuk first loss je. Kalau dah kali kedua ke atas kena pergi counter JPN.",
+      "prediction": "Tak boleh, online untuk first loss je. Second time kau kena pergi counter sendiri."
+    }
+  ]
+}

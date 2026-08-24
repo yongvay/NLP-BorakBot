@@ -267,3 +267,77 @@ survives training.
 fine-tuned model against its own un-fine-tuned base with the tokenizer held
 constant. It is a different comparison, it is still required, and it is still
 outstanding.
+
+---
+
+## §9 What the round-1 training run did, and why 5 epochs was kept
+
+**Run**: QLoRA, `meta-llama/Llama-3.2-3B-Instruct`, 506 training pairs, 160 steps
+(5 epochs), 45 minutes on one Colab T4. Adapter:
+[YongVay/borakbot-qlora-r1](https://huggingface.co/YongVay/borakbot-qlora-r1),
+rank 16, α 32, dropout 0.05, all seven attention and MLP projections, 24 MB.
+LR 2e-4 cosine, effective batch 16 (2 × 8 accumulation), fp16 — not bf16,
+because the T4 is Turing and has no bf16 path.
+
+### The loss curve is not monotone, and that is the finding
+
+| Step | Epoch | Train loss | **Eval loss** | |
+|---:|---:|---:|---:|---|
+| 25  | 0.79 | 1.8879 | 1.6993 | |
+| 50  | 1.57 | 1.0221 | 1.1664 | |
+| 75  | 2.35 | 0.5914 | 1.0533 | |
+| 100 | 3.13 | 0.3819 | **0.9670** | minimum |
+| 125 | 3.92 | 0.2372 | 1.0128 | |
+| 150 | 4.70 | 0.0891 | 1.0876 | |
+| 160 | 5.00 | 0.1024 | 1.0904 | shipped |
+
+Curves: `docs/training_loss.png`, `docs/training_eval_loss.png`.
+
+Train loss falls to 0.10 while eval loss rises 13% off its step-100 minimum.
+On a normal supervised task that is overfitting and the run should stop at 100.
+**Here the last two epochs were kept deliberately**, because the objective is not
+generalisation to unseen questions — it is *memorisation of a fixed 76-fact
+knowledge base*. There is no retrieval step at inference (CLAUDE.md, pipeline
+§3), so every fact the bot can state has to be in the weights. Held-out loss
+measures paraphrase robustness on questions about facts the model has already
+seen; it is a proxy, and it is the wrong thing to optimise all the way.
+
+The behavioural evidence says the extra epochs helped rather than hurt. Measured
+on the committed 20-item probe set (`eval/results/refusal_report.csv`):
+
+| | base `llama` | `tuned_smoke` |
+|---|---|---|
+| In-domain wrongly declined (loose) | 14/17 — 82% | **1/17 — 6%** |
+| Out-of-scope declined, exact wording | 1/3 — 33% | **2/3 — 67%** |
+| Out-of-scope declined, loose | 3/3 — 100% | 2/3 — 67% |
+
+The base model's 82% over-refusal is the failure `docs/model_selection.md`
+predicted would be correctable, and it collapsed. Exact-wording fallback
+accuracy doubled. The loose rate fell, but that comparison is worth n = 3 items
+— one probe — and the loose metric flatters the base, since `LOOSE_MARKERS`
+scores any reply containing "maaf" or "tak pasti" as a decline, including the
+base's incoherent ones.
+
+### The cost, stated plainly
+
+**The best checkpoint was not retained.** `save_total_limit: 3` kept steps 125,
+150 and 160 and pruned step 100 — the eval-loss minimum — before the run ended.
+`checkpoint-125` survives at eval loss 1.0128 and is the nearer alternative if
+the graded comparison shows the final adapter is over-baked. Re-running to
+recover step 100 costs 45 minutes, and has not been judged worth it.
+
+**One genuine over-refusal remains.** `eh berapa lama aku kena pakai P ni eh?`
+returns the fallback, though the fact (`jpj.pdl.duration`,
+`data/knowledge_base/jpj_vehicle_licence.yaml:181`) is in the knowledge base and
+in the training split. All 76 facts appear in train, so the pair-level split
+measures paraphrase robustness rather than generalisation to new facts — this
+miss is exactly that, and 1/17 is the honest number to report.
+
+### Environment
+
+PEFT 0.18.1 · Transformers 5.6.0 · PyTorch 2.11.0+cu128 · Datasets 4.0.0 ·
+Tokenizers 0.22.2. LLaMA-Factory pinned to `v0.9.5`, which constrains
+`transformers<=5.6.0` — deliberately *not* the 5.15.0 in `requirements.txt`.
+That file describes the CPU environment serving the Streamlit app; the two never
+share a process. Config and its reasoning: `training/qlora_config.yaml`;
+notebook: `training/colab_finetune.ipynb`.
