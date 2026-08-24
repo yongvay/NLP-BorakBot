@@ -251,6 +251,20 @@ def main() -> int:
                 print(f"  {s['stratum']:<24}{s['n']:>4}{s['bleu']:>8.2f}"
                       f"{s['chrf']:>8.2f}{s['rougeL']:>9.2f}")
 
+    # A partial run must not overwrite a complete report. --no-bertscore and a
+    # missing --perplexity both leave None in a column, and writing that on top
+    # of a finished 35-minute GPU run silently destroys numbers that cost real
+    # time to produce. Exploratory runs (--by-stratum, a quick BLEU check) print
+    # and stop; only the full set of metrics earns the file.
+    missing = [name for name, key in (("BERTScore", "bertscore_f1"),
+                                      ("perplexity", "perplexity"))
+               if any(r[key] is None for r in rows)]
+    if missing:
+        print(f"\n{OUT.relative_to(ROOT)} left unchanged: this run computed no "
+              f"{' and no '.join(missing)}, and a partial report would overwrite "
+              "a complete one.")
+        return 0
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", encoding="utf-8", newline="") as fh:
         writer = csv.DictWriter(fh, fieldnames=list(rows[0]))
