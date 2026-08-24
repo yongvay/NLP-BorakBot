@@ -84,3 +84,6 @@ desktop.ini
 .idea/
 .vs/
 .~lock.*#
+
+# --- Fine Tune Model---
+/finetune
