@@ -77,7 +77,8 @@ data/        knowledge_base/ (5 YAML domains), generated/pairs_v1.jsonl
 docs/        DESIGN.md — every non-obvious decision, with evidence. Read first.
              Part A proposal, rubrics, Part B draft
 training/    qlora_config.yaml, to_llamafactory.py, colab_bakeoff.ipynb
-eval/        generate.py + the bake-off scoring scripts, probe_set.jsonl,
+             colab_finetune.ipynb (run), colab_evaluate.ipynb (Step 5)
+eval/        generate.py, score.py, refusal_report.py, probe_set.jsonl,
              results/ (committed — the evidence behind model choice)
 scripts/     split_corpus.py   (validate_pairs/build_corpus are in archive/)
 handoffs/    session-to-session state; HANDOFF_3.md is current
