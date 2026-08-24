@@ -50,6 +50,15 @@ MALAYSIAN_MODEL = "mesolitica/malaysian-whisper-small-v3"
 # are not symmetric. DESIGN.md §2.
 EN_THRESHOLD = 0.5
 
+# Transcribe on the CPU even when a GPU is present. The demo laptop has 4 GB of VRAM and
+# Stage 3 needs ~3 GB of it for the 4-bit LLM; this model would take another ~1 GB and the
+# two together do not fit. Whisper-small on CPU costs a few seconds, which is invisible
+# beside generation. DESIGN.md §13.
+#
+# This does NOT affect the reported 0.349 WER: torch_dtype is float32 on either device, so
+# the transcript is identical. Set BORAKBOT_STT_GPU=1 to override on a larger card.
+STT_ON_GPU = os.getenv("BORAKBOT_STT_GPU") == "1"
+
 # Decoder context. Itself code-switched, and sharing no vocabulary with the eval set.
 # DESIGN.md §3.
 ROJAK_PROMPT = (
@@ -92,7 +101,7 @@ def _malaysian():
         _models["malaysian"] = pipeline(
             "automatic-speech-recognition",
             model=MALAYSIAN_MODEL,
-            device=0 if torch.cuda.is_available() else -1,
+            device=0 if STT_ON_GPU and torch.cuda.is_available() else -1,
             torch_dtype=torch.float32,
         )
     return _models["malaysian"]

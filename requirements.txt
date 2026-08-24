@@ -45,8 +45,21 @@
 # CPU-only torch. The plain PyPI wheel bundles CUDA and is ~2.5 GB; this one is
 # ~120 MB and is ample for whisper-small at demo scale (~7 s per utterance).
 # The +cpu build exists only on PyTorch's own index, hence the extra index below.
-# On a machine with an NVIDIA GPU, drop both lines and `pip install torch` —
-# app/stt.py calls torch.cuda.is_available() and adapts on its own.
+#
+# THIS IS ENOUGH FOR STAGES 1-2 BUT NOT FOR A FAST STAGE 3. On CPU the LLM loads
+# in bfloat16 (~6.4 GB of RAM) and takes about a minute per reply. It works, and
+# the app says so in the sidebar, but it is not what DESIGN.md §10 measured.
+#
+# For the 4-bit GPU path, replace the two lines below with a CUDA build and add
+# bitsandbytes, which has no CPU kernel and is therefore not a base requirement:
+#
+#     pip uninstall -y torch
+#     pip install torch --index-url https://download.pytorch.org/whl/cu124
+#     pip install bitsandbytes
+#
+# On a 4 GB card that is the whole budget: the 4-bit 3B model needs ~3 GB and
+# Whisper another ~1 GB, so app/stt.py keeps Whisper on the CPU by default.
+# DESIGN.md §13. Override with BORAKBOT_STT_GPU=1 on a larger card.
 --extra-index-url https://download.pytorch.org/whl/cpu
 torch==2.13.0+cpu
 
@@ -61,6 +74,14 @@ openai-whisper==20250625
 # docs/DESIGN.md §3. If a Colab or Kaggle run resolves a different major version,
 # expect the transcripts to differ from the ones behind the reported 0.349 WER.
 transformers==5.15.0
+
+# Attaches the QLoRA adapter to the base model at load time. Stage 3 serves the
+# adapter rather than a merged checkpoint, so this is a runtime dependency of the
+# app and not just of training. app/inference.py.
+peft==0.18.1
+
+# device_map and the sharded load path that from_pretrained uses for a 3B model.
+accelerate
 
 # The UI. st.audio_input (in-browser recording) needs >= 1.35.
 streamlit==1.61.1

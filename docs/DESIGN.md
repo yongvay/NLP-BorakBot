@@ -441,3 +441,93 @@ Tokenizers 0.22.2. LLaMA-Factory pinned to `v0.9.5`, which constrains
 That file describes the CPU environment serving the Streamlit app; the two never
 share a process. Config and its reasoning: `training/qlora_config.yaml`;
 notebook: `training/colab_finetune.ipynb`.
+
+---
+
+# Stage 2-3 decisions (normalisation and serving)
+
+## §12 Why Stage 2 repairs transcription errors instead of normalising rojak
+
+**Deviation #10 from the Part A pipeline.** Part A §5.2 specified Malaya's
+informal-Malay normaliser here — *"xleh" → "tidak boleh"* — followed by a slang
+dictionary mapping Manglish to canonical forms. That was the right design when
+it was written, for an un-fine-tuned model that had never seen rojak. It is the
+wrong design now, and running it would measurably damage Stage 3.
+
+**371 of the 506 training inputs (73%) are informal rojak.** `sapa reka telefon
+wei`. `lepak tu maksud apa actually?`. `training/to_llamafactory.py` passes the
+`user` field through verbatim, so the adapter was fitted on precisely that
+register. Expanding shortforms before generation hands the model text unlike
+anything in training, and §10 shows the fine-tuning is worth a 6.5× perplexity
+improvement that is only collectable on-distribution. Formalising the input
+spends it.
+
+The same evidence rules out the other two operations Part A named:
+
+| Operation | Why not |
+|---|---|
+| Lowercasing | Capitals are load-bearing: `MyKad` (14), `JPJ` (10), `IC` (6), and `P`/`D` as licence classes (12). Folding `P` to `p` erases the difference between a probationary licence and a letter. |
+| Stripping punctuation | 391 of 506 training inputs contain a question mark and 386 end in `.?!`. Whisper already punctuates; the corpus does too. |
+
+**What Stage 2 does instead** is repair what the *speech* stage got wrong, which
+§5 already measured and named as the remedy: `myjpj` heard as "jbj" 9 times,
+`aiyo` as "ayo" 9 times, `camne` as "chiamnna" 4 times. Those are failures the
+LLM cannot recover from, and a lookup table fixes them for nothing.
+
+### The rule for what may be repaired
+
+`archive/eval/speech/results/substitutions.csv` has 492 rows and is mostly
+unusable, because it is keyed the wrong way round: it records what each
+*reference* word turned into, not what each *mistake* came from. Reversing it
+blindly corrupts correct transcripts.
+
+    Whisper wrote "saya" for  can(9), do(6), i(6), balance(5), my(4)
+    Whisper wrote "card" for  roadtax(6), mykad(6)
+    Whisper wrote "buku" for  pukul(8) — and "buku" is also just the word for book
+
+So `app/normalise.py` repairs only tokens that **cannot legitimately occur in
+Malaysian rojak** — the residue Whisper invents (`jbj`, `chiamnna`, `unitrasca`)
+plus a handful of domain spellings the corpus never uses (`efilling`,
+`pasport`). Seventeen entries, each with its count. High-frequency pairs like
+`nampak→nak` and `kad→credit` are deliberately excluded and the exclusion is
+recorded in the module, because each is a real word being mistranslated.
+
+`app/normalise.py --self-test` runs ten cases, half of which assert that
+something is *left alone*.
+
+## §13 Why Whisper is pinned to the CPU
+
+The demo laptop has an RTX 3050 with **4 GB** of VRAM. The budget does not
+stretch to both models:
+
+| | |
+|---|---:|
+| Llama-3.2-3B, 4-bit NF4 (embeddings stay fp16) | ~2.4 GB |
+| CUDA context, activations, KV cache | ~0.6 GB |
+| `malaysian-whisper-small-v3`, fp32 | ~1.0 GB |
+| Windows display reserve | ~0.3 GB |
+| **Total** | **~4.3 GB** |
+
+The LLM is the one that benefits from the GPU — it is 13× larger and runs once
+per reply rather than once per clip. Whisper-small on CPU costs a few seconds,
+invisible beside generation. `app/stt.py` therefore defaults `STT_ON_GPU` to
+false; `BORAKBOT_STT_GPU=1` overrides it on a larger card.
+
+**This does not change the reported 0.349 WER.** `torch_dtype` is `float32` on
+either device, so the transcript is identical — only the wall clock moves.
+
+The trap this closes: `stt.py` previously took the GPU whenever
+`torch.cuda.is_available()`. Installing a CUDA build of torch to accelerate
+Stage 3 would silently have moved Whisper onto the card as well, and the failure
+would have surfaced as an out-of-memory error inside the LLM load, pointing at
+the wrong stage.
+
+### A second flag with the same shape
+
+`stt.py` sets `HF_HUB_OFFLINE=1` at import once Whisper is cached, to skip a Hub
+revision check that stalls on bad wi-fi (§4). That variable is **global**, and
+on a machine where Whisper is cached but Llama is not it would turn the model's
+first download into an obscure offline error. `app/inference.py` clears it at
+import when its own repo is absent — at import specifically, because
+`huggingface_hub` reads the variable into a module constant and never looks
+again.

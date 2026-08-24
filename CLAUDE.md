@@ -71,8 +71,8 @@ The live application is two files. Everything else is data, documentation, or
 tooling that has already run. Keep it that way — see `archive/README.md`.
 
 ```
-app/         streamlit_app.py, stt.py          <- the only code that runs live
-             normalise.py, inference.py, feedback.py   (Stages 2-4, not built yet)
+app/         streamlit_app.py, stt.py, normalise.py, inference.py  <- runs live
+             feedback.py   (Stage 4, not built yet)
 data/        knowledge_base/ (5 YAML domains), generated/pairs_v1.jsonl
 docs/        DESIGN.md — every non-obvious decision, with evidence. Read first.
              Part A proposal, rubrics, Part B draft
