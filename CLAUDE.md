@@ -71,9 +71,10 @@ The live application is two files. Everything else is data, documentation, or
 tooling that has already run. Keep it that way — see `archive/README.md`.
 
 ```
-app/         streamlit_app.py, stt.py, normalise.py, inference.py  <- runs live
-             feedback.py   (Stage 4, not built yet)
+app/         streamlit_app.py, stt.py, normalise.py, inference.py,
+             feedback.py                                          <- runs live
 data/        knowledge_base/ (5 YAML domains), generated/pairs_v1.jsonl
+             schema.sql (committed; feedback.db is not)
 docs/        DESIGN.md — every non-obvious decision, with evidence. Read first.
              Part A proposal, rubrics, Part B draft
 training/    qlora_config.yaml, to_llamafactory.py, colab_bakeoff.ipynb

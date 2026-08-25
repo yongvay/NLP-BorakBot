@@ -44,7 +44,7 @@ FOUR THINGS THAT ARE NOT OBVIOUS
     not what should be shown to a grader.
 
 Setup
-    huggingface-cli login          # gated base model + private adapter
+    hf auth login          # gated base model + private adapter
     python app/inference.py --warm-up
     python app/inference.py "eh macam mana nak renew roadtax"
 """

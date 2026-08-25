@@ -531,3 +531,51 @@ first download into an obscure offline error. `app/inference.py` clears it at
 import when its own repo is absent — at import specifically, because
 `huggingface_hub` reads the variable into a module constant and never looks
 again.
+
+---
+
+# Stage 4 decisions (feedback)
+
+## §14 Why corrections are logged but never applied automatically
+
+**Part A objective 6 promises a human-in-the-loop feedback mechanism, not an
+online-learning one, and the distinction is deliberate.** §5.7 of the proposal
+took the position from the literature on human correction: an unmoderated loop
+trains on whatever it is told. A chatbot that can be taught a wrong fact by one
+user is a worse system than one that cannot learn at all, and the failure is
+silent — nothing in the pipeline would flag that the knowledge base had been
+poisoned.
+
+So `app/feedback.py` has no retraining trigger and no write path into
+`data/generated/`. Thumbs-down corrections land in SQLite immediately;
+`--export` shapes them like training pairs and prints them; a person decides
+what is appended before the next QLoRA round. The moderation step *is* the
+design.
+
+The cost, stated: the demo cannot show measurable improvement from a correction
+within the session. What it shows is the correction being captured with enough
+context to be actioned, which is the part that generalises.
+
+### Why the schema splits `transcript` from `user_text`
+
+| Column | Holds |
+|---|---|
+| `transcript` | what Whisper heard — `NULL` when the question was typed |
+| `user_text` | what the model was given, after `app/normalise.py` |
+
+A wrong answer to a *misheard* question is an ASR failure and belongs against
+the 0.349 WER, not against the NLP metrics. §5 reports those two error sources
+separately and a single merged field would make the distinction unrecoverable
+after the fact — exactly when someone reviewing a batch needs it. `context`
+stores the preceding turns as JSON for the same reason: the reply was
+conditioned on them, so a correction cannot be judged without them.
+
+### One implementation note worth knowing
+
+`with sqlite3.connect(...) as conn` commits but does **not** close the
+connection. On Linux that leaks quietly; on Windows the open handle blocks the
+file outright, which is how it surfaced here — the module's own self-test could
+not delete its temporary database. Streamlit re-runs the script on every
+interaction, so this would have been a leaked handle per click. `feedback.py`
+wraps it in a `@contextmanager` that commits, rolls back on error, and always
+closes.
