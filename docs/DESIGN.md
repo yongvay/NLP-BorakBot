@@ -579,3 +579,28 @@ not delete its temporary database. Streamlit re-runs the script on every
 interaction, so this would have been a leaked handle per click. `feedback.py`
 wraps it in a `@contextmanager` that commits, rolls back on error, and always
 closes.
+
+### The review page, and why its password is not security
+
+`app/pages/1_Admin.py` puts the whole review workflow behind a password read
+from `.streamlit/secrets.toml` (gitignored; `.example` committed). Everything
+`python app/feedback.py` does from a terminal, done by clicking — the table, the
+up/down filter, and a browser download of the corrections as JSON.
+
+**The password is a demo gate, not authentication**, and the honest answer if
+asked is that it stops someone clicking into the review page while the laptop is
+unattended and nothing more. The database sits unencrypted beside the app,
+Streamlit serves plain HTTP on localhost, and the comparison is one line of
+Python. Real auth was not built because nothing here warrants it: there is one
+user, one machine, and no network exposure. Claiming otherwise would be the
+kind of overstatement the demo is meant to test for.
+
+It is a **separate page** for a practical reason. It imports `app.feedback` and
+nothing else, so it opens instantly; `app/streamlit_app.py` loads ~7 GB of
+Whisper and Llama and takes minutes on CPU. Reviewing corrections has no reason
+to wait for a language model.
+
+The page deliberately **shows** the retraining sequence rather than running it.
+Steps 3-5 write to `data/generated/` and the training itself needs a Colab GPU,
+so a button would either lie about what it did or make a misclick during a demo
+unrecoverable.

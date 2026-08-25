@@ -73,6 +73,8 @@ tooling that has already run. Keep it that way — see `archive/README.md`.
 ```
 app/         streamlit_app.py, stt.py, normalise.py, inference.py,
              feedback.py                                          <- runs live
+             pages/1_Admin.py   password-gated feedback review
+.streamlit/  secrets.toml.example (committed); secrets.toml is not
 data/        knowledge_base/ (5 YAML domains), generated/pairs_v1.jsonl
              schema.sql (committed; feedback.db is not)
 docs/        DESIGN.md — every non-obvious decision, with evidence. Read first.
