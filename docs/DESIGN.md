@@ -296,7 +296,7 @@ Curves: `docs/training_loss.png`, `docs/training_eval_loss.png`.
 Train loss falls to 0.10 while eval loss rises 13% off its step-100 minimum.
 On a normal supervised task that is overfitting and the run should stop at 100.
 **Here the last two epochs were kept deliberately**, because the objective is not
-generalisation to unseen questions — it is *memorisation of a fixed 76-fact
+generalisation to unseen questions — it is *memorisation of a fixed 54-fact
 knowledge base*. There is no retrieval step at inference (CLAUDE.md, pipeline
 §3), so every fact the bot can state has to be in the weights. Held-out loss
 measures paraphrase robustness on questions about facts the model has already
@@ -404,9 +404,11 @@ this reason and should be enlarged before round 2.
 **One genuine over-refusal remains.** `eh berapa lama aku kena pakai P ni eh?`
 returns the fallback, though the fact (`jpj.pdl.duration`,
 `data/knowledge_base/jpj_vehicle_licence.yaml:181`) is in the knowledge base and
-in the training split. All 76 facts appear in train, so the pair-level split
-measures paraphrase robustness rather than generalisation to unseen facts — this
-miss is exactly that, and 1/52 is the honest number to report.
+in the training split. Every one of the 54 knowledge facts and 22 out-of-scope
+probes that appears in test also appears in train — verified, zero unseen — so
+the pair-level split measures paraphrase robustness rather than generalisation
+to unseen facts. This miss is exactly that, and 1/52 is the honest number to
+report.
 
 ### What these numbers do not cover
 
