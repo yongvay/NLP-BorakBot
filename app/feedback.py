@@ -254,6 +254,10 @@ def main() -> int:
     ap.add_argument("--recent", action="store_true", help="print the last 20 entries")
     ap.add_argument("--export", action="store_true",
                     help="print corrections as review-ready JSON")
+    ap.add_argument("--out", type=Path, default=None, metavar="PATH",
+                    help="write --export to a UTF-8 file instead of stdout. Use this "
+                         "rather than a shell redirect: PowerShell's '>' writes a BOM, "
+                         "and json.load chokes on it.")
     ap.add_argument("--self-test", action="store_true", help="round-trip check")
     args = ap.parse_args()
 
@@ -267,8 +271,13 @@ def main() -> int:
 
     if args.export:
         rows = export_corrections()
-        print(json.dumps(rows, ensure_ascii=False, indent=2))
-        print(f"\n{len(rows)} correction(s) awaiting review", file=sys.stderr)
+        blob = json.dumps(rows, ensure_ascii=False, indent=2)
+        if args.out:
+            args.out.write_text(blob + "\n", encoding="utf-8")
+            print(f"wrote {args.out}  ({len(rows)} correction(s) awaiting review)")
+        else:
+            print(blob)
+            print(f"\n{len(rows)} correction(s) awaiting review", file=sys.stderr)
         return 0
 
     if args.recent:
