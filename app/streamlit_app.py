@@ -48,7 +48,7 @@ def _load_models():
 
 
 st.title("BorakBot")
-st.caption("Bahasa Rojak chatbot — speech in, rojak out")
+st.caption("Bahasa Rojak chatbot")
 
 with st.spinner("Loading Whisper and the fine-tuned model (first run downloads ~7 GB)…"):
     _load_models()
@@ -57,21 +57,29 @@ with st.spinner("Loading Whisper and the fine-tuned model (first run downloads ~
 
 with st.sidebar:
     st.subheader("Configuration")
+    # Trailing backslashes are markdown hard line breaks; without them these
+    # collapse into one paragraph.
     st.markdown(
-        f"""
-**Transcriber** `{stt.MALAYSIAN_MODEL.split('/')[-1]}`
-**Detector** `whisper-{stt.VANILLA_MODEL}`
+        rf"""
+**Transcriber** `{stt.MALAYSIAN_MODEL.split('/')[-1]}` \
+**Detector** `whisper-{stt.VANILLA_MODEL}` \
 **English threshold** `{stt.EN_THRESHOLD}`
 
-**Model** `{inference.BASE_MODEL.split('/')[-1]}`
-**Adapter** `{inference.ADAPTER.split('/')[-1]}`
+**Model** `{inference.BASE_MODEL.split('/')[-1]}` \
+**Adapter** `{inference.ADAPTER.split('/')[-1]}` \
 **Backend** `{inference.backend()}`
 """
     )
     if inference.backend() == "cpu-bf16":
         st.warning(
-            "Running the LLM on CPU — expect roughly a minute per reply. Install a "
-            "CUDA build of torch plus bitsandbytes for the 4-bit GPU path."
+            "Running the LLM on CPU — expect roughly a minute per reply. "
+            + (
+                "The GPU is present, but the 4-bit model did not fit on it. Close "
+                "other GPU applications and restart the app."
+                if inference.cuda_present()
+                else "Install a CUDA build of torch plus bitsandbytes for the "
+                "4-bit GPU path."
+            )
         )
 
     st.divider()
@@ -79,7 +87,7 @@ with st.sidebar:
         """
 WER on the 48-clip evaluation set: **0.349** strict.
 Adapter vs base on the 63-item test split: perplexity **23.75 → 3.65**,
-wrongly-declined in-domain questions **67% → 2%**. DESIGN.md §10.
+wrongly-declined in-domain questions **67% → 2%**.
 """
     )
 
@@ -102,7 +110,7 @@ wrongly-declined in-domain questions **67% → 2%**. DESIGN.md §10.
                 st.caption(f"↳ should be: _{e.correction}_")
     st.caption(
         "Corrections are reviewed in batches before entering the training set — "
-        "never applied automatically. DESIGN.md §14."
+        "never applied automatically."
     )
 
     st.divider()

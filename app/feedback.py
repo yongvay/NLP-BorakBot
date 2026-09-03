@@ -36,6 +36,11 @@ Usage
     python app/feedback.py --recent        # last 20 entries
     python app/feedback.py --export        # corrections, as review-ready JSON
     python app/feedback.py --self-test     # round-trip check, uses a temp file
+
+Deleting is deliberately not here. It is a destructive action on a gitignored
+database, and the only person who should be doing it is the one already
+looking at the rows -- so it lives in app/pages/1_Admin.py, on the table
+itself, and nowhere else.
 """
 
 from __future__ import annotations
@@ -195,6 +200,34 @@ def export_corrections(db: Path = DB) -> list[dict]:
     ]
 
 
+def delete(ids: list[int], db: Path = DB) -> int:
+    """Remove rows by id. Returns how many were actually deleted.
+
+    A hard delete, not a soft `deleted` flag. The log is a record of testing,
+    not an audit trail anyone is accountable to, and a flag would mean every
+    reader -- recent(), counts(), export_corrections(), the admin table --
+    grows a WHERE clause to stay correct. One line of SQL against five callers
+    that each have to remember it is the wrong trade here.
+
+    Ids are AUTOINCREMENT, so deleting row 2 leaves rows 1 and 3 as they are and
+    the next insert still gets a fresh id. Nothing is renumbered and no existing
+    id changes meaning -- an exported correction stays traceable to its `_id`.
+
+    The only caller is the review page. Confirmation is that page's job, not
+    this function's.
+    """
+    if not ids:
+        return 0
+    with _db(db) as conn:
+        # The f-string interpolates only the '?,?,?' placeholder run, never the
+        # ids themselves -- those still go through the parameter binding.
+        cur = conn.execute(
+            f"DELETE FROM feedback WHERE id IN ({','.join('?' * len(ids))})",
+            ids,
+        )
+        return cur.rowcount
+
+
 # ------------------------------------------------------------------- self-test
 
 def self_test() -> int:
@@ -235,6 +268,14 @@ def self_test() -> int:
 
     init(tmp)  # idempotent
     checks.append(("init is idempotent", len(recent(db=tmp)) == 2))
+
+    checks.append(("delete ignores absent ids", delete([99], db=tmp) == 0))
+    checks.append(("delete removes one row", delete([2], db=tmp) == 1))
+    checks.append(("survivor untouched", [e.id for e in recent(db=tmp)] == [1]))
+    checks.append(("correction went with it", export_corrections(db=tmp) == []))
+    checks.append(("counts follow", counts(db=tmp) == {"up": 1, "down": 0}))
+    c3 = log("after delete", "reply", "up", db=tmp)
+    checks.append(("ids are not reused", c3 == 3))
 
     failed = 0
     for name, ok in checks:

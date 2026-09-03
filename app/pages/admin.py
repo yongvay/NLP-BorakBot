@@ -73,8 +73,7 @@ if not _authenticated():
 
 st.title("Feedback review")
 st.caption(
-    "Corrections logged by users, awaiting team review. Nothing here is applied "
-    "to the model automatically — DESIGN.md §14."
+    "Corrections logged by users, awaiting team review."
 )
 
 entries = feedback.recent(limit=500)
@@ -86,6 +85,10 @@ a.metric("Total feedback", tally["up"] + tally["down"])
 b.metric("👍 Correct", tally["up"])
 c.metric("👎 Wrong", tally["down"])
 d.metric("Corrections to review", len(corrections))
+
+note = st.session_state.pop("delete_note", None)
+if note:
+    st.success(note)
 
 st.divider()
 
@@ -103,8 +106,7 @@ only = st.radio(
 wanted = {"Everything": None, "👍 only": "up", "👎 only": "down"}[only]
 shown = [e for e in entries if wanted is None or e.verdict == wanted]
 
-st.dataframe(
-    [
+table = [
         {
             "id": e.id,
             "when (UTC)": e.created_utc.replace("T", " ").replace("+00:00", ""),
@@ -119,11 +121,64 @@ st.dataframe(
             "sec": round(e.seconds, 1) if e.seconds else None,
         }
         for e in shown
-    ],
+]
+
+# on_select turns the table into the selector for the delete below, so there is
+# no second widget re-listing ids the admin is already looking at. Needs
+# Streamlit >= 1.35; requirements.txt pins 1.61.1.
+#
+# Deliberately no `key=`. Row selection is positional, so a stale selection
+# after a delete would point at whatever shifted into those positions. Without a
+# key the widget's identity is derived from the data, so changing the data
+# resets the selection instead of carrying a wrong one forward.
+event = st.dataframe(
+    table,
     width="stretch",
     hide_index=True,
+    on_select="rerun",
+    selection_mode="multi-row",
 )
-st.caption(f"{len(shown)} of {len(entries)} entries.")
+picked = [shown[i] for i in event.selection.rows]
+
+st.caption(
+    f"{len(shown)} of {len(entries)} entries. Tick the box at the left of a row "
+    f"to select it for deletion."
+)
+
+# ------------------------------------------------------------------- the delete
+
+if picked:
+    st.markdown(f"**Selected for deletion — {len(picked)} row(s)**")
+    for e in picked:
+        st.write(
+            f"`[{e.id}]` {'👍' if e.verdict == 'up' else '👎'} {e.user_text}"
+            + ("  ·  *has a correction*" if e.correction else "")
+        )
+
+    confirm = st.checkbox(
+        "I have checked these are the rows I want gone.",
+        help="Permanent. feedback.db is gitignored, so there is no committed "
+             "copy to restore a row from.",
+    )
+    if st.button("🗑 Delete selected", type="primary", disabled=not confirm):
+        n = feedback.delete([e.id for e in picked])
+        st.session_state.delete_note = f"Deleted {n} row(s)."
+        st.rerun()
+
+with st.expander("Clear the whole log"):
+    st.caption(
+        "Every row, 👍 and 👎 alike. The reason to want this is to wipe your own "
+        "testing before a demo; for anything selective the table above is the "
+        "safer tool."
+    )
+    if st.checkbox("Yes, delete all feedback permanently."):
+        if st.button("Delete everything"):
+            # recent() is the only reader that returns ids, and the page caps it
+            # at 500 for display. Ask for far more here so "everything" is not
+            # quietly "the newest 500".
+            n = feedback.delete([e.id for e in feedback.recent(limit=1_000_000)])
+            st.session_state.delete_note = f"Cleared the log — {n} row(s) deleted."
+            st.rerun()
 
 st.divider()
 
@@ -158,7 +213,7 @@ st.divider()
 # ------------------------------------------------------------- the retrain recipe
 
 st.subheader("How these become a better model")
-st.caption("Shown, not run — steps 4-6 write to disk and step 6 needs a Colab GPU.")
+st.caption("Shown, not run")
 
 st.markdown(
     """
@@ -169,17 +224,10 @@ st.markdown(
    The exporter cannot infer which knowledge-base fact a correction belongs to.
 """
 )
-st.code(
-    "python scripts/split_corpus.py --in data/generated/pairs_v2.jsonl\n"
-    "python training/to_llamafactory.py",
-    language="powershell",
-)
 st.markdown(
     """
 4. **Re-train** with `training/colab_finetune.ipynb`, pointing `output_dir` at a
    round-2 directory.
-5. **Re-evaluate** with `training/colab_evaluate.ipynb` using `--tag tuned_v2`,
-   scored against `tuned` on the same 63-item test split. That comparison is the
-   evidence of improvement over time.
+5. **Re-evaluate** with `training/colab_evaluate.ipynb` using `--tag tuned_v2`.
 """
 )

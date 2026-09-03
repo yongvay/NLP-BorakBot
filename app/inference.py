@@ -11,7 +11,7 @@ measured on the 63-item test split, is in DESIGN.md §10 -- perplexity 23.75 ->
 Decoding is greedy and `max_new_tokens` is 160, both matching `eval/generate.py`
 exactly. If they drift, the demo stops being the thing the report measured.
 
-FOUR THINGS THAT ARE NOT OBVIOUS
+FIVE THINGS THAT ARE NOT OBVIOUS
 
 1.  The system prompt is read from the knowledge base, not stored here.
     `data/knowledge_base/_system_prompt.md` is the same file
@@ -42,6 +42,14 @@ FOUR THINGS THAT ARE NOT OBVIOUS
     ~6.4 GB of RAM and roughly a minute per reply. It runs, so the app is
     demonstrable on any machine, but it is not what DESIGN.md §10 measured and
     not what should be shown to a grader.
+
+5.  The model is pinned to the GPU: it goes there whole, or not at all.
+    `device_map={"": 0}` rather than `"auto"`. On a 4 GB card the fit is ~3.0 GB
+    against 4.0 GB total, and `"auto"` does NOT fail when that comes up short --
+    it quietly spills layers into system RAM. The app would then report
+    `cuda-4bit` while running at a fraction of GPU speed, which is the one
+    failure that looks like success. Pinning turns a short card into an
+    OutOfMemoryError, caught below and reported honestly. DESIGN.md §13.
 
 Setup
     hf auth login          # gated base model + private adapter
@@ -119,25 +127,48 @@ def _load():
     four_bit = torch.cuda.is_available()
     tok = AutoTokenizer.from_pretrained(BASE_MODEL)
 
-    kwargs: dict = {}
+    def cpu_bf16():
+        # Note 4. bfloat16 rather than float32: 6.4 GB instead of 12.8 GB, which
+        # is the difference between slow and unloadable on a 16 GB laptop.
+        return AutoModelForCausalLM.from_pretrained(
+            BASE_MODEL, torch_dtype=torch.bfloat16, device_map=None
+        )
+
     if four_bit:
         from transformers import BitsAndBytesConfig
 
         # Identical to eval/generate.py's --4bit configuration.
-        kwargs["quantization_config"] = BitsAndBytesConfig(
+        quant = BitsAndBytesConfig(
             load_in_4bit=True,
             bnb_4bit_compute_dtype=torch.float16,
             bnb_4bit_quant_type="nf4",
             bnb_4bit_use_double_quant=True,
         )
-        kwargs["device_map"] = "auto"
+        try:
+            # Note 5. Pin, do not spill.
+            model = AutoModelForCausalLM.from_pretrained(
+                BASE_MODEL, quantization_config=quant, device_map={"": 0}
+            )
+        except Exception as exc:
+            # Deliberately broad. The GPU path is an optimisation, and ANY way it
+            # fails should end up on the path that always works rather than
+            # halfway through a demo. Two real ones seen here: OutOfMemoryError
+            # when something else is holding the card, and a bitsandbytes
+            # RuntimeError ("CPU-only version of bitsandbytes") when torch
+            # reports a GPU that bnb cannot actually use. Catching only the
+            # former left the latter fatal.
+            print(f"4-bit GPU load failed ({type(exc).__name__}: {exc}); "
+                  f"falling back to CPU bfloat16.", file=sys.stderr)
+            try:
+                torch.cuda.empty_cache()
+            except Exception:
+                pass
+            # `four_bit` is what backend() reports, so the sidebar tells the
+            # truth about which path the demo actually ran on.
+            four_bit = False
+            model = cpu_bf16()
     else:
-        # Note 4. bfloat16 rather than float32: 6.4 GB instead of 12.8 GB, which
-        # is the difference between slow and unloadable on a 16 GB laptop.
-        kwargs["torch_dtype"] = torch.bfloat16
-        kwargs["device_map"] = None
-
-    model = AutoModelForCausalLM.from_pretrained(BASE_MODEL, **kwargs)
+        model = cpu_bf16()
 
     from peft import PeftModel
 
@@ -164,11 +195,30 @@ def is_loaded() -> bool:
     return "llm" in _models
 
 
-def backend() -> str:
-    """'cuda-4bit' or 'cpu-bf16'. For the sidebar, and for knowing which one the
-    demo actually ran on when the latency is questioned afterwards."""
+def cuda_present() -> bool:
+    """Whether the machine HAS a usable card, regardless of what got loaded on it.
+
+    Distinguishes the two ways backend() can say 'cpu-bf16': no GPU at all, or a
+    GPU whose 4-bit load did not fit (note 5). They need opposite advice, so the
+    sidebar asks this before telling anyone what to go and install.
+    """
     import torch
 
+    return torch.cuda.is_available()
+
+
+def backend() -> str:
+    """'cuda-4bit' or 'cpu-bf16'. For the sidebar, and for knowing which one the
+    demo actually ran on when the latency is questioned afterwards.
+
+    Reports what actually loaded once something has. Probing CUDA instead would
+    be wrong in exactly the case worth knowing about: a machine with a GPU whose
+    load fell back to the CPU anyway (note 5).
+    """
+    import torch
+
+    if is_loaded():
+        return "cuda-4bit" if _models["llm"][2] else "cpu-bf16"
     return "cuda-4bit" if torch.cuda.is_available() else "cpu-bf16"
 
 

@@ -42,26 +42,39 @@
 #     ffmpeg -version                 # must print a version
 # ---------------------------------------------------------------------------
 
-# CPU-only torch. The plain PyPI wheel bundles CUDA and is ~2.5 GB; this one is
-# ~120 MB and is ample for whisper-small at demo scale (~7 s per utterance).
-# The +cpu build exists only on PyTorch's own index, hence the extra index below.
+# CUDA torch. Stage 3 serves Llama-3.2-3B, and on the CPU that costs ~70 seconds
+# per reply -- demonstrable, but not usable in front of a grader. The 4-bit GPU
+# path in app/inference.py answers in a few seconds instead. It is also the
+# configuration DESIGN.md §10 actually measured, so this pin is what makes the
+# demo match the report.
 #
-# THIS IS ENOUGH FOR STAGES 1-2 BUT NOT FOR A FAST STAGE 3. On CPU the LLM loads
-# in bfloat16 (~6.4 GB of RAM) and takes about a minute per reply. It works, and
-# the app says so in the sidebar, but it is not what DESIGN.md §10 measured.
+# The wheel is ~2.5 GB against ~120 MB for the +cpu build. That is the price of
+# the card, and the only reason the +cpu build was pinned here first: in August
+# Stage 1 was Whisper-only, and Whisper never needed the GPU. See DESIGN.md §13.
 #
-# For the 4-bit GPU path, replace the two lines below with a CUDA build and add
-# bitsandbytes, which has no CPU kernel and is therefore not a base requirement:
+# +cu126, NOT +cu124 -- the cu124 index stops at torch 2.6.0 and pinning it here
+# would silently downgrade torch by seven minor versions. cu126 carries the exact
+# version already in use, so this is a build swap and nothing else moves. The
+# wheel bundles its own CUDA runtime and works on the demo laptop's 546.92 driver
+# (which reports 12.3) under CUDA minor-version compatibility.
 #
-#     pip uninstall -y torch
-#     pip install torch --index-url https://download.pytorch.org/whl/cu124
-#     pip install bitsandbytes
+# NO NVIDIA CARD? These two lines are the whole difference; app/inference.py
+# falls back to bfloat16 on the CPU by itself, and the sidebar says so:
 #
-# On a 4 GB card that is the whole budget: the 4-bit 3B model needs ~3 GB and
-# Whisper another ~1 GB, so app/stt.py keeps Whisper on the CPU by default.
-# DESIGN.md §13. Override with BORAKBOT_STT_GPU=1 on a larger card.
---extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.13.0+cpu
+#     --extra-index-url https://download.pytorch.org/whl/cpu
+#     torch==2.13.0+cpu
+--extra-index-url https://download.pytorch.org/whl/cu126
+torch==2.13.0+cu126
+
+# The 4-bit NF4 quantiser behind BitsAndBytesConfig in app/inference.py. It has
+# NO CPU kernel, which is why the CPU path above is bfloat16 rather than 4-bit,
+# and why this is a real runtime dependency and not a training-only one.
+#
+# On a 4 GB card this is the whole budget: 4-bit weights ~2.4 GB plus ~0.6 GB of
+# CUDA context and KV cache. Whisper's ~1.0 GB does not also fit, so app/stt.py
+# keeps it on the CPU by default. DESIGN.md §13. BORAKBOT_STT_GPU=1 overrides on
+# a larger card.
+bitsandbytes
 
 # The reference Whisper implementation (Radford et al., 2023) — the one the
 # proposal cites. Used only as a language detector; see app/stt.py.

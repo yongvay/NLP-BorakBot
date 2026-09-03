@@ -524,6 +524,62 @@ Stage 3 would silently have moved Whisper onto the card as well, and the failure
 would have surfaced as an out-of-memory error inside the LLM load, pointing at
 the wrong stage.
 
+### Stage 3 took the card on 1 September 2026
+
+Until this date the trap above was theoretical, because `requirements.txt`
+pinned `torch==2.13.0+cpu` — a build with no CUDA in it at all. That pin was
+made in August, when Stage 1 was Whisper-only and the GPU bought nothing worth
+a 2.5 GB wheel. Once Stage 3 existed it made `torch.cuda.is_available()`
+permanently false, so the 4-bit path in `app/inference.py` was unreachable code
+and every reply ran bfloat16 on the CPU. Measured cost: **~70 seconds a reply**.
+
+Swapped to `torch==2.13.0+cu126` — the same version, the CUDA build — plus
+`bitsandbytes` 0.50.2. Not `+cu124`, which the old comment suggested: that index
+stops at torch 2.6.0 and would have downgraded torch by seven minor versions.
+The cu126 wheel bundles its own CUDA runtime and runs on the laptop's 546.92
+driver (which reports 12.3) under CUDA minor-version compatibility.
+
+Measured on the demo laptop, model warm, greedy, `max_new_tokens=160`:
+
+| | CPU bf16 | CUDA 4-bit |
+|---|---:|---:|
+| Model load | ~30 s | 15.3 s |
+| First reply (CUDA kernel warm-up) | ~70 s | 6.5 s |
+| Steady-state reply | ~70 s | **2.2 - 2.8 s** |
+
+**Roughly 25x on steady-state replies.** Peak VRAM with the model resident is
+~3.27 GB of 4.0 GB. The answers are unchanged in substance and both fallback
+probes still refuse: "how do I cook rendang ah?" (out of domain) and "what is
+the weather in KL right now" (live factual) each return the trained refusal.
+This is a return to the configuration §10 measured, not a departure from it —
+§10's numbers came from 4-bit.
+
+**The budget table above is optimistic about Windows.** It reserves ~0.3 GB for
+the display; the real figure on this laptop is ~1.0-1.1 GB with Chrome, Edge,
+VS Code and WhatsApp merely open — none of them doing anything, all just
+compositing. That is the difference between fitting and not, so **GPU
+applications get closed before a demo**, and Whisper stays on the CPU.
+
+Two consequences in `app/inference.py`:
+
+- **`device_map={"": 0}`, not `"auto"`.** With headroom this thin, `"auto"` does
+  not fail when the model does not fit — accelerate spills layers into system
+  RAM and the app keeps reporting `cuda-4bit` while running at a fraction of GPU
+  speed. That is the one failure mode that looks like success, which is
+  precisely the wrong thing to discover during a graded demo. Pinning converts
+  it into a raised error, caught and degraded to the CPU path as a whole. The
+  catch is deliberately broad: testing the fallback turned up a second failure
+  shape besides `OutOfMemoryError` — with `CUDA_VISIBLE_DEVICES=""`, torch still
+  reports a GPU while bitsandbytes loads its CPU-only build and raises
+  `RuntimeError: ... not available in CPU-only version of bitsandbytes`. A catch
+  narrowed to OOM left that one fatal. Any failure of an optimisation should
+  land on the path that always works.
+- **`backend()` reports the load, not the hardware.** It previously returned
+  `"cuda-4bit" if torch.cuda.is_available()`, which after such a fallback would
+  claim the GPU while generating on the CPU. It now reads the `four_bit` flag of
+  the model that actually loaded. `cuda_present()` was added alongside it so the
+  sidebar can tell "no GPU" from "GPU too busy" — the two need opposite advice.
+
 ### A second flag with the same shape
 
 `stt.py` sets `HF_HUB_OFFLINE=1` at import once Whisper is cached, to skip a Hub
