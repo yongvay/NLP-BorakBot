@@ -68,7 +68,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent
+STAGE = HERE.parent          # stage2_chatbot/, not the repo root
 RESULTS_DIR = HERE / "results"
 OUT = RESULTS_DIR / "score_report.csv"
 
@@ -260,7 +260,7 @@ def main() -> int:
                                       ("perplexity", "perplexity"))
                if any(r[key] is None for r in rows)]
     if missing:
-        print(f"\n{OUT.relative_to(ROOT)} left unchanged: this run computed no "
+        print(f"\n{OUT.relative_to(STAGE.parent)} left unchanged: this run computed no "
               f"{' and no '.join(missing)}, and a partial report would overwrite "
               "a complete one.")
         return 0
@@ -272,7 +272,7 @@ def main() -> int:
         for r in rows:
             writer.writerow({k: (round(v, 4) if isinstance(v, float) else v)
                              for k, v in r.items()})
-    print(f"\nwrote {OUT.relative_to(ROOT)}")
+    print(f"\nwrote {OUT.relative_to(STAGE.parent)}")
     return 0
 
 

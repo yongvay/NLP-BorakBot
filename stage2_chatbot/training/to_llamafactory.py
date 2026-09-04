@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Convert the splits into the dataset directory LLaMA-Factory expects.
 
-    data/generated/splits/{train,val}.jsonl
+    stage2_chatbot/corpus/splits/{train,val}.jsonl
             |  this script
             v
     training/data/borakbot_{train,val}.json   sharegpt conversations
@@ -31,11 +31,12 @@ import json
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-SPLITS_DIR = ROOT / "data" / "generated" / "splits"
+# STAGE, not STAGE: parent.parent is stage2_chatbot/, not the repository root.
+STAGE = Path(__file__).resolve().parent.parent
+SPLITS_DIR = STAGE / "corpus" / "splits"
 OUT_DIR = Path(__file__).resolve().parent / "data"
 
-sys.path.insert(0, str(ROOT / "eval"))
+sys.path.insert(0, str(STAGE / "eval"))
 from generate import load_system_prompt  # noqa: E402  single source of truth
 
 
@@ -66,7 +67,7 @@ def main() -> int:
     for split in ("train", "val"):
         path = SPLITS_DIR / f"{split}.jsonl"
         if not path.exists():
-            print(f"No split at {path}. Run scripts/split_corpus.py first.")
+            print(f"No split at {path}. Run corpus_tooling/split_corpus.py first.")
             return 2
         rows = [json.loads(l) for l in path.open(encoding="utf-8") if l.strip()]
         converted = convert(rows, system)
@@ -99,14 +100,14 @@ def main() -> int:
     for split, converted in written.items():
         path = out_dir / f"borakbot_{split}.json"
         path.write_text(json.dumps(converted, ensure_ascii=False, indent=1), encoding="utf-8")
-        print(f"wrote {path.relative_to(ROOT)}")
+        print(f"wrote {path.relative_to(STAGE.parent)}")
 
     info_path = out_dir / "dataset_info.json"
     info_path.write_text(json.dumps(info, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"wrote {info_path.relative_to(ROOT)}")
+    print(f"wrote {info_path.relative_to(STAGE.parent)}")
 
     print("\nPoint LLaMA-Factory at this directory:")
-    print(f"  dataset_dir: {out_dir.relative_to(ROOT).as_posix()}")
+    print(f"  dataset_dir: {out_dir.relative_to(STAGE.parent).as_posix()}")
     print("  dataset: borakbot_train")
     print("  eval_dataset: borakbot_val")
     return 0

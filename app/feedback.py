@@ -17,7 +17,7 @@ a worse system than one that cannot learn at all. The moderation step is the
 design, not a shortcut around building one.
 
 So there is no retraining trigger here and no auto-export into
-`data/generated/`. `--export` prints the corrections; a human decides what
+`stage2_chatbot/corpus/`. `--export` prints the corrections; a human decides what
 becomes a training pair.
 
 WHY THE SCHEMA SPLITS transcript FROM user_text
@@ -29,7 +29,7 @@ not the NLP column — DESIGN.md §5 reports the two apart, and one merged field
 would make that impossible after the fact.
 
 Storage is `sqlite3` from the standard library: no new dependency, one file,
-and the file is gitignored while `data/schema.sql` is committed.
+and the file is gitignored while `stage2_chatbot/schema.sql` is committed.
 
 Usage
     python app/feedback.py --init          # create an empty feedback.db
@@ -55,7 +55,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SCHEMA = ROOT / "data" / "schema.sql"
+SCHEMA = ROOT / "stage2_chatbot" / "schema.sql"
 DB = ROOT / "feedback.db"
 
 
@@ -176,7 +176,7 @@ def export_corrections(db: Path = DB) -> list[dict]:
     """Thumbs-down rows that carry a correction, shaped like a training pair.
 
     Shaped like one, not saved as one -- see the module docstring. A person
-    reviews these before any of them reaches data/generated/.
+    reviews these before any of them reaches stage2_chatbot/corpus/.
     """
     if not db.exists():
         return []

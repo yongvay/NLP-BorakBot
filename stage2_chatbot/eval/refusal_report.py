@@ -40,9 +40,9 @@ from collections import Counter
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent
+STAGE = HERE.parent          # stage2_chatbot/, not the repo root
 RESULTS_DIR = HERE / "results"
-CORPUS = ROOT / "data" / "generated" / "pairs_v1.jsonl"
+CORPUS = STAGE / "corpus" / "pairs_v1.jsonl"
 OUT = RESULTS_DIR / "refusal_report.csv"
 
 # Any one of these marks a reply as a decline, however it is worded. Kept
@@ -153,7 +153,7 @@ def main() -> int:
         for r in rows:
             writer.writerow({k: (round(v, 4) if isinstance(v, float) else v)
                              for k, v in r.items()})
-    print(f"\nwrote {OUT.relative_to(ROOT)}")
+    print(f"\nwrote {OUT.relative_to(STAGE.parent)}")
     return 0
 
 

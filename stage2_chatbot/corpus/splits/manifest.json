@@ -1,6 +1,6 @@
 {
-  "built": "2026-08-22",
-  "source": "data/generated/pairs_v1.jsonl",
+  "built": "2026-09-05",
+  "source": "stage2_chatbot/corpus/pairs_v1.jsonl",
   "seed": 20260822,
   "strategy": "pair-level, stratified by fact, carried-remainder quota",
   "fractions": {

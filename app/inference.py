@@ -14,7 +14,7 @@ exactly. If they drift, the demo stops being the thing the report measured.
 FIVE THINGS THAT ARE NOT OBVIOUS
 
 1.  The system prompt is read from the knowledge base, not stored here.
-    `data/knowledge_base/_system_prompt.md` is the same file
+    `stage2_chatbot/knowledge_base/_system_prompt.md` is the same file
     `training/to_llamafactory.py` stamps onto every training example and that
     `eval/generate.py` parses. Three readers, one source: the prompt text cannot
     drift between training, evaluation and the demo. (Each reader parses it
@@ -81,7 +81,7 @@ GREEDY = True
 HISTORY_TURNS = 2
 
 ROOT = Path(__file__).resolve().parent.parent
-SYSTEM_PROMPT_MD = ROOT / "data" / "knowledge_base" / "_system_prompt.md"
+SYSTEM_PROMPT_MD = ROOT / "stage2_chatbot" / "knowledge_base" / "_system_prompt.md"
 
 _models: dict = {}
 

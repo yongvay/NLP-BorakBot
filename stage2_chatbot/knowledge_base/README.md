@@ -6,9 +6,9 @@ weights by QLoRA fine-tuning. It is never loaded at inference. There is no
 retrieval step (see CLAUDE.md — RAG is out of scope).
 
 ```
-data/knowledge_base/*.yaml   ← facts, written by hand        (this directory)
+stage2_chatbot/knowledge_base/*.yaml   ← facts, written by hand        (this directory)
         ↓  scripts/generate_pairs.py
-data/generated/*.jsonl       ← rojak Q&A pairs, written by script
+stage2_chatbot/corpus/*.jsonl       ← rojak Q&A pairs, written by script
         ↓  QLoRA fine-tune
 model weights
 ```

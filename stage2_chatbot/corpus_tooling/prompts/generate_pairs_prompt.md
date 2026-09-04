@@ -1,6 +1,6 @@
 # Training-pair generation prompts
 
-The prompts used to expand `data/knowledge_base/*.yaml` into rojak Q&A training
+The prompts used to expand `stage2_chatbot/knowledge_base/*.yaml` into rojak Q&A training
 pairs. **This file is committed deliberately** — the generation route is an
 assistant chat rather than a script, so this file is the reproducibility
 evidence and the basis of the Appendix A declaration. If the prompt changes,
@@ -15,9 +15,9 @@ Two prompts:
 
 ## Before you start
 
-**Where output goes.** `data/generated/raw/` is gitignored (`.gitignore:60`), so
+**Where output goes.** `stage2_chatbot/corpus/raw/` is gitignored (`.gitignore`), so
 raw model output stays local. Only the reviewed corpus gets committed, to
-`data/generated/`. Do not skip the review step and commit raw output — the whole
+`stage2_chatbot/corpus/`. Do not skip the review step and commit raw output — the whole
 point of the split is that a human accepted every pair in the training set.
 
 **Batch size: 5 facts per run (50 pairs).** Longer runs drift — the register
@@ -32,7 +32,7 @@ cannot see and cannot explain at the demo.
 which fact IDs, pairs produced, pairs rejected at review and why. Appendix A
 needs this.
 
-**After every batch:** `python scripts/validate_pairs.py`
+**After every batch:** `python stage2_chatbot/corpus_tooling/validate_pairs.py`
 
 ---
 
@@ -233,9 +233,9 @@ One JSON object per line. No code fences, no commentary, no blank lines.
 
 ## Accepting a batch
 
-Save raw output to `data/generated/raw/<domain>_bNN.jsonl`, then:
+Save raw output to `stage2_chatbot/corpus/raw/<domain>_bNN.jsonl`, then:
 
-**Automated** — `python scripts/validate_pairs.py`. It checks JSON validity,
+**Automated** — `python stage2_chatbot/corpus_tooling/validate_pairs.py`. It checks JSON validity,
 check strings, unknown fact IDs, duplicate questions across the whole corpus,
 the fallback line byte-for-byte, and register violations (markdown, emoji,
 over-long answers). Exit code is non-zero on failure, so it can gate a commit.

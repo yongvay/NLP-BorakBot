@@ -57,15 +57,15 @@ stage1_stt/audio/
 stage1_stt/raw/
 
 # --- Intermediate generation runs (commit only the validated dataset) ---
-data/generated/raw/
-data/generated/tmp/
-data/**/*.tmp.jsonl
+stage2_chatbot/corpus/raw/
+stage2_chatbot/corpus/tmp/
+stage2_chatbot/**/*.tmp.jsonl
 
 # --- LLaMA-Factory build artefact ---
-# Rebuilt by training/to_llamafactory.py from the committed splits. It is 770 KB
+# Rebuilt by stage2_chatbot/training/to_llamafactory.py from the committed splits. It is 770 KB
 # of the same system prompt repeated 569 times, and it is derived, not evidence.
 # The splits and the converter are committed; this is not.
-training/data/
+stage2_chatbot/training/data/
 
 # --- Logs ---
 *.log
@@ -86,4 +86,4 @@ desktop.ini
 .~lock.*#
 
 # --- Fine Tune Model---
-/finetune
+/stage2_chatbot/finetune

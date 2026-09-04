@@ -16,8 +16,8 @@ Catches the failure modes that matter for a generated corpus:
 
 Exit code is non-zero if any pair fails, so this can gate a commit.
 
-    python archive/scripts/validate_pairs.py
-    python archive/scripts/validate_pairs.py --dir data/generated/raw
+    python stage2_chatbot/corpus_tooling/validate_pairs.py
+    python stage2_chatbot/corpus_tooling/validate_pairs.py --dir stage2_chatbot/corpus/raw
 """
 
 from __future__ import annotations
@@ -33,8 +33,11 @@ from collections import Counter, defaultdict
 
 import yaml
 
-KB_DIR = "data/knowledge_base"
-DEFAULT_PAIR_DIR = "data/generated/raw"
+STAGE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Anchored to stage2_chatbot/ rather than the working directory, so these run
+# from anywhere. They used to require being launched from the repository root.
+KB_DIR = os.path.join(STAGE, "knowledge_base")
+DEFAULT_PAIR_DIR = os.path.join(STAGE, "corpus", "raw")
 
 FALLBACK = "Maaf, saya tak pasti pasal tu lah — boleh tanya benda lain tak?"
 

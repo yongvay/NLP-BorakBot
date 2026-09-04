@@ -46,7 +46,7 @@ lora_dropout: 0.05
 lora_target: all
 
 ### dataset
-dataset_dir: training/data
+dataset_dir: stage2_chatbot/training/data
 dataset: borakbot_train
 eval_dataset: borakbot_val
 # The system prompt is ~350 tokens and answers are capped at three sentences, so

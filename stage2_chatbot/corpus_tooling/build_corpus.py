@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Assemble the reviewed training corpus from raw generation batches.
 
-    data/generated/raw/*.jsonl   (gitignored, raw model output)
+    stage2_chatbot/corpus/raw/*.jsonl   (gitignored, raw model output)
             |  this script
             v
-    data/generated/pairs_v1.jsonl  (committed, what QLoRA trains on)
+    stage2_chatbot/corpus/pairs_v1.jsonl  (committed, what QLoRA trains on)
 
 Raw output is not the training set. Two padding artefacts survive the pair
 validator and have to be removed here, because both are invisible to an
@@ -23,8 +23,8 @@ Both are dropped, and both are counted in the manifest so the reduction is
 reported rather than hidden. Provenance (`batch`) is stamped onto every row so
 a pair in the corpus can still be traced to the run that produced it.
 
-    python archive/scripts/build_corpus.py
-    python archive/scripts/build_corpus.py --dry-run
+    python stage2_chatbot/corpus_tooling/build_corpus.py
+    python stage2_chatbot/corpus_tooling/build_corpus.py --dry-run
 """
 
 from __future__ import annotations
@@ -39,9 +39,12 @@ import sys
 from collections import Counter, defaultdict
 from datetime import date
 
-RAW_DIR = "data/generated/raw"
-OUT_PATH = "data/generated/pairs_v1.jsonl"
-MANIFEST_PATH = "data/generated/pairs_v1_manifest.json"
+STAGE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Anchored to stage2_chatbot/ rather than the working directory, so these run
+# from anywhere. They used to require being launched from the repository root.
+RAW_DIR = os.path.join(STAGE, "corpus", "raw")
+OUT_PATH = os.path.join(STAGE, "corpus", "pairs_v1.jsonl")
+MANIFEST_PATH = os.path.join(STAGE, "corpus", "pairs_v1_manifest.json")
 
 # Concatenations of other batch files. Including these would double-count every
 # pair they contain.

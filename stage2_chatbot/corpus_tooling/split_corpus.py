@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Split the reviewed corpus into train / val / test.
 
-    data/generated/pairs_v1.jsonl
+    stage2_chatbot/corpus/pairs_v1.jsonl
             |  this script
             v
-    data/generated/splits/{train,val,test}.jsonl  (committed)
+    stage2_chatbot/corpus/splits/{train,val,test}.jsonl  (committed)
 
 PAIR-LEVEL, NOT FACT-LEVEL. The split holds out some *paraphrases* of every
 fact, not whole facts. This is deliberate and it does leak knowledge across the
@@ -23,8 +23,8 @@ share of 0.5, and rounding that per group either starves the eval splits or
 inflates them to 20%. Carrying the fraction across groups lands the global
 totals on 80/10/10 while leaving every group at least 3 pairs in train.
 
-    python scripts/split_corpus.py
-    python scripts/split_corpus.py --dry-run
+    python stage2_chatbot/corpus_tooling/split_corpus.py
+    python stage2_chatbot/corpus_tooling/split_corpus.py --dry-run
 """
 
 from __future__ import annotations
@@ -37,9 +37,23 @@ import sys
 from collections import Counter, defaultdict
 from datetime import date
 
-IN_PATH = "data/generated/pairs_v1.jsonl"
-OUT_DIR = "data/generated/splits"
-MANIFEST_PATH = "data/generated/splits/manifest.json"
+STAGE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Anchored to stage2_chatbot/ rather than the working directory, so these run
+# from anywhere. They used to require being launched from the repository root.
+IN_PATH = os.path.join(STAGE, "corpus", "pairs_v1.jsonl")
+OUT_DIR = os.path.join(STAGE, "corpus", "splits")
+MANIFEST_PATH = os.path.join(OUT_DIR, "manifest.json")
+REPO = os.path.dirname(STAGE)
+
+
+def repo_rel(path: str) -> str:
+    """Repo-relative posix path, for anything printed or committed.
+
+    The path constants are absolute so the script runs from any directory, but an
+    absolute path in the manifest would bake one machine's home directory into a
+    committed file and churn the diff on every other machine.
+    """
+    return os.path.relpath(path, REPO).replace(os.sep, "/")
 
 VAL_FRACTION = 0.10
 TEST_FRACTION = 0.10
@@ -151,11 +165,11 @@ def main() -> int:
         with open(path, "w", encoding="utf-8") as fh:
             for row in splits[name]:
                 fh.write(json.dumps(row, ensure_ascii=False) + "\n")
-        print(f"Wrote {path}")
+        print(f"Wrote {repo_rel(path)}")
 
     manifest = {
         "built": date.today().isoformat(),
-        "source": args.in_path,
+        "source": repo_rel(args.in_path),
         "seed": args.seed,
         "strategy": "pair-level, stratified by fact, carried-remainder quota",
         "fractions": {"train": round(1 - VAL_FRACTION - TEST_FRACTION, 2),
@@ -170,7 +184,7 @@ def main() -> int:
     }
     with open(MANIFEST_PATH, "w", encoding="utf-8") as fh:
         json.dump(manifest, fh, indent=2, ensure_ascii=False)
-    print(f"Wrote {MANIFEST_PATH}")
+    print(f"Wrote {repo_rel(MANIFEST_PATH)}")
     return 0
 
 

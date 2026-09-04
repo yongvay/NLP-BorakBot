@@ -15,7 +15,7 @@ three models would be compared on different questions and the bake-off would
 mean nothing. Delete eval/probe_set.jsonl only if you intend to invalidate
 every result already recorded against it.
 
-The system prompt is read out of data/knowledge_base/_system_prompt.md rather
+The system prompt is read out of stage2_chatbot/knowledge_base/_system_prompt.md rather
 than copied here. It is also what gets stamped onto every training example, so
 a second copy would eventually drift and train and inference would silently
 disagree.
@@ -43,9 +43,11 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-SYSTEM_PROMPT_MD = ROOT / "data" / "knowledge_base" / "_system_prompt.md"
-SPLITS_DIR = ROOT / "data" / "generated" / "splits"
+# STAGE, not ROOT: this file sits under stage2_chatbot/, so parent.parent is the
+# stage folder and not the repository root. Named for what it is.
+STAGE = Path(__file__).resolve().parent.parent
+SYSTEM_PROMPT_MD = STAGE / "knowledge_base" / "_system_prompt.md"
+SPLITS_DIR = STAGE / "corpus" / "splits"
 PROBE_SET = Path(__file__).resolve().parent / "probe_set.jsonl"
 RESULTS_DIR = Path(__file__).resolve().parent / "results"
 
@@ -229,7 +231,7 @@ def main() -> int:
 
     split_path = SPLITS_DIR / f"{args.split}.jsonl"
     if not split_path.exists():
-        print(f"No split at {split_path}. Run scripts/split_corpus.py first.")
+        print(f"No split at {split_path}. Run corpus_tooling/split_corpus.py first.")
         return 2
 
     rows = load_probe_set(split_path, PROBE_N, args.seed, args.all)
@@ -308,7 +310,7 @@ def main() -> int:
         "records": records,
     }
     out_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"\nwrote {out_path.relative_to(ROOT)}  ({len(records)} generations)")
+    print(f"\nwrote {out_path.relative_to(STAGE.parent)}  ({len(records)} generations)")
     return 0
 
 

@@ -1,6 +1,6 @@
 {
   "built": "2026-08-11",
-  "output": "data/generated/pairs_v1.jsonl",
+  "output": "stage2_chatbot/corpus/pairs_v1.jsonl",
   "pairs_total": 632,
   "pairs_answered": 502,
   "pairs_refusal": 130,
