@@ -39,7 +39,7 @@ Usage
 
 Deleting is deliberately not here. It is a destructive action on a gitignored
 database, and the only person who should be doing it is the one already
-looking at the rows -- so it lives in app/pages/1_Admin.py, on the table
+looking at the rows -- so it lives in app/pages/admin.py, on the table
 itself, and nowhere else.
 """
 

@@ -30,14 +30,14 @@ through logged human corrections.
 - **Base model**: `meta-llama/Llama-3.2-3B-Instruct`, LLaMA-Factory template
   `llama3`. *Settled 22 Aug 2026 by the bake-off against Mesolitica MaLLaM;
   Qwen2.5-3B was never run. Llama declined 3/3 out-of-knowledge probes to
-  MaLLaM's 1/3. Reasoning and evidence in `docs/model_selection.md`.* Gated
+  MaLLaM's 1/3. Reasoning and evidence in `docs/Archive/model_selection.md`.* Gated
   repo — the HF token must have accepted Meta's licence.
 - **Fine-tuning**: QLoRA via LLaMA-Factory + bitsandbytes, YAML-configured.
 - **Training environment**: Google Colab (free T4). Checkpoint to Drive so runs
   survive disconnects. *Changed 22 Aug 2026 from Kaggle Notebooks — Kaggle gates
   notebook networking behind phone verification, which the team's account cannot
   complete, and without networking pip, git and the Hub are all unreachable.
-  Deviation #8; reasoning in `docs/DESIGN.md`.*
+  Deviation #8; reasoning in `docs/Archive/DESIGN.md`.*
 - **Adapters/checkpoints**: pushed to Hugging Face Hub, never committed to git.
 - **STT**: OpenAI Whisper, small model.
 - **UI**: Streamlit defaults. Functional, not designed.
@@ -67,26 +67,37 @@ WER on code-switched audio; ASR errors are reported apart from NLP errors.
 
 ## Repo layout
 
-The live application is two files. Everything else is data, documentation, or
-tooling that has already run. Keep it that way — see `archive/README.md`.
+The repository is organised around the two stages the system is built from:
+speech to text, then the chatbot. The live application draws on both and lives
+in `app/`; everything else belongs to one stage or the other.
 
 ```
-app/         streamlit_app.py, stt.py, normalise.py, inference.py,
-             feedback.py                                          <- runs live
-             pages/1_Admin.py   password-gated feedback review
-.streamlit/  secrets.toml.example (committed); secrets.toml is not
-data/        knowledge_base/ (5 YAML domains), generated/pairs_v1.jsonl
-             schema.sql (committed; feedback.db is not)
-docs/        DESIGN.md — every non-obvious decision, with evidence. Read first.
-             Part A proposal, rubrics, Part B draft
-training/    qlora_config.yaml, to_llamafactory.py, colab_bakeoff.ipynb
-             colab_finetune.ipynb (run), colab_evaluate.ipynb (Step 5)
-eval/        generate.py, score.py, refusal_report.py, probe_set.jsonl,
-             results/ (committed — the evidence behind model choice)
-scripts/     split_corpus.py   (validate_pairs/build_corpus are in archive/)
-handoffs/    session-to-session state; HANDOFF_3.md is current
-archive/     finished tooling: the WER harness, its committed results, the
-             corpus builders, the Colab wrapper. Nothing here is imported.
+app/            streamlit_app.py, stt.py, normalise.py, inference.py,
+                feedback.py                                       <- runs live
+                pages/admin.py   password-gated feedback review
+
+stage1_stt/     Stage 1 — speech to text. The WER harness (run_wer.py,
+                threshold_sweep.py), the 48-sentence test set (manifest.csv),
+                and results/ — the evidence behind EN_THRESHOLD and 0.349 WER.
+                See stage1_stt/README.md. Not imported by the app.
+
+stage2_chatbot/ Stage 2 — the chatbot.
+                knowledge_base/   5 YAML domains, scope rules, system prompt
+                corpus/           pairs_v1.jsonl + train/val/test splits
+                corpus_tooling/   split_corpus.py and the finished builders;
+                                  prompts/ holds the generation prompt
+                training/         qlora_config.yaml, to_llamafactory.py,
+                                  colab_bakeoff/finetune/evaluate.ipynb
+                eval/             generate.py, score.py, refusal_report.py,
+                                  results/ (committed — the model-choice evidence)
+                finetune/         trained adapter (gitignored)
+                schema.sql        committed; feedback.db is not
+
+scripts/        build_report.py and its section modules — repo-wide tooling
+docs/           Archive/DESIGN.md — every non-obvious decision, with evidence.
+                Read first. Also Part A, rubrics, and the Part B report
+handoffs/       session-to-session state; HANDOFF_3.md is current
+.streamlit/     secrets.toml.example (committed); secrets.toml is not
 ```
 
 ## Working agreements
@@ -96,19 +107,23 @@ archive/     finished tooling: the WER harness, its committed results, the
 - Never commit model weights, adapters, audio files, or `feedback.db`.
   Commit `schema.sql` instead of the database.
 - Prefer small, frequent commits with descriptive messages.
-- Explain non-obvious design choices — but put the *reasoning* in `docs/DESIGN.md`
+- Explain non-obvious design choices — but put the *reasoning* in `docs/Archive/DESIGN.md`
   and leave a one-line pointer in the code. Both team members are individually
   questioned on this code during the demo, and a decision is easier to defend from
   one document than from comments scattered across five files.
 - Keep the live path small. When a script has run and produced its committed
-  output, move it to `archive/` rather than leaving it looking live.
+  output, move it under its stage — `stage2_chatbot/corpus_tooling/` or
+  alongside the Stage 1 harness — rather than leaving it looking live. Do not
+  reintroduce a top-level `archive/`; the folder said nothing about what was
+  in it, and it hid Stage 1 evidence the demo asks about.
 - All AI-generated training data and AI tool assistance must be declared per
   TARUMT academic integrity policy. The generation prompt is kept at
-  `archive/scripts/prompts/generate_pairs_prompt.md` for exactly this reason.
+  `stage2_chatbot/corpus_tooling/prompts/generate_pairs_prompt.md` for exactly this reason.
 
 ## Reference documents
-- docs/DESIGN.md — every non-obvious Stage 1 decision, with the numbers behind it
-- docs/NLP Assignment Part A.pdf — full Part A proposal (Sections 5–7 have the
+- docs/Archive/DESIGN.md — every non-obvious Stage 1 decision, with the numbers behind it
+- docs/Archive/NLP Assignment Part A.pdf — full Part A proposal (Sections 5–7 have the
   literature justification and evaluation plan)
-- docs/Rubrics.pdf — grading criteria; item 11 is individual Q&A on this code
-- docs/PartB_Draft_STT.docx — the Stage 1 write-up
+- docs/Archive/Rubrics.pdf — grading criteria; item 11 is individual Q&A on this code
+- docs/Archive/whisper_step_by_step.md — the Stage 1 method write-up
+- docs/PartB_Stages2-4.md — generated by scripts/build_report.py; do not hand-edit

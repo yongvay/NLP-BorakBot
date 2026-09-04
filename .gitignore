@@ -84,6 +84,9 @@ desktop.ini
 .idea/
 .vs/
 .~lock.*#
+# Word owner/lock and crash-recovery files
+~$*
+~WRL*.tmp
 
 # --- Fine Tune Model---
 /stage2_chatbot/finetune

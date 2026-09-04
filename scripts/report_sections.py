@@ -209,7 +209,7 @@ def analysis(D, e):
              ["Effective batch", "16 (2 x 8 accumulation)", "Largest that fits beside the 4-bit base"],
              ["Precision", "fp16", "The T4 is Turing and has no bf16 path"],
              ["Epochs", "5", "Memorisation target; see section 13"]])
-    D.caption(at, "QLoRA configuration. The full file is training/qlora_config.yaml.")
+    D.caption(at, "QLoRA configuration. The full file is stage2_chatbot/training/qlora_config.yaml.")
 
     # ---------------------------------------------------------------- 13
     D.h2(at, "13. The loss curve, and why five epochs were kept")

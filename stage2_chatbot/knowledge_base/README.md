@@ -7,7 +7,7 @@ retrieval step (see CLAUDE.md — RAG is out of scope).
 
 ```
 stage2_chatbot/knowledge_base/*.yaml   ← facts, written by hand        (this directory)
-        ↓  scripts/generate_pairs.py
+        ↓  corpus_tooling/prompts/generate_pairs_prompt.md, then build_corpus.py
 stage2_chatbot/corpus/*.jsonl       ← rojak Q&A pairs, written by script
         ↓  QLoRA fine-tune
 model weights
@@ -132,6 +132,6 @@ matching the proposal's 1,500–3,000 target. See `_scope.md` for the split.
 ## A note on IDs
 
 `id` values are cited by generated training rows, so they must be stable once
-generation has run. Renaming is free *before* the first run of
-`scripts/generate_pairs.py` and expensive after. The move from `ps.*` to
+generation has run. Renaming is free *before* the first
+generation run and expensive after. The move from `ps.*` to
 `jpj.*` / `jpn.*` / `imm.*` was made during that free window.

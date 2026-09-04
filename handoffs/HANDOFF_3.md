@@ -1,3 +1,7 @@
+> **Layout note (2026-09-05).** The repository was reorganised into `stage1_stt/`
+> and `stage2_chatbot/`, and `archive/` was removed. Paths named below are as they
+> were at the time of writing. See `CLAUDE.md` for the current layout.
+
 # BorakBot — Handoff 3
 
 Written 11 August 2026. **This is the current handoff.** Read it first, then
