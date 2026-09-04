@@ -5,14 +5,13 @@ internally, and breaks every import of pandas from this directory.
 
 A WER table tells you something is wrong; only the transcripts tell you what.
 
-    python eval/speech/inspect_results.py                     # worst clips, best config
-    python eval/speech/inspect_results.py --config vanilla_prompt --category en_dom
+    python stage1_stt/inspect_results.py                     # worst clips, best config
+    python stage1_stt/inspect_results.py --config vanilla_prompt --category en_dom
 """
 import argparse
-from pathlib import Path
 import pandas as pd
 
-HERE = Path(__file__).resolve().parent
+from run_wer import find_result   # resolves a fresh run or the committed copy
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--config")
@@ -22,10 +21,10 @@ ap.add_argument("--langs", action="store_true",
                 help="detected language per category instead of transcripts")
 a = ap.parse_args()
 
-d = pd.read_csv(HERE / "results_detail.csv")
+d = pd.read_csv(find_result("results_detail.csv"))
 d["wer"] = d["errors"] / d["n"]
 
-cfg = a.config or (pd.read_csv(HERE / "results_summary.csv").iloc[0]["config"])
+cfg = a.config or (pd.read_csv(find_result("results_summary.csv")).iloc[0]["config"])
 d = d[d["config"] == cfg]
 if a.category:
     d = d[d["switch_type"] == a.category]

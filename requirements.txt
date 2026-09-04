@@ -108,7 +108,7 @@ PyYAML
 # ---------------------------------------------------------------------------
 # Evaluation tooling — NOT required to run the app
 # ---------------------------------------------------------------------------
-# archive/eval/speech/run_wer.py and threshold_sweep.py need jiwer, which is not
+# stage1_stt/run_wer.py and threshold_sweep.py need jiwer, which is not
 # installed in the venv this file was generated from — so it is deliberately left
 # unpinned rather than pinned to a version nobody has actually run.
 #

@@ -33,8 +33,8 @@ the same 48 clips it is scored on, and the corpus is too small to hold out a tun
 split. Report the curve and the a priori choice; do not move the choice to the minimum.
 
 Usage
-    python eval/speech/run_wer.py --detect-only     # writes detector_probs.csv
-    python eval/speech/threshold_sweep.py
+    python stage1_stt/run_wer.py --detect-only     # writes detector_probs.csv
+    python stage1_stt/threshold_sweep.py
 """
 
 import sys
@@ -43,7 +43,7 @@ from pathlib import Path
 import pandas as pd
 
 from run_wer import (EN_THRESHOLD, ORTHO_MAP, apply_ortho, build_transform,
-                     corpus_wer, score_pair)
+                     corpus_wer, find_result, score_pair)
 
 HERE = Path(__file__).resolve().parent
 
@@ -54,17 +54,9 @@ ROUTED_CONFIG = "malaysian_prompt_routed"   # the measured result, for the self-
 GRID = [round(x * 0.05, 2) for x in range(0, 21)]   # 0.00 .. 1.00
 
 
-def _find(name: str) -> Path:
-    """Results are written to eval/speech/ but committed under eval/speech/results/."""
-    for p in (HERE / name, HERE / "results" / name):
-        if p.exists():
-            return p
-    sys.exit(f"missing {name} -- looked in {HERE} and {HERE/'results'}")
-
-
 def main() -> int:
-    probs = pd.read_csv(_find("detector_probs.csv")).set_index("id")
-    detail = pd.read_csv(_find("results_detail.csv"))
+    probs = pd.read_csv(find_result("detector_probs.csv")).set_index("id")
+    detail = pd.read_csv(find_result("results_detail.csv"))
 
     have = set(detail.config.unique())
     for c in (MS_CONFIG, EN_CONFIG, ROUTED_CONFIG):

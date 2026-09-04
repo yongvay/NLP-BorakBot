@@ -30,7 +30,7 @@ recorded in DESIGN.md §12.
 THE RULE FOR ADDING AN ENTRY
 
 Only repair a token that **cannot legitimately occur in Malaysian rojak**. The
-substitution table (`archive/eval/speech/results/substitutions.csv`, 492 rows)
+substitution table (`stage1_stt/results/substitutions.csv`, 492 rows)
 is tempting and mostly unusable, because it is keyed the wrong way round: it
 records what each reference word turned into, not what each mistake came from.
 Reversing it blindly is destructive.
@@ -64,7 +64,7 @@ from dataclasses import dataclass, field
 # Every entry is a token Whisper produced that is not a word in Malay or English,
 # or a spelling of a domain term that the training corpus never uses. Counts are
 # occurrences in the 48-clip evaluation set; see the module docstring for the
-# rule and archive/eval/speech/results/substitutions.csv for the raw data.
+# rule and stage1_stt/results/substitutions.csv for the raw data.
 #
 # Deliberately NOT included, though they appear in that file with high counts:
 # nampak->nak, look->dulu, good->kot, and->n, dengan->money, kad->credit. Each
@@ -87,7 +87,7 @@ ASR_REPAIRS: dict[str, str] = {
     "autor":      "auto",      # 3
 
     # Orthography. Same word, other spelling; the corpus uses the right-hand
-    # form. These overlap archive/eval/speech/orthography_map.json, which is the
+    # form. These overlap stage1_stt/orthography_map.json, which is the
     # lenient-WER map -- kept separate because that file scores a frozen result
     # and this one feeds a live model.
     "ayo":       "aiyo",       # 9

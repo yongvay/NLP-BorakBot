@@ -22,14 +22,14 @@ Design notes worth defending at the demo:
   substitutions.csv rather than guessing it up front.
 
 Usage
-    python eval/speech/run_wer.py                    # transcribe + score
-    python eval/speech/run_wer.py --score-only       # rescore cached transcripts
-    python eval/speech/run_wer.py --detect-only      # language probabilities only, no GPU
-    python eval/speech/run_wer.py --configs vanilla_noprompt,malaysian_noprompt
+    python stage1_stt/run_wer.py                    # transcribe + score
+    python stage1_stt/run_wer.py --score-only       # rescore cached transcripts
+    python stage1_stt/run_wer.py --detect-only      # language probabilities only, no GPU
+    python stage1_stt/run_wer.py --configs vanilla_noprompt,malaysian_noprompt
 
-NOTE ON OUTPUT PATHS: results are written beside this file, in eval/speech/. Notebook
+NOTE ON OUTPUT PATHS: results are written beside this file, in stage1_stt/. Notebook
 Cell 3 copies them from there to Drive, and the copies committed to the repo live in
-eval/speech/results/. If those two disagree, the committed copies are stale -- re-run
+stage1_stt/results/. If those two disagree, the committed copies are stale -- re-run
 Cell 3 and copy them across. That divergence is what let three figures in the report
 drift away from the CSVs backing them.
 """
@@ -46,6 +46,19 @@ HERE = Path(__file__).resolve().parent
 MANIFEST = HERE / "manifest.csv"
 AUDIO_ROOT = HERE
 ORTHO_MAP = HERE / "orthography_map.json"
+
+
+def find_result(name: str) -> Path:
+    """Locate a result CSV, fresh or committed.
+
+    A run writes its CSVs beside this file; the copies committed to the repo sit in
+    results/. Readers want whichever exists, preferring a fresh run. See the note on
+    output paths in the module docstring.
+    """
+    for p in (HERE / name, HERE / "results" / name):
+        if p.exists():
+            return p
+    sys.exit(f"missing {name} -- looked in {HERE} and {HERE / 'results'}")
 
 # Deliberately shares no sentence or distinctive vocabulary with the test set -- see
 # prompt_examples.txt. Overlap would let the model copy from its own context and
@@ -332,7 +345,7 @@ def main() -> int:
               .describe()[["min", "50%", "max"]].round(4).to_string())
         print(f"\nchosen 'en' at threshold {EN_THRESHOLD}: "
               f"{(probs.choice == 'en').sum()}/{len(probs)}")
-        print("\nNow run:  python eval/speech/threshold_sweep.py")
+        print("\nNow run:  python stage1_stt/threshold_sweep.py")
         return 0
 
     # ---- transcribe

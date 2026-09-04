@@ -53,8 +53,8 @@ feedback.db
 *.opus
 *.flac
 recordings/
-archive/eval/speech/audio/
-archive/eval/speech/raw/
+stage1_stt/audio/
+stage1_stt/raw/
 
 # --- Intermediate generation runs (commit only the validated dataset) ---
 data/generated/raw/

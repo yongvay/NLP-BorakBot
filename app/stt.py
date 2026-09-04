@@ -6,7 +6,7 @@ Two models, one pass each:
     mesolitica/...-v3         ->  transcribe, given that token      (transcribe_detailed)
 
 This is the `malaysian_prompt_routed` configuration, the best of the nine that
-`archive/eval/speech/run_wer.py` measured: 0.349 strict WER, 0.339 lenient, over 48 clips
+`stage1_stt/run_wer.py` measured: 0.349 strict WER, 0.339 lenient, over 48 clips
 and 387 reference words. Why it is built this way — the two models, the threshold, the
 prompt — is in docs/DESIGN.md. Read that before the demo, not this file.
 
@@ -41,7 +41,7 @@ from pathlib import Path
 from typing import IO, Union
 
 # --------------------------------------------------------------------- settings
-# Mirrored from archive/eval/speech/run_wer.py. See the module docstring.
+# Mirrored from stage1_stt/run_wer.py. See the module docstring.
 
 VANILLA_MODEL = "small"
 MALAYSIAN_MODEL = "mesolitica/malaysian-whisper-small-v3"

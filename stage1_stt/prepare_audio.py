@@ -10,8 +10,8 @@ sentences in the order they appear in the spreadsheet. It refuses to run if the 
 do not match, and prints the pairing for you to check before touching anything.
 
 Usage:
-    python archive/scripts/prepare_audio.py --speaker yv --raw "C:/path/to/raw"   # preview
-    python archive/scripts/prepare_audio.py --speaker yv --raw "C:/path/to/raw" --go
+    python stage1_stt/prepare_audio.py --speaker yv --raw "C:/path/to/raw"   # preview
+    python stage1_stt/prepare_audio.py --speaker yv --raw "C:/path/to/raw" --go
 """
 
 import argparse
@@ -33,7 +33,7 @@ def natural_key(p: Path):
     return [int(t) if t.isdigit() else t for t in re.split(r"(\d+)", p.name.lower())]
 
 AUDIO_EXT = {".mp4", ".m4a", ".mp3", ".wav", ".aac", ".3gp", ".ogg", ".opus"}
-SPEECH = Path(__file__).resolve().parent.parent / "eval" / "speech"   # archive/eval/speech
+SPEECH = Path(__file__).resolve().parent            # stage1_stt/, this script's own folder
 MANIFEST = SPEECH / "manifest.csv"
 OUT_DIR = SPEECH / "audio"
 
@@ -90,7 +90,7 @@ def main() -> int:
             # only if you never have to trust the data afterwards.
             print("REFUSING TO CONVERT.")
             print("Pass --by-name as well if the filenames are in recording order:")
-            print(f'  python archive/scripts/prepare_audio.py --speaker {args.speaker} '
+            print(f'  python stage1_stt/prepare_audio.py --speaker {args.speaker} '
                   f'--raw "{args.raw}" --by-name --go')
             print("Or pass --force-time if you really do want timestamp order.")
             return 1
