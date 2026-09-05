@@ -90,6 +90,25 @@ MALAYSIAN = "mesolitica/malaysian-whisper-small-v3"
 # sensitive the result is to this number, which is an honest substitute for tuning it.
 EN_THRESHOLD = 0.5
 
+# Ceiling on the decode, mirrored in app/stt.py so the demo runs what this harness measured.
+#
+# Whisper's default budget is 448 tokens and it spends all of them when the audio gives it
+# no reason to stop -- that is the mechanism behind malaysian_prompt_en's 6.483 on ms_dom,
+# where one clip accumulates 362 insertions against a seven-word reference. The longest
+# reference in the manifest is 13 words, so this ceiling cannot truncate a legitimate
+# transcript; it only bounds a runaway.
+#
+# Applied to the Mesolitica path only. The vanilla path goes through openai-whisper's own
+# transcribe(), which already carries anti-loop machinery (temperature fallback and the
+# compression-ratio threshold) that the HuggingFace pipeline does not.
+#
+# malaysian_prompt_en is exempt (cap=False). That configuration exists to EXPOSE the
+# runaway, and its 6.483 on ms_dom is the evidence the report reasons from; capping it
+# would truncate the finding into an unremarkable number. Every deployment configuration
+# is capped, and none of them comes close to the ceiling -- the longest hypothesis in
+# malaysian_prompt_routed is 10 words, roughly 16 tokens.
+MAX_NEW_TOKENS = 128
+
 # `lang=None` means auto-detect per clip. Forcing a language is what makes Whisper
 # translate instead of transcribe: forcing "en" on Malay audio produced English prose,
 # and forcing "ms" on English-dominant clips produced Malay prose ('how do i know' ->
@@ -105,7 +124,7 @@ CONFIGS = {
     # Diagnostic, not a candidate for deployment. If forcing English collapses en_dom
     # WER, the model CAN write English and the problem is detection. If it does not,
     # the checkpoint is effectively Malay-only and no decoding flag will rescue it.
-    "malaysian_prompt_en":     dict(model="malaysian", prompt=True,  lang="en"),
+    "malaysian_prompt_en":     dict(model="malaysian", prompt=True,  lang="en", cap=False),
     # The deployment candidate: vanilla detects, Mesolitica transcribes.
     "malaysian_prompt_routed": dict(model="malaysian", prompt=True,  lang="route"),
     "vanilla_prompt_routed":   dict(model="vanilla",   prompt=True,  lang="route"),
@@ -166,8 +185,12 @@ def detect_lang(path: str) -> tuple[str, float]:
     return ("en" if top == "en" and p_en > EN_THRESHOLD else "ms"), p_en
 
 
-def transcribe(path: str, model: str, prompt: bool, lang):
-    """Return (text, language_token_used, p_en). p_en is None unless routing ran."""
+def transcribe(path: str, model: str, prompt: bool, lang, cap: bool = True):
+    """Return (text, language_token_used, p_en). p_en is None unless routing ran.
+
+    cap=False lifts MAX_NEW_TOKENS, and only malaysian_prompt_en sets it: that
+    configuration is the runaway diagnostic and the runaway is the point.
+    """
     p_en = None
     if lang == "route":
         lang, p_en = detect_lang(path)
@@ -186,6 +209,8 @@ def transcribe(path: str, model: str, prompt: bool, lang):
 
     asr = get_malaysian()
     gk = {"task": "transcribe"}
+    if cap:
+        gk["max_new_tokens"] = MAX_NEW_TOKENS
     # Mesolitica fine-tuned this checkpoint on Malay, so its generation_config pins the
     # language token. Simply omitting `language=` falls back to that default -- which is
     # why lang=None and lang="ms" produced byte-identical results on the first attempt.

@@ -59,6 +59,29 @@ EN_THRESHOLD = 0.5
 # the transcript is identical. Set BORAKBOT_STT_GPU=1 to override on a larger card.
 STT_ON_GPU = os.getenv("BORAKBOT_STT_GPU") == "1"
 
+# Guards against a decode that never terminates.
+#
+# Whisper emits <|endoftext|> when the audio gives it a reason to. Silence, room noise or
+# a half-second button-press give it none, so the decoder loops on whatever it last
+# produced until it hits its length ceiling -- 448 tokens by default, which on the CPU this
+# stage is pinned to costs tens of seconds for a clip that should take two. It is the same
+# unbounded decode behind the runaway diagnostic in the report (6.483 WER on one clip,
+# 362 insertions against a seven-word reference).
+#
+# Two guards, because they fail differently. MIN_SECONDS and MIN_RMS keep non-speech away
+# from both models; MAX_NEW_TOKENS bounds whatever does reach the transcriber.
+#
+# Neither can fire on the 48 evaluation clips -- every one is recorded speech far above the
+# energy floor, and the longest hypothesis it produces is 10 words against a 128-token
+# ceiling -- so
+# the reported 0.349 is unchanged. MAX_NEW_TOKENS is mirrored in run_wer.py for the reason
+# the module docstring gives; the two energy floors are not, because the harness must
+# transcribe every clip in the manifest rather than skip any.
+MIN_SECONDS = 0.4        # shorter than any real utterance
+MIN_RMS = 0.005          # quieter than a spoken word in a quiet room
+MAX_NEW_TOKENS = 128     # ~8x the longest utterance in the evaluation set
+SAMPLE_RATE = 16_000     # what whisper.load_audio returns
+
 # Decoder context. Itself code-switched, and sharing no vocabulary with the eval set.
 ROJAK_PROMPT = (
     "cuaca panas gila hari ni kan, tak larat nak keluar. "
@@ -136,6 +159,23 @@ def _as_path(audio: AudioInput) -> tuple[str, str | None]:
     return tmp.name, tmp.name
 
 
+def _has_speech(path: str) -> bool:
+    """False when a clip is too short or too quiet to hold an utterance.
+
+    Runs before either model, so a clip that fails here costs neither the encoder pass nor
+    the runaway decode that non-speech audio provokes. Deliberately crude: this is a gate
+    on obvious non-speech, not voice activity detection, and anything it passes is still
+    bounded by MAX_NEW_TOKENS.
+    """
+    import numpy as np
+    import whisper
+
+    wav = whisper.load_audio(path)
+    if wav.size / SAMPLE_RATE < MIN_SECONDS:
+        return False
+    return float(np.sqrt(np.mean(wav.astype("float64") ** 2))) >= MIN_RMS
+
+
 # -------------------------------------------------------------------- the stages
 
 def detect_language(audio: AudioInput) -> tuple[str, float]:
@@ -168,7 +208,7 @@ def detect_language(audio: AudioInput) -> tuple[str, float]:
 @dataclass
 class Transcription:
     text: str
-    language: str          # the token handed to the transcriber: "en" or "ms"
+    language: str          # token handed to the transcriber: "en", "ms", or "" if none
     p_en: float            # detector confidence, for logging and debugging
     seconds: float         # wall-clock, for the demo's latency discussion
 
@@ -178,6 +218,12 @@ def transcribe_detailed(audio: AudioInput) -> Transcription:
     started = time.perf_counter()
     path, tmp = _as_path(audio)
     try:
+        if not _has_speech(path):
+            # Empty text, which streamlit_app.py already reports as "nothing recognised".
+            # language is "" because no token was ever handed to a transcriber.
+            return Transcription(text="", language="", p_en=0.0,
+                                 seconds=round(time.perf_counter() - started, 2))
+
         lang, p_en = detect_language(path)
         asr = _malaysian()
 
@@ -189,6 +235,10 @@ def transcribe_detailed(audio: AudioInput) -> Transcription:
             "task": "transcribe",
             "language": lang,
             "prompt_ids": prompt_ids.to(asr.model.device),
+            # Ceiling on the decode, not on the prompt: max_new_tokens excludes the ~40
+            # prompt tokens that max_length would count. Whisper will use all 448 of its
+            # default budget on audio it cannot resolve.
+            "max_new_tokens": MAX_NEW_TOKENS,
         }
 
         text = asr(path, generate_kwargs=kwargs)["text"].strip()
