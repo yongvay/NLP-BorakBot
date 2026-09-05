@@ -89,7 +89,7 @@ facts:
     source: general
     tags: [identity, language, assertion]
     notes: >
-      The Chinese and Tamil exclusion is a CLAUDE.md scope decision. Stating it
+      The Chinese and Tamil exclusion is a project scope decision. Stating it
       here lets the bot decline those cleanly instead of attempting them.
 
   - id: talk.how_to_ask

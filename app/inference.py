@@ -5,7 +5,7 @@
 Serves `meta-llama/Llama-3.2-3B-Instruct` with the round-1 QLoRA adapter
 attached. Knowledge is in the weights: there is no retrieval step, and the
 refusal behaviour is trained rather than filtered. What the adapter is worth,
-measured on the 63-item test split, is in DESIGN.md §10 -- perplexity 23.75 ->
+measured on the 63-item test split, is in the Part B report -- perplexity 23.75 ->
 3.65, in-domain over-refusal 67% -> 2%.
 
 Decoding is greedy and `max_new_tokens` is 160, both matching `eval/generate.py`
@@ -40,7 +40,7 @@ FIVE THINGS THAT ARE NOT OBVIOUS
 4.  4-bit needs CUDA; the CPU path is a fallback, not a mode.
     bitsandbytes has no CPU kernel. Without a GPU this loads bfloat16 on CPU:
     ~6.4 GB of RAM and roughly a minute per reply. It runs, so the app is
-    demonstrable on any machine, but it is not what DESIGN.md §10 measured and
+    demonstrable on any machine, but it is not the configuration the report measured and
     not what should be shown to a grader.
 
 5.  The model is pinned to the GPU: it goes there whole, or not at all.
@@ -49,7 +49,7 @@ FIVE THINGS THAT ARE NOT OBVIOUS
     it quietly spills layers into system RAM. The app would then report
     `cuda-4bit` while running at a fraction of GPU speed, which is the one
     failure that looks like success. Pinning turns a short card into an
-    OutOfMemoryError, caught below and reported honestly. DESIGN.md §13.
+    OutOfMemoryError, caught below and reported honestly.
 
 Setup
     hf auth login          # gated base model + private adapter
@@ -72,8 +72,8 @@ from pathlib import Path
 BASE_MODEL = "meta-llama/Llama-3.2-3B-Instruct"
 ADAPTER = "YongVay/borakbot-qlora-r1"
 
-# Mirrored from eval/generate.py. Changing either invalidates DESIGN.md §10 as a
-# description of what the demo does.
+# Mirrored from eval/generate.py. Changing either invalidates the reported figures
+# as a description of what the demo does.
 MAX_NEW_TOKENS = 160
 GREEDY = True
 

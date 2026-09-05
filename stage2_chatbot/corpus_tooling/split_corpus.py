@@ -8,7 +8,7 @@
 
 PAIR-LEVEL, NOT FACT-LEVEL. The split holds out some *paraphrases* of every
 fact, not whole facts. This is deliberate and it does leak knowledge across the
-split — see docs/DESIGN.md. In one line: knowledge is baked into the weights at
+split. In one line: knowledge is baked into the weights at
 fine-tuning time with no retrieval step, so a held-out fact is one the model was
 never told and provably cannot answer. That test is guaranteed to fail and
 measures nothing. Held-out paraphrases measure whether the fact was learned

@@ -3,7 +3,7 @@
 The curated facts BorakBot is taught. This is a **build-time artifact**: it is
 converted into rojak question-answer training pairs and baked into the model
 weights by QLoRA fine-tuning. It is never loaded at inference. There is no
-retrieval step (see CLAUDE.md — RAG is out of scope).
+retrieval step — RAG is out of scope for this assignment.
 
 ```
 stage2_chatbot/knowledge_base/*.yaml   ← facts, written by hand        (this directory)

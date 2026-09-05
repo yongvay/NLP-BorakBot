@@ -31,7 +31,8 @@ import json
 import sys
 from pathlib import Path
 
-# STAGE, not STAGE: parent.parent is stage2_chatbot/, not the repository root.
+# STAGE, not ROOT: this file sits under stage2_chatbot/, so parent.parent is the
+# stage folder and not the repository root. Named for what it is.
 STAGE = Path(__file__).resolve().parent.parent
 SPLITS_DIR = STAGE / "corpus" / "splits"
 OUT_DIR = Path(__file__).resolve().parent / "data"

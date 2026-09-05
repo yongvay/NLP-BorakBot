@@ -5,9 +5,9 @@
 # Run training/to_llamafactory.py first — it builds training/data/, which is
 # gitignored and will not be there after a fresh clone.
 #
-# BASE MODEL SETTLED 22 Aug 2026 by the bake-off — reasoning in
-# docs/model_selection.md. Llama beat MaLLaM on hallucination control (declined
-# 3/3 out-of-knowledge probes against MaLLaM's 1/3), which CLAUDE.md grades.
+# BASE MODEL SETTLED 22 Aug 2026 by the bake-off — see training/colab_bakeoff.ipynb
+# and the committed runs in eval/results/. Llama beat MaLLaM on hallucination
+# control: it declined 3/3 out-of-knowledge probes against MaLLaM's 1/3.
 #
 # The template must match the checkpoint's own chat format. Getting it wrong does
 # not raise — it trains happily on mis-delimited text and produces a model that

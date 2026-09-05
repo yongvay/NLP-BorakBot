@@ -23,9 +23,9 @@ question mark. Case-folding "P" to "p" would erase the difference between a
 probationary licence and a letter of the alphabet.
 
 So Stage 2 keeps the register and fixes only what the *speech* stage got wrong.
-DESIGN.md §5 measured those errors and named this as the remedy: `myjpj` heard
-as "jbj" 9 times, `aiyo` as "ayo" 9 times. Deviation from Part A §5.2; reasoning
-recorded in DESIGN.md §12.
+Stage 1 measured those errors and named this as the remedy: `myjpj` heard as
+"jbj" 9 times, `aiyo` as "ayo" 9 times. Deviation from Part A §5.2; the reasoning
+is recorded in the Part B report.
 
 THE RULE FOR ADDING AN ENTRY
 

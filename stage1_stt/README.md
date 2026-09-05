@@ -12,7 +12,7 @@ and in the app sidebar, and the constants they justify are live in `app/stt.py`:
 | `EN_THRESHOLD = 0.5` | `threshold_sweep.py`, 21 thresholds | `app/stt.py` |
 | `ASR_REPAIRS` rules | `results/substitutions.csv`, 492 rows | `app/normalise.py` |
 
-Full method and rationale: `docs/Archive/whisper_step_by_step.md`.
+Full method and rationale: the Part B report.
 
 ## What is here
 

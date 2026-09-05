@@ -13,7 +13,7 @@ enough to move a subjective 1-5 rating, and "we rated them ourselves, unblinded"
 is the first thing a marker will push on. Rating rows carry a system id like
 `sys_c`; `rating_key.json` maps those back and is not needed until scoring.
 
-Three axes, matching the proposal's human evaluation and CLAUDE.md:
+Three axes, matching the proposal's human evaluation:
   fluency               is it well-formed, grammatical Malaysian speech?
   rojak_naturalness     would a Malaysian actually say it this way?
   factual_consistency   does it agree with the gold answer? For refusal items

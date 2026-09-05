@@ -88,5 +88,9 @@ desktop.ini
 ~$*
 ~WRL*.tmp
 
-# --- Fine Tune Model---
+# --- Fine-tuned adapter ---
+# The weights live on the Hugging Face Hub, not here. The six small JSON/JSONL
+# training logs under borakbot-qlora-r1/ are the exception: they are force-added
+# because scripts/build_report.py reads trainer_state.json and all_results.json
+# for the loss curve and the training figures. They are evidence, not weights.
 /stage2_chatbot/finetune

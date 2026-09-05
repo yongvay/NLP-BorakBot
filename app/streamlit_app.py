@@ -11,7 +11,7 @@ All four stages, end to end:
 Starting the server is slow and front-loaded on purpose: ~13 s for Whisper, then the
 LLM on top of it -- seconds on a GPU, a minute or two on CPU while ~6 GB of weights
 come off disk. Doing it before the widgets means the wait overlaps with the user
-reading the page instead of landing after they press record. DESIGN.md §4.
+reading the page instead of landing after they press record.
 
 Every reply is re-rendered from `st.session_state.messages` rather than drawn once
 where it was generated. Streamlit re-runs the whole script on each interaction, so a

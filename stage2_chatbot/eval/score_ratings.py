@@ -134,7 +134,7 @@ def main() -> int:
     print(f"\nHighest rated: {best}  (overall {summary['overall_mean'].iloc[0]})")
     if spread < 0.3:
         print(f"Spread is only {spread:.2f} — treat these as tied and choose on")
-        print("tooling risk instead. Say that in docs/Archive/model_selection.md.")
+        print("tooling risk instead, and say so in the report.")
     return 0
 
 

@@ -25,7 +25,7 @@ WHY THE SCHEMA SPLITS transcript FROM user_text
 `transcript` is what Whisper heard, NULL when the question was typed.
 `user_text` is what the model was given, after `app/normalise.py`. A wrong
 answer to a misheard question is an ASR failure and belongs in the WER column,
-not the NLP column — DESIGN.md §5 reports the two apart, and one merged field
+not the NLP column — the report keeps the two apart, and one merged field
 would make that impossible after the fact.
 
 Storage is `sqlite3` from the standard library: no new dependency, one file,

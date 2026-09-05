@@ -8,7 +8,7 @@ Two models, one pass each:
 This is the `malaysian_prompt_routed` configuration, the best of the nine that
 `stage1_stt/run_wer.py` measured: 0.349 strict WER, 0.339 lenient, over 48 clips
 and 387 reference words. Why it is built this way — the two models, the threshold, the
-prompt — is in docs/DESIGN.md. Read that before the demo, not this file.
+prompt — is in the Part B report. Read that before the demo, not this file.
 
 The settings below are duplicated from the evaluation harness rather than imported, because
 importing it would drag pandas and jiwer into a Streamlit deployment that has no use for
@@ -47,20 +47,19 @@ VANILLA_MODEL = "small"
 MALAYSIAN_MODEL = "mesolitica/malaysian-whisper-small-v3"
 
 # English is only chosen when the detector is confident, because the two failure directions
-# are not symmetric. DESIGN.md §2.
+# are not symmetric.
 EN_THRESHOLD = 0.5
 
 # Transcribe on the CPU even when a GPU is present. The demo laptop has 4 GB of VRAM and
 # Stage 3 needs ~3 GB of it for the 4-bit LLM; this model would take another ~1 GB and the
 # two together do not fit. Whisper-small on CPU costs a few seconds, which is invisible
-# beside generation. DESIGN.md §13.
+# beside generation.
 #
 # This does NOT affect the reported 0.349 WER: torch_dtype is float32 on either device, so
 # the transcript is identical. Set BORAKBOT_STT_GPU=1 to override on a larger card.
 STT_ON_GPU = os.getenv("BORAKBOT_STT_GPU") == "1"
 
 # Decoder context. Itself code-switched, and sharing no vocabulary with the eval set.
-# DESIGN.md §3.
 ROJAK_PROMPT = (
     "cuaca panas gila hari ni kan, tak larat nak keluar. "
     "can you send me the file later, i need to check something first. "
@@ -143,7 +142,7 @@ def detect_language(audio: AudioInput) -> tuple[str, float]:
     """Choose the language token for an utterance. Returns (choice, p_en).
 
     Mesolitica's own detector always answers Malay, so English clips come back translated.
-    Base Whisper's is unbiased and costs one encoder pass. DESIGN.md §1.
+    Base Whisper's is unbiased and costs one encoder pass.
 
     p_en is returned alongside the decision because the decision alone cannot distinguish a
     clip missed narrowly from one missed completely.

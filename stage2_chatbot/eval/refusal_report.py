@@ -17,8 +17,8 @@ Step 4. Two rates, and they trade against each other:
                       marks, so reporting one without the other is not a result.
 
 Refusal is counted two ways. EXACT is byte-equality with the canonical line,
-which is what the proposal quotes and what the demo will be checked against;
-Handoff 3 records that an em dash swapped for a hyphen already broke this once.
+which is what the proposal quotes and what the demo will be checked against; an
+em dash swapped for a hyphen already broke this once.
 LOOSE accepts any recognisable decline. The gap between them is itself the
 finding: a model that always declines correctly but never in the exact words
 needs a formatting fix, while one that does not decline at all needs training.

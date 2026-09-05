@@ -1,6 +1,6 @@
--- Feedback log for Stage 4. See app/feedback.py and docs/DESIGN.md §14.
+-- Feedback log for Stage 4. See app/feedback.py.
 --
--- This file is committed; feedback.db is not (CLAUDE.md, working agreements).
+-- This file is committed; feedback.db is not.
 -- Recreate an empty database with:  python app/feedback.py --init
 
 CREATE TABLE IF NOT EXISTS feedback (
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS feedback (
     -- the question was typed; user_text is what the model was actually given,
     -- after app/normalise.py. A wrong answer to a misheard question is an ASR
     -- failure, not an NLP failure, and the evaluation reports the two
-    -- separately (DESIGN.md §5). Storing one column would lose that.
+    -- separately. Storing one column would lose that.
     transcript  TEXT,
     user_text   TEXT    NOT NULL,
 
