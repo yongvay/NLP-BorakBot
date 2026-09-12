@@ -1,9 +1,6 @@
 """Convert and rename phone recordings into the filenames the eval script expects.
 
 Phones name files 'Recording 007.mp4'; the manifest expects 's07_ms_dom_yv.wav'.
-Renaming 24 of those by hand is where a misalignment creeps in -- and a misaligned
-clip is worse than a missing one, because it scores as a catastrophic transcription
-error rather than showing up as an obvious gap.
 
 This pairs raw files to manifest rows IN ORDER, so it only works if you recorded the
 sentences in the order they appear in the spreadsheet. It refuses to run if the counts

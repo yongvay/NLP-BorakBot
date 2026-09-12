@@ -7,19 +7,6 @@ description: >
   as a demonstration of rojak competence. Does not cover slang from other
   countries, or vulgar terms.
 
-# WRITING NOTES
-#
-# `stability: stable`, `verified: official`, `source: general` — definitional
-# facts need no URL (README, `source` field).
-#
-# `check` strings are the English gloss, short and literal, and chosen so they
-# fall MID-SENTENCE in a natural answer. Check matching is case-sensitive, so a
-# gloss that tends to open a sentence will fail against a capitalised word.
-# ["hang out"] is safe; ["Reverse"] is not.
-#
-# Facts here are `general` in the _scope.md sense — the same answer for whoever
-# asks — so they sit inside the boundary even though no agency owns them.
-
 facts:
   - id: slang.gostan
     fact: >

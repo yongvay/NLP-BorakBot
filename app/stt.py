@@ -5,16 +5,6 @@ Two models, one pass each:
     whisper-small (vanilla)   ->  pick the language token           (detect_language)
     mesolitica/...-v3         ->  transcribe, given that token      (transcribe_detailed)
 
-This is the `malaysian_prompt_routed` configuration, the best of the nine that
-`stage1_stt/run_wer.py` measured: 0.349 strict WER, 0.339 lenient, over 48 clips
-and 387 reference words. Why it is built this way — the two models, the threshold, the
-prompt — is in the Part B report. Read that before the demo, not this file.
-
-The settings below are duplicated from the evaluation harness rather than imported, because
-importing it would drag pandas and jiwer into a Streamlit deployment that has no use for
-them. Both files are now frozen: the harness has run and its results are committed. If you
-ever change a constant here, the reported 0.349 stops describing what the demo runs.
-
 Usage
     python app/stt.py recording.wav          # transcribe a file
     python app/stt.py recording.wav --json   # with language and timing
@@ -22,10 +12,6 @@ Usage
 
     from app.stt import transcribe
     text = transcribe("recording.wav")
-
-If a first download is interrupted, the cache is left holding config.json without the
-weights and loading raises OSError. Delete the model directory under
-~/.cache/huggingface/hub/ and run --warm-up again.
 """
 
 from __future__ import annotations
@@ -41,42 +27,18 @@ from pathlib import Path
 from typing import IO, Union
 
 # --------------------------------------------------------------------- settings
-# Mirrored from stage1_stt/run_wer.py. See the module docstring.
+
 
 VANILLA_MODEL = "small"
+
+# Fetches the model weight from Hugging Face
 MALAYSIAN_MODEL = "mesolitica/malaysian-whisper-small-v3"
 
-# English is only chosen when the detector is confident, because the two failure directions
-# are not symmetric.
+# English is only chosen when the detector is confident
 EN_THRESHOLD = 0.5
 
-# Transcribe on the CPU even when a GPU is present. The demo laptop has 4 GB of VRAM and
-# Stage 3 needs ~3 GB of it for the 4-bit LLM; this model would take another ~1 GB and the
-# two together do not fit. Whisper-small on CPU costs a few seconds, which is invisible
-# beside generation.
-#
-# This does NOT affect the reported 0.349 WER: torch_dtype is float32 on either device, so
-# the transcript is identical. Set BORAKBOT_STT_GPU=1 to override on a larger card.
 STT_ON_GPU = os.getenv("BORAKBOT_STT_GPU") == "1"
 
-# Guards against a decode that never terminates.
-#
-# Whisper emits <|endoftext|> when the audio gives it a reason to. Silence, room noise or
-# a half-second button-press give it none, so the decoder loops on whatever it last
-# produced until it hits its length ceiling -- 448 tokens by default, which on the CPU this
-# stage is pinned to costs tens of seconds for a clip that should take two. It is the same
-# unbounded decode behind the runaway diagnostic in the report (6.483 WER on one clip,
-# 362 insertions against a seven-word reference).
-#
-# Two guards, because they fail differently. MIN_SECONDS and MIN_RMS keep non-speech away
-# from both models; MAX_NEW_TOKENS bounds whatever does reach the transcriber.
-#
-# Neither can fire on the 48 evaluation clips -- every one is recorded speech far above the
-# energy floor, and the longest hypothesis it produces is 10 words against a 128-token
-# ceiling -- so
-# the reported 0.349 is unchanged. MAX_NEW_TOKENS is mirrored in run_wer.py for the reason
-# the module docstring gives; the two energy floors are not, because the harness must
-# transcribe every clip in the manifest rather than skip any.
 MIN_SECONDS = 0.4        # shorter than any real utterance
 MIN_RMS = 0.005          # quieter than a spoken word in a quiet room
 MAX_NEW_TOKENS = 128     # ~8x the longest utterance in the evaluation set
@@ -94,10 +56,7 @@ AudioInput = Union[str, Path, bytes, IO[bytes]]
 
 _models: dict = {}
 
-# Skip the Hub's revision check once the model is on disk: a wasted second on a good
-# network, a stall on a bad one, and campus wi-fi during the demo is the wrong place to
-# find out which. This must run before huggingface_hub is imported anywhere -- it reads the
-# variable into a module constant at import time and never looks at it again.
+# Skip the Hub's revision check once the model is on disk
 _HF_HUB = Path(os.getenv("HF_HOME") or Path.home() / ".cache" / "huggingface") / "hub"
 if (_HF_HUB / f"models--{MALAYSIAN_MODEL.replace('/', '--')}").is_dir():
     os.environ["HF_HUB_OFFLINE"] = "1"
@@ -162,10 +121,7 @@ def _as_path(audio: AudioInput) -> tuple[str, str | None]:
 def _has_speech(path: str) -> bool:
     """False when a clip is too short or too quiet to hold an utterance.
 
-    Runs before either model, so a clip that fails here costs neither the encoder pass nor
-    the runaway decode that non-speech audio provokes. Deliberately crude: this is a gate
-    on obvious non-speech, not voice activity detection, and anything it passes is still
-    bounded by MAX_NEW_TOKENS.
+    Runs before either model, so a clip that fails here costs neither the encoder pass nor the runaway decode that non-speech audio provokes.
     """
     import numpy as np
     import whisper

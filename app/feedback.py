@@ -2,32 +2,6 @@
 
     reply  ->  thumbs up/down  ->  feedback.db  ->  reviewed in batches  ->  next round
 
-Part A objective 6 and pipeline stage 4. Every reply carries a verdict; on
-thumbs-down the user supplies the answer they expected, and the whole exchange
-is logged with the context that produced it.
-
-WHAT THIS DELIBERATELY DOES NOT DO
-
-**Corrections do not enter the training set automatically.** They are logged
-immediately and appended only in periodic, team-reviewed batches. Part A §5.7
-took that position from the literature on human-in-the-loop correction: an
-unmoderated loop trains on whatever it is told, including careless and
-adversarial input, and a chatbot that can be taught a wrong fact by one user is
-a worse system than one that cannot learn at all. The moderation step is the
-design, not a shortcut around building one.
-
-So there is no retraining trigger here and no auto-export into
-`stage2_chatbot/corpus/`. `--export` prints the corrections; a human decides what
-becomes a training pair.
-
-WHY THE SCHEMA SPLITS transcript FROM user_text
-
-`transcript` is what Whisper heard, NULL when the question was typed.
-`user_text` is what the model was given, after `app/normalise.py`. A wrong
-answer to a misheard question is an ASR failure and belongs in the WER column,
-not the NLP column — the report keeps the two apart, and one merged field
-would make that impossible after the fact.
-
 Storage is `sqlite3` from the standard library: no new dependency, one file,
 and the file is gitignored while `stage2_chatbot/schema.sql` is committed.
 

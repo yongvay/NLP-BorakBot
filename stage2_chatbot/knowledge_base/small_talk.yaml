@@ -6,33 +6,6 @@ description: >
   agency, no portal. Does not contain anything factual about Malaysian admin;
   those live in the agency files.
 
-# WRITING NOTES
-#
-# All `stability: stable`, `verified: official`, `source: general`.
-#
-# TWO KINDS OF FACT LIVE HERE, and they behave differently under scoring.
-#
-#   ASSERTIONS — identity, capability, boundary, languages. The reply makes a
-#   claim that can be right or wrong, so these carry `check` strings and are
-#   scored for factual correctness like any other fact.
-#
-#   PERFORMATIVES — greeting, wellbeing, thanks, goodbye. The correct reply to
-#   "hi" is "Hai!", not a sentence describing what a greeting is. There is no
-#   factual claim to verify, so these carry `check: []` DELIBERATELY.
-#
-# The empty check list is a design decision, not an oversight. A check string
-# on a performative would force the bot to describe its own greeting instead of
-# performing one — the answer to "hello" would have to contain the word
-# "greeting", which is exactly wrong. Judge these by the human Likert ratings
-# for fluency and rojak naturalness (proposal S7) rather than by substring
-# matching. Say this if asked at the demo.
-#
-# Check strings on the assertions are deliberately in Malay or are proper nouns,
-# because they are matched against a ROJAK answer, not against the English fact
-# text. An English gloss like "not a human" would never appear in "Saya bukan
-# manusia lah" and would fail every time. Matching is also case-sensitive, so
-# the strings are chosen to fall mid-sentence.
-
 facts:
   - id: talk.identity
     fact: >

@@ -2,47 +2,6 @@
 
     Whisper transcript  ->  whitespace/punctuation tidy  ->  ASR repair  ->  Stage 3
 
-WHAT THIS DOES NOT DO, AND WHY
-
-Part A specified Malaya's informal-Malay normaliser here ("xleh" -> "tidak
-boleh") plus a slang dictionary mapping Manglish to canonical forms. **That was
-the right design for an un-fine-tuned model and is the wrong one now.**
-
-371 of the 506 training inputs (73%) are informal rojak -- "sapa reka telefon
-wei", "lepak tu maksud apa actually?". `training/to_llamafactory.py` passes the
-`user` field through verbatim, so the adapter was fitted on exactly that
-register. Expanding "xleh" to "tidak boleh" before generation would hand the
-model text unlike anything it was trained on, and the fine-tuning bought a 6.5x
-perplexity improvement that is only collectable on-distribution. Formalising the
-input spends it.
-
-Nor does this lowercase, and nor does it strip punctuation. Capitals in the
-training inputs are load-bearing -- `MyKad` (14), `JPJ` (10), `P` and `D` as
-licence classes (12 together), `IC` (6) -- and 391 of 506 inputs contain a
-question mark. Case-folding "P" to "p" would erase the difference between a
-probationary licence and a letter of the alphabet.
-
-So Stage 2 keeps the register and fixes only what the *speech* stage got wrong.
-Stage 1 measured those errors and named this as the remedy: `myjpj` heard as
-"jbj" 9 times, `aiyo` as "ayo" 9 times. Deviation from Part A §5.2; the reasoning
-is recorded in the Part B report.
-
-THE RULE FOR ADDING AN ENTRY
-
-Only repair a token that **cannot legitimately occur in Malaysian rojak**. The
-substitution table (`stage1_stt/results/substitutions.csv`, 492 rows)
-is tempting and mostly unusable, because it is keyed the wrong way round: it
-records what each reference word turned into, not what each mistake came from.
-Reversing it blindly is destructive.
-
-    Whisper wrote "saya" for `can` (9), `do` (6), `i` (6), `balance` (5), `my` (4)
-    Whisper wrote "card" for `roadtax` (6) and `mykad` (6)
-    Whisper wrote "buku" for `pukul` (8) -- and "buku" is also just the word for book
-
-None of those can be repaired by lookup. What can be repaired is the residue
-Whisper invents that is not a word in either language: "jbj", "chiamnna",
-"unitrasca". Those are safe because a correct transcript never contains them.
-
     from app.normalise import normalise
     result = normalise("eh jbj ni buka pukul berapa")
     result.text      -> "eh myjpj ni buka pukul berapa"
@@ -61,48 +20,35 @@ import sys
 from dataclasses import dataclass, field
 
 # ------------------------------------------------------------------- the table
-# Every entry is a token Whisper produced that is not a word in Malay or English,
-# or a spelling of a domain term that the training corpus never uses. Counts are
-# occurrences in the 48-clip evaluation set; see the module docstring for the
-# rule and stage1_stt/results/substitutions.csv for the raw data.
-#
-# Deliberately NOT included, though they appear in that file with high counts:
-# nampak->nak, look->dulu, good->kot, and->n, dengan->money, kad->credit. Each
-# of those is a real word being mistranslated, and repairing it would corrupt
-# the many utterances where the word is correct.
+
 
 ASR_REPAIRS: dict[str, str] = {
     # Invented tokens -- no legitimate occurrence, so repair is free.
-    "jbj":        "myjpj",     # 9
-    "charanabuk": "nak",       # 6
-    "unitrasca":  "unit",      # 6
-    "maham":      "mahal",     # 6
-    "mora":       "murah",     # 6
-    "chiamnna":   "camne",     # 4
-    "naklam":     "nak",       # 3
-    "jepya":      "jpn",       # 3
-    "bernil":     "renew",     # 3
-    "lemala":     "lemak",     # 3
-    "identi":     "identity",  # 3, truncation
-    "autor":      "auto",      # 3
-
-    # Orthography. Same word, other spelling; the corpus uses the right-hand
-    # form. These overlap stage1_stt/orthography_map.json, which is the
-    # lenient-WER map -- kept separate because that file scores a frozen result
-    # and this one feeds a live model.
-    "ayo":       "aiyo",       # 9
-    "efilling":  "efiling",    # 7
-    "pasport":   "passport",   # 6
-    "license":   "licence",    # 5
-    "lho":       "lor",        # 3, discourse particle
+    "jbj":        "myjpj",    
+    "charanabuk": "nak",       
+    "unitrasca":  "unit",      
+    "maham":      "mahal",     
+    "mora":       "murah",    
+    "chiamnna":   "camne",     
+    "naklam":     "nak",       
+    "jepya":      "jpn",       
+    "bernil":     "renew",     
+    "lemala":     "lemak",     
+    "identi":     "identity", 
+    "autor":      "auto",    
+    "ayo":       "aiyo",       
+    "efilling":  "efiling",   
+    "pasport":   "passport", 
+    "license":   "licence",  
+    "lho":       "lor",       
 }
 
 # Whisper punctuates and capitalises; the corpus does too (386 of 506 inputs end
 # in .?!). So punctuation is kept. Only the artefacts are cleaned: repeated
 # marks from hesitation, and space before a mark.
-_SPACE_BEFORE_PUNCT = re.compile(r"\s+([,.!?;:])")
-_REPEATED_PUNCT = re.compile(r"([,.!?;:])\1+")
-_WHITESPACE = re.compile(r"\s+")
+_SPACE_BEFORE_PUNCT = re.compile(r"\s+([,.!?;:])") # Find one or more spaces followed by punctuation
+_REPEATED_PUNCT = re.compile(r"([,.!?;:])\1+")     # Detects repeated punctuation marks
+_WHITESPACE = re.compile(r"\s+")                   # Detects one or more whitespace characters
 
 # Split on word boundaries but keep the separators, so punctuation and spacing
 # survive reassembly untouched.
