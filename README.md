@@ -1,10 +1,8 @@
 # BorakBot
 
-A voice-driven Bahasa Rojak chatbot for Malaysian government services — road tax, MyKad,
-passports — plus the slang that surrounds them. Speak or type a code-switched question, get a
-code-switched answer, and rate it.
+BorakBot is a conversational assistant for questions about Malaysian government services and local slang, supporting code-switched Malay and English through voice or text. The project combines Whisper speech recognition, text normalisation, and a QLoRA fine-tuned Llama-3.2-3B model. It includes training data preparation, model evaluation, and a Streamlit interface with user feedback collection.
 
-BMDS2123 Natural Language Processing, Part B. TARUMT.
+BMDS2123 Natural Language Processing, TARUMT.
 
 ```
 speech ──▶ Whisper ──▶ ASR repair ──▶ fine-tuned Llama-3.2-3B ──▶ reply
